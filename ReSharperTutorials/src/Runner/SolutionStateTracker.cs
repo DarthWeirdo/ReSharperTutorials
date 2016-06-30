@@ -5,6 +5,7 @@ using JetBrains.DataFlow;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.Tasks;
 using JetBrains.ReSharper.Psi;
+using JetBrains.Threading;
 
 namespace ReSharperTutorials.Runner
 {
@@ -85,7 +86,10 @@ namespace ReSharperTutorials.Runner
                     SolutionLoadTaskKinds.SolutionContainer, () => solutionStateTracker.HandleSolutionContainerCreated(solution)));
                 scheduler.EnqueueTask(new SolutionLoadTask("SolutionStateTracker",
                     SolutionLoadTaskKinds.Done, () => solutionStateTracker.HandleSolutionOpened(solution)));
-                scheduler.EnqueueTask(new SolutionLoadTask("SolutionStateTracker",
+                //                scheduler.EnqueueTask(new SolutionLoadTask("SolutionStateTracker",
+                //                    SolutionLoadTaskKinds.AfterDone, () => psiServices.CachesState.IsIdle.WhenTrueOnce(lifetime, () => 
+                //                    threading.ExecuteOrQueue("dd", () => solutionStateTracker.HandlePsiLoaded(solution)))));
+                scheduler.EnqueueTask(new SolutionLoadTask("SolutionStateTracker", 
                     SolutionLoadTaskKinds.AfterDone, () => psiServices.CachesState.IsIdle.WhenTrueOnce(lifetime, () => 
                     solutionStateTracker.HandlePsiLoaded(solution))));
                 lifetime.AddAction(solutionStateTracker.HandleSolutionClosed);

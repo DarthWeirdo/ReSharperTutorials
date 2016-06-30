@@ -10,6 +10,7 @@ using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;
+using JetBrains.Threading;
 using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
@@ -28,7 +29,7 @@ namespace ReSharperTutorials.Runner
                                   IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment, 
                                   IActionManager actionManager, ToolWindowManager toolWindowManager, TutorialWindowDescriptor tutorialWindowDescriptor,
                                   IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
-                                  IColorThemeManager colorThemeManager)
+                                  IColorThemeManager colorThemeManager, IThreading threading)
         {
             if (lifetime == null)
                 throw new ArgumentNullException("lifetime");
@@ -45,7 +46,7 @@ namespace ReSharperTutorials.Runner
                     solutionStateTracker.AfterPsiLoaded.Advise(lifetime, 
                     sol => RunTutorial(globalSettings.GetPath(tutorial.Key, PathType.WorkCopyContentFile), lifetime, solution, psiFiles, 
                         textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager, 
-                        tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager));                    
+                        tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading));                    
                 }
             }                                              
         }
@@ -55,15 +56,15 @@ namespace ReSharperTutorials.Runner
                                   DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
                                   ToolWindowManager toolWindowManager, TutorialWindowDescriptor tutorialWindowDescriptor,
                                   IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
-                                  IColorThemeManager colorThemeManager)
-        {                                
-            var tutorialWindow = new TutWindow.TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager, shellLocks, editorManager,
-                documentManager, environment, actionManager, toolWindowManager, tutorialWindowDescriptor, windowsHookManager,
-                psiServices, shortcutManager, colorThemeManager);
-            
-            lifetime.AddBracket(
-                () => { tutorialWindow.Show(); },
-                () => { tutorialWindow.Close(); });
+                                  IColorThemeManager colorThemeManager, IThreading threading)
+        {
+            threading.ExecuteOrQueue("RunTutorialWindow", () => {
+                var tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager, tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
+
+                lifetime.AddBracket(
+                    () => { tutorialWindow.Show(); },
+                    () => { tutorialWindow.Close(); });
+            });            
         }   
     }
 }
