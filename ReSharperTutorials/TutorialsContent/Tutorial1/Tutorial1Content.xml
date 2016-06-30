@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tutorial>
+  <currentStep>1</currentStep>
+  
+  <intro>
+    <Run FontSize="36">Tutorial 1. Essential Shortcuts</Run>
+    <LineBreak/>
+    <Run  FontSize="14">In this tutorial you will learn a number of essential ReSharper shortcuts that you will probably use most often in your day-to-day work. The goal of this tutorial is only to give you a "taste" of ReSharper. All these shortcuts will be covered in next tutorials in more details.</Run>
+  </intro>
+
+  <steps>
+    <step li="1" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass">
+      <text>
+        <h1>Alt+Enter</h1>
+        <p>Used to apply quick fixes to inspections ("squigglies"), or apply context specific actions, depending on location of text caret. Also allows searching and applying all ReSharper commands direct from the menu. </p>
+        <p>Icon is displayed in gutter margin on left of editor, e.g. yellow lightbulb to fix warning, red light bulb to fix error, hammer to context action, etc.</p>
+      </text>
+    </step>
+    
+    <step li="2" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass" action="ReSharper_AltEnter" check="CheckTutorial1Step2" nextStep="Auto" strikeOnDone ="true">
+      <text>
+        <h1>Apply QuickFix for an inspection</h1>
+        <p>
+          The <code>badlyNamedClass</code> class doesn't match ReSharper's naming style! Let's fix this:
+        </p>
+        <ol>
+          <li>
+            Place text caret on "squiggly". Note the lightbulb in the margin on the left.</li>
+          <li>
+            Click the light bulb, or hit <b>Alt+Enter</b>.
+          </li>
+          <li>
+            Select <b>Rename to 'BadlyNamedClass'</b> to apply the fix.
+          </li>
+        </ol> 
+      </text>
+    </step>
+
+    <step li="3" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg" textToFindOccurrence ="2" action="ReSharper_AltEnter" check="CheckTutorial1Step3" nextStep="Auto" strikeOnDone ="true">
+      <text>
+        <h1>Apply context action</h1>
+        <ol>
+          <li>
+            Place text caret on <code>arg</code>. Note the hammer action - a context action is available.
+          </li>
+          <li>
+            Hit <b>Alt+Enter</b>.
+          </li>
+          <li>
+            Select <b>To string.Format invocation</b>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="4" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.GoToAction" action="ReSharper_AltEnter" check="CheckTutorial1Step4" nextStep="Auto" strikeOnDone ="true">
+      <text>
+        <h1>Go to action</h1>
+        <ol>
+          <li>
+            Place caret on <code>GoToAction</code> class name.
+          </li>
+          <li>
+            Hit <b>Alt+Enter</b>. Note the magnifying glass.
+          </li>
+          <li>
+            Start typing "rename".
+          </li>
+          <li>
+            Rename the class to <code>Renamed</code>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="5" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.BadlyNamedClass" textToFind="SomeClass" textToFindOccurrence ="1" action="ReSharper.ReSharper_GotoDeclaration" check="CheckTutorial1Step5" nextStep="Auto" strikeOnDone ="true">
+      <text>
+        <h1>Go To Declaration</h1>
+        <p>
+          Say, we want to take a look at the <code>SomeClass</code> declaration.
+        </p>
+        <ol>
+          <li>
+            Place text caret on the <code>SomeClass</code> in the field declaration.            
+          </li>
+          <li>
+            Hit <b>Ctrl + B</b> (VS) to navigate to type declaration.
+          </li>
+        </ol>
+      </text>
+    </step>          
+    
+    <step li="6" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" >
+      <text>
+        <h1>That's All!</h1>
+        <p>
+          Thanks for passing the tutorial. Now you can proceed to the next tutorial that will show you ReSharper navigation tricks.
+        </p>
+      </text>
+    </step>           
+  </steps>
+  
+</tutorial>
