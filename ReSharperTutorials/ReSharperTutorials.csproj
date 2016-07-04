@@ -305,7 +305,7 @@
     <Compile Include="src\TutWindow\TutorialWindowDescriptor.cs" />
     <Compile Include="src\Utils\SolutionCopyHelper.cs" />
     <Compile Include="src\Utils\TutorialXmlReader.cs" />
-    <Compile Include="src\Utils\VSCommunication.cs" />
+    <Compile Include="src\Utils\VsIntegration.cs" />
     <Compile Include="ZoneMarker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

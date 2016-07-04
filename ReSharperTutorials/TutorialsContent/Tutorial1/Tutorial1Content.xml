@@ -14,6 +14,7 @@
         <h1>Alt+Enter</h1>
         <p>Used to apply quick fixes to inspections ("squigglies"), or apply context specific actions, depending on location of text caret. Also allows searching and applying all ReSharper commands direct from the menu. </p>
         <p>Icon is displayed in gutter margin on left of editor, e.g. yellow lightbulb to fix warning, red light bulb to fix error, hammer to context action, etc.</p>
+        <button onclick="buttonClick()">Next</button>
       </text>
     </step>
     

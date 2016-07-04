@@ -71,7 +71,7 @@ namespace ReSharperTutorials.TutStep
 
         public void Close(object sender, RoutedEventArgs args)
         {
-            VsCommunication.CloseVsSolution(true);         
+            VsIntegration.CloseVsSolution(true);         
         }        
 
         private void GoNext(object sender, EventArgs args)

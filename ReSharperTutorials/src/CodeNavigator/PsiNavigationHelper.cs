@@ -168,7 +168,7 @@ namespace ReSharperTutorials.CodeNavigator
             shellLocks.ReentrancyGuard.ExecuteOrQueue("Navigate", () => { targetMethod.Navigate(true);});
             shellLocks.ReentrancyGuard.ExecuteOrQueue("FindText", () =>
             {
-                VsCommunication.NavigateToTextInCurrentDocument(text, textOcc);
+                VsIntegration.NavigateToTextInCurrentDocument(text, textOcc);
             });            
         }
         #endregion

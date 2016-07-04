@@ -19,17 +19,18 @@ using ReSharperTutorials.TutWindow;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
-{       
+{
     [SolutionComponent]
     public class TutorialRunner
     {
         public TutorialRunner([NotNull] Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-                                  [NotNull] ISolutionStateTracker solutionStateTracker,
-                                  [NotNull] GlobalSettings globalSettings, TextControlManager textControlManager, IShellLocks shellLocks,
-                                  IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment, 
-                                  IActionManager actionManager, ToolWindowManager toolWindowManager, TutorialWindowDescriptor tutorialWindowDescriptor,
-                                  IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
-                                  IColorThemeManager colorThemeManager, IThreading threading)
+            [NotNull] ISolutionStateTracker solutionStateTracker,
+            [NotNull] GlobalSettings globalSettings, TextControlManager textControlManager, IShellLocks shellLocks,
+            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
+            IActionManager actionManager, ToolWindowManager toolWindowManager,
+            TutorialWindowDescriptor tutorialWindowDescriptor,
+            IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
+            IColorThemeManager colorThemeManager, IThreading threading)
         {
             if (lifetime == null)
                 throw new ArgumentNullException("lifetime");
@@ -37,34 +38,42 @@ namespace ReSharperTutorials.Runner
                 throw new ArgumentNullException("solutionStateTracker");
             if (globalSettings == null)
                 throw new ArgumentNullException("globalSettings");
-                        
+
 
             foreach (var tutorial in globalSettings.AvailableTutorials)
             {
-                if (VsCommunication.GetCurrentSolutionPath() == tutorial.Value)
+                if (VsIntegration.GetCurrentSolutionPath() == tutorial.Value)
                 {
-                    solutionStateTracker.AfterPsiLoaded.Advise(lifetime, 
-                    sol => RunTutorial(globalSettings.GetPath(tutorial.Key, PathType.WorkCopyContentFile), lifetime, solution, psiFiles, 
-                        textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager, 
-                        tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading));                    
+                    solutionStateTracker.AfterPsiLoaded.Advise(lifetime,
+                        sol =>
+                            RunTutorial(globalSettings.GetPath(tutorial.Key, PathType.WorkCopyContentFile), lifetime,
+                                solution, psiFiles,
+                                textControlManager, shellLocks, editorManager, documentManager, environment,
+                                actionManager, toolWindowManager,
+                                tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager,
+                                colorThemeManager, threading));
                 }
-            }                                              
+            }
         }
 
-        private static void RunTutorial(string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,                                 
-                                  TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager, 
-                                  DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
-                                  ToolWindowManager toolWindowManager, TutorialWindowDescriptor tutorialWindowDescriptor,
-                                  IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
-                                  IColorThemeManager colorThemeManager, IThreading threading)
+        private static void RunTutorial(string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
+            TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
+            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
+            ToolWindowManager toolWindowManager, TutorialWindowDescriptor tutorialWindowDescriptor,
+            IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
+            IColorThemeManager colorThemeManager, IThreading threading)
         {
-            threading.ExecuteOrQueue("RunTutorialWindow", () => {
-                var tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager, tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
+            threading.ExecuteOrQueue("RunTutorialWindow", () =>
+            {
+                var tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager,
+                    shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager,
+                    tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
 
                 lifetime.AddBracket(
-                    () => { tutorialWindow.Show(); },
-                    () => { tutorialWindow.Close(); });
-            });            
-        }   
+                    () => tutorialWindow.Show(),
+                    () => tutorialWindow.Close());
+            });
+        }
+
     }
 }

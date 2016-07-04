@@ -77,7 +77,11 @@ namespace ReSharperTutorials.TutWindow
         private readonly ToolWindowClass _toolWindowClass;
         private string _scrollBackColor;
         private string _scrollFaceColor;
-        private string _disabledTextColor;
+        private string _disabledTextColor;        
+        private LifetimeDefinition _animationLifetime;
+
+        private HtmlMediator _htmlMediator;
+
 
 
         public string TutorialText { set { PrepareHtmlContent(value); } }
@@ -89,19 +93,19 @@ namespace ReSharperTutorials.TutWindow
             {                
                 // DIRTY HACK!
                 if (_stepText != null && _stepText.Contains("prevStep"))
-                {                    
-                    var animLifetime = Lifetimes.Define(_lifetime);
-                    var mediator = new HtmlMediator(animLifetime.Lifetime, _viewControl);                    
-                    mediator.AllAnimationsDone.Advise(animLifetime.Lifetime, () =>
+                {
+                    _animationLifetime = Lifetimes.Define(_lifetime);
+
+                    _htmlMediator.AllAnimationsDone.Advise(_animationLifetime.Lifetime, () =>
                     {
                         _stepText = value;
                         _shellLocks.ExecuteOrQueue(_lifetime, "TutorialTextUpdate",
                             () => { _viewControl.DocumentText = PrepareHtmlContent(_stepText); });
 
-                        animLifetime.Terminate();
+                        _animationLifetime.Terminate();
                     });
-
-                    mediator.Animate();
+                    
+                    _htmlMediator.Animate();
                 }
                 else
                 {
@@ -181,7 +185,7 @@ namespace ReSharperTutorials.TutWindow
 
                         lt.AddBracket(
                             () => { _buttonNext.Click += NextStep; },
-                            () => { _buttonNext.Click -= NextStep; });
+                            () => { _buttonNext.Click -= NextStep; });                        
 
                         lt.AddBracket(
                             () => _containerControl.Controls.Add(_buttonNext),
@@ -194,6 +198,9 @@ namespace ReSharperTutorials.TutWindow
                         _colorThemeManager.ColorThemeChanged.Advise(lifetime, RefreshKeepContent);
 
                         SetColors();                        
+
+                        _htmlMediator = new HtmlMediator(lifetime, _viewControl);
+                        _htmlMediator.OnButtonClick.Advise(lifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
 
                         return new EitherControl(lt, containerControl);
                     });
@@ -219,11 +226,11 @@ namespace ReSharperTutorials.TutWindow
                 toolWindowInstance.Close();
             
             _toolWindowClass.Close();
-            VsCommunication.CloseVsSolution(true);
+            VsIntegration.CloseVsSolution(true);
         }
 
 
-        public void RefreshKeepContent()
+        private void RefreshKeepContent()
         {
             StepText = _stepText;
         }

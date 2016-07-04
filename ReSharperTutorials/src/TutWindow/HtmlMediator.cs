@@ -1,5 +1,6 @@
 ﻿using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
+using JetBrains.Util;
 
 namespace ReSharperTutorials.TutWindow
 {
@@ -10,9 +11,10 @@ namespace ReSharperTutorials.TutWindow
     public class HtmlMediator
     {
         public ISignal<bool> AllAnimationsDone { get; }
+        public ISignal<bool> OnButtonClick { get; }
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
-
+        
         private bool MoveOutStepDone
         {
             get
@@ -33,8 +35,9 @@ namespace ReSharperTutorials.TutWindow
         }
 
         public HtmlMediator(Lifetime lifetime, HtmlViewControl viewControl)
-        {
+        {            
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
+            OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
             _viewControl = viewControl;
             _viewControl.ObjectForScripting = this;
         }
@@ -47,6 +50,11 @@ namespace ReSharperTutorials.TutWindow
         public void MoveOutPrevStepDone()
         {
             MoveOutStepDone = true;            
+        }
+
+        public void ClickNextButton()
+        {            
+            OnButtonClick.Fire(true);            
         }
     }
 }

@@ -10,7 +10,7 @@ using Process = System.Diagnostics.Process;
 namespace ReSharperTutorials.Utils
 {    
 
-    public static class VsCommunication
+    public static class VsIntegration
     {
 
         public static bool FindTextInCurrentDocument(string text)
@@ -98,14 +98,30 @@ namespace ReSharperTutorials.Utils
             var vsInstance = GetCurrentVsInstance();
             var solution = vsInstance?.Solution;
 
-            //            solution?.Close(saveFirst);
+//                        solution?.Close(saveFirst);
             if (solution == null) return;
             if (saveFirst)
                 SaveVsSolution();
             
             vsInstance.ExecuteCommand("File.CloseSolution");
         }
-        
+
+        public static void CloseVsSolution()
+        {            
+            var vsInstance = GetCurrentVsInstance();
+            var solution = vsInstance?.Solution;
+            if (solution?.FileName == "") return;
+            vsInstance?.ExecuteCommand("File.CloseSolution");
+        }
+
+
+        public static bool IsAnySolutionOpened()
+        {
+            var vsInstance = GetCurrentVsInstance();
+            var solution = vsInstance?.Solution;
+            return solution?.FileName != "";
+        }
+
 
         private static IEnumerable<DTE> EnumVsInstances()
         {            
