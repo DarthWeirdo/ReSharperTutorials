@@ -1,6 +1,8 @@
 ﻿using System;
 using JetBrains.ActionManagement;
+using JetBrains.Application;
 using JetBrains.Application.DataContext;
+using JetBrains.DataFlow;
 using JetBrains.UI.ActionsRevised;
 using JetBrains.Util;
 using ReSharperTutorials.Utils;
@@ -37,22 +39,51 @@ namespace ReSharperTutorials.Runner
                     "ReSharper Tutorials");
 //            if (titleWnd.ShowDialog() != true) return;
 //            if (titleWnd.Restart)
-            if (result)            
+            if (result)
             {
-                SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
-                    globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
+//                var locks = context.GetComponent<IShellLocks>();
+//
+//                if (VsIntegration.IsAnySolutionOpened())
+//                {
+//                    var lt = Lifetimes.Define();                    
+//                    var stateTracker = context.GetComponent<SolutionStateTracker>();
+//                    stateTracker.BeforeSolutionClosed.Advise(lt.Lifetime, () =>
+//                    {
+//                        SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
+//                            globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
+//                        VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
+//                        lt.Terminate();
+//                    });
+//
+//                    VsIntegration.CloseVsSolution();
+//                }
+//                else
+//                {
+//                    locks.ExecuteWithReadLock(() =>
+//                    {
+                        VsIntegration.CloseVsSolution();
+                        SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
+                            globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
+                        VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
+//                    });
+                }
+                
+//                VsIntegration.CloseVsSolution();
+
+//                SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
+//                    globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
 
                 // now we always run from the beginning 
 //                GC.Collect();                
 //                TutorialXmlReader.WriteCurrentStep(globalOptions.GetPath(id, PathType.WorkCopyContentFile), "1");
 
-                VsCommunication.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
+//                VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
             }
 //            else
-//                VsCommunication.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
+//                VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
         }
 
-    }
+//    }
 
     [Action("ActionOpenTutorial1", "Start Tutorial 1 - Essential Shortcuts", Id = 100)]
     public class ActionOpenTutorial1 : ActionOpenTutorial
