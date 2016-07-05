@@ -60,10 +60,11 @@ namespace ReSharperTutorials.TutStep
 
             _currentStepId = TutorialXmlReader.ReadCurrentStep(contentPath);
             CurrentStep = _steps[_currentStepId];
+            _stepView.StepCount = _steps.Count;            
 
             lifetime.AddBracket(
                 () => { _stepView.NextStep += GoNext; }, 
-                () => { _stepView.NextStep -= GoNext; });
+                () => { _stepView.NextStep -= GoNext; });            
 
             ProcessStep();
 
@@ -79,7 +80,7 @@ namespace ReSharperTutorials.TutStep
             if (_currentStepId == _steps.Count) return;
 
             _currentStepId++;
-            CurrentStep = _steps[_currentStepId];
+            CurrentStep = _steps[_currentStepId];            
             ProcessStep();
         }
 
@@ -87,18 +88,11 @@ namespace ReSharperTutorials.TutStep
         {
             ShowText(CurrentStep);
             _codeNavigator.Navigate(CurrentStep);
+            _stepView.UpdateProgress();
 
-            if (CurrentStep.GoToNextStep == GoToNextStep.Auto)
-            {                
-                _stepView.ButtonVisible = false;
-                CurrentStep.StepIsDone += StepOnStepIsDone;
-                CurrentStep.PerformChecks(this);
-            }
-            else            
-                _stepView.ButtonVisible = true;                            
-
-            if (_currentStepId == _steps.Count)            
-                _stepView.ButtonVisible = false;            
+            if (CurrentStep.GoToNextStep != GoToNextStep.Auto) return;
+            CurrentStep.StepIsDone += StepOnStepIsDone;
+            CurrentStep.PerformChecks(this);
         }
 
 
@@ -116,7 +110,7 @@ namespace ReSharperTutorials.TutStep
             if (step.Id > 1)
             {
                 var prevStep = _steps[step.Id - 1];
-                if (prevStep.StrikeOnDone)                
+                if ((prevStep.StrikeOnDone && step.GoToNextStep == GoToNextStep.Auto) || (prevStep.StrikeOnDone && step.Id == _steps.Count))    
                     result = $"<div id=\"prevStep\">{prevStep.Text}</div> <div id=\"currentStep\">{step.Text}</div>";                
             }
 

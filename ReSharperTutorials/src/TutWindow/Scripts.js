@@ -2,10 +2,8 @@
     var pElem = document.getElementById("prevStep");
     var pHeight = pElem.clientHeight;
     var cElem = document.getElementById("currentStep");
-
-    if (pElem != null) {
-        cElem.style.top = pHeight;
-    }
+//    cElem.style.top = pHeight;
+    cElem.style.top = pHeight + "px";
 }
 
 function moveOutPrevStep() {

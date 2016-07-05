@@ -297,6 +297,9 @@
     <Compile Include="src\TutStep\IStepView.cs" />
     <Compile Include="src\TutStep\TutorialStep.cs" />
     <Compile Include="src\TutStep\TutorialStepPresenter.cs" />
+    <Compile Include="src\TutWindow\CustomProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="src\TutWindow\HtmlMediator.cs" />
     <Compile Include="src\TutWindow\TutorialPanel.cs">
       <SubType>Component</SubType>

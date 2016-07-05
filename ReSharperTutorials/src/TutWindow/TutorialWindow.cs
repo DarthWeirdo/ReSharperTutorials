@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,14 +27,13 @@ using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
 using ReSharperTutorials.TutStep;
 using ReSharperTutorials.Utils;
-using Button = System.Windows.Forms.Button;
-using Color = System.Drawing.Color;
 
 namespace ReSharperTutorials.TutWindow
 {
     public class TutorialWindow : IStepView
     {
-        private const string HtmlDoctype = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
+        private const string HtmlDoctype = "<!DOCTYPE html>";
+//        private const string HtmlDoctype = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
         private const string HtmlHead = @"
         <HTML>
         <HEAD>
@@ -42,7 +42,7 @@ namespace ReSharperTutorials.TutWindow
             html, 
             body 
             { 
-                font-family:tahoma, sans-serif; font-size:90%; color:FNTCLR;
+                font-family:Tahoma, Geneva, sans-serif; font-size:100%; color:FNTCLR;
                 overflow: auto;
                 scrollbar-face-color: SCRLFACECLR;
                 scrollbar-highlight-color: SCRLHLCLR;
@@ -53,9 +53,24 @@ namespace ReSharperTutorials.TutWindow
                 scrollbar-base-color: SCRLTRCKCLR;             
             }
             p { text-align:justify }          
-            .done { text-decoration:line-through; color:DISFNT; }  
-            #prevStep { text-decoration:line-through; color:DISFNT; position: absolute;}            
-            #currentStep { position: absolute;}
+            .done { text-decoration:line-through; color:DISFNT; } 
+            .nextButton 
+            {
+                float: right;
+//                background-color: BTNBCKCLR; 
+//                border: none;
+//                color: BTNFORECLR;
+//                padding: 5px 10px;
+//                text-align: center;
+//                text-decoration: none;
+//                display: inline-block;
+//                font-size: 12px;   
+//                border-radius: 2px;
+//                cursor: pointer;                      
+            } 
+//            .nextButton:hover { background-color: BTNHVRCLR; }
+            #prevStep { text-decoration:line-through; color:DISFNT; position: absolute; padding-right: 10px; padding-left: 10px;}            
+            #currentStep { position: absolute; padding-right: 10px; padding-left: 10px;}
         </style>
         ";
 
@@ -69,7 +84,6 @@ namespace ReSharperTutorials.TutWindow
         private TutorialPanel _containerControl;
         private HtmlViewControl _viewControl = new HtmlViewControl(null, null);
         private string _stepText;
-        private Button _buttonNext = new Button();
         private TutorialStepPresenter _stepPresenter;
         private readonly Lifetime _lifetime;
         private readonly IColorThemeManager _colorThemeManager;
@@ -77,12 +91,20 @@ namespace ReSharperTutorials.TutWindow
         private readonly ToolWindowClass _toolWindowClass;
         private string _scrollBackColor;
         private string _scrollFaceColor;
-        private string _disabledTextColor;        
+        private string _disabledTextColor;
+        private string _buttonBackColor;
+        private string _buttonForeColor;
+        private string _buttonHoverColor;
         private LifetimeDefinition _animationLifetime;
-
         private HtmlMediator _htmlMediator;
+        private CustomProgressBar _progressBar = new CustomProgressBar { Visible = true, Step = 1, Value = 0, Dock = DockStyle.Bottom,};
 
+        public int StepCount
+        {            
+            set { _progressBar.Maximum = value; }
+        }
 
+        public event EventHandler NextStep;
 
         public string TutorialText { set { PrepareHtmlContent(value); } }
 
@@ -114,23 +136,9 @@ namespace ReSharperTutorials.TutWindow
                         () => { _viewControl.DocumentText = PrepareHtmlContent(_stepText); });
                 }                               
             }
-        }
+        }        
 
-        public string ButtonText
-        {
-            get { return _buttonNext.Text; }
-            set { _buttonNext.Text = value; }
-        }
-
-        public bool ButtonVisible
-        {
-            get { return _buttonNext.Visible; }
-            set { _buttonNext.Visible = value; }
-        }
-
-        public event EventHandler NextStep;
-
-
+        
         public TutorialWindow(string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
                                   TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
                                   DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
@@ -157,39 +165,23 @@ namespace ReSharperTutorials.TutWindow
                                                                                             
                         var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
                         {                            
-                            Dock = DockStyle.Fill,                                                           
-                        }.BindToLifetime(lt);                                                   
-
-                        var buttonNext = new Button
-                        {
-                            Text = "Next",
-                            Anchor = AnchorStyles.Bottom | AnchorStyles.Right,
-                            FlatStyle = FlatStyle.Flat,
-                            FlatAppearance = {BorderColor = Color.Gray, BorderSize = 1}                                                        
-                        };                        
-
-                        lt.AddBracket(
-                            () => _buttonNext = buttonNext,
-                            () => _buttonNext = null);
-
-                        _buttonNext.Top = containerControl.Height - _buttonNext.Height - 10;
-                        _buttonNext.Left = containerControl.Width - _buttonNext.Width - 25;
+                            Dock = DockStyle.Fill, 
+                            WebBrowserShortcutsEnabled = false,
+                        }.BindToLifetime(lt);                                                                    
 
                         lt.AddBracket(
                             () => _containerControl = containerControl,
                             () => _containerControl = null);
 
+                        lt.AddAction(() => _progressBar = null);
+
+                        lt.AddBracket(
+                            () => _containerControl.Controls.Add(_progressBar),
+                            () => _containerControl.Controls.Remove(_progressBar));
+
                         lt.AddBracket(
                             () => _viewControl = viewControl,
                             () => _viewControl = null);                                                
-
-                        lt.AddBracket(
-                            () => { _buttonNext.Click += NextStep; },
-                            () => { _buttonNext.Click -= NextStep; });                        
-
-                        lt.AddBracket(
-                            () => _containerControl.Controls.Add(_buttonNext),
-                            () => _containerControl.Controls.Remove(_buttonNext));
 
                         lt.AddBracket(
                             () => _containerControl.Controls.Add(_viewControl),
@@ -210,6 +202,14 @@ namespace ReSharperTutorials.TutWindow
                 _stepPresenter = new TutorialStepPresenter(this, contentPath, lifetime, solution, psiFiles, textControlManager, 
                     shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);
             }
+        }
+
+
+        public void UpdateProgress()
+        {            
+            _progressBar.PerformStep();                        
+            _progressBar.CustomText = $"Step {_progressBar.Value} of {_progressBar.Maximum}";
+            _progressBar.Refresh();
         }
 
 
@@ -248,18 +248,12 @@ namespace ReSharperTutorials.TutWindow
             backControlColor.ForEachValue(_lifetime, (lt, color) => _containerControl.BackColor = color.GDIColor);
 
             var foreControlColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ToolWindowForeground);
-            foreControlColor.ForEachValue(_lifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);
-
-            var buttonBackColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonBackground);
-            buttonBackColor.ForEachValue(_lifetime, (lt, color) => _buttonNext.BackColor = color.GDIColor);
-
-            var buttonForeColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
-            buttonForeColor.ForEachValue(_lifetime, (lt, color) => _buttonNext.ForeColor = color.GDIColor);            
+            foreControlColor.ForEachValue(_lifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);            
 
         }
 
 
-        private string GetJsScript(string fileName)
+        private static string GetResource(string fileName)
         {
             var assembly = Assembly.GetExecutingAssembly();            
             var resourceNames = assembly.GetManifestResourceNames();
@@ -313,7 +307,16 @@ namespace ReSharperTutorials.TutWindow
             scrollBackColor.ForEachValue(_lifetime, (lt, color) => _scrollBackColor = ColorAsHtmlRgb(color));
 
             var scrollFaceColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
-            scrollFaceColor.ForEachValue(_lifetime, (lt, color) => _scrollFaceColor = ColorAsHtmlRgb(color));            
+            scrollFaceColor.ForEachValue(_lifetime, (lt, color) => _scrollFaceColor = ColorAsHtmlRgb(color));
+
+            var buttonBackColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ContextMenuIconBackgroundGradientMiddle);
+            buttonBackColor.ForEachValue(_lifetime, (lt, color) => _buttonBackColor = ColorAsHtmlRgb(color));
+
+            var buttonForeColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
+            buttonForeColor.ForEachValue(_lifetime, (lt, color) => _buttonForeColor = ColorAsHtmlRgb(color));
+
+            var buttonHoverColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ContextMenuItemMouseOverBackgroundGradientMiddle1);
+            buttonHoverColor.ForEachValue(_lifetime, (lt, color) => _buttonHoverColor = ColorAsHtmlRgb(color));
 
             html.AppendLine(HtmlDoctype);
             html.AppendLine(HtmlHead);
@@ -324,6 +327,9 @@ namespace ReSharperTutorials.TutWindow
             html.Replace("SCRLFACECLR", _scrollFaceColor);  // scrollbar tracker 
             html.Replace("SCRLARROWCLR", _scrollFaceColor); // scrollbar arrows
             html.Replace("SCRLHLCLR", _scrollBackColor);  // scrollbar background                        
+            html.Replace("BTNBCKCLR", _buttonBackColor);  // button background
+            html.Replace("BTNFORECLR", _buttonForeColor);  // button text                        
+            html.Replace("BTNHVRCLR", _buttonForeColor);  // button text                        
         }
 
 
@@ -336,7 +342,7 @@ namespace ReSharperTutorials.TutWindow
         private void BuildScript(StringBuilder html)
         {
             html.AppendLine("<script>");
-            html.AppendLine(GetJsScript("Scripts.js"));
+            html.AppendLine(GetResource("Scripts.js"));
             html.AppendLine("</script>");
             html.AppendLine("</ HEAD >");
         }

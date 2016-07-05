@@ -5,10 +5,12 @@ namespace ReSharperTutorials.TutStep
     public interface IStepView
     {
         string StepText { get; set; }
-        string ButtonText { get; set; }
-        bool ButtonVisible { get; set; }
+
+        int StepCount { set; }
 
         event EventHandler NextStep;
+
+        void UpdateProgress();
     }
     
 }
