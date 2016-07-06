@@ -76,7 +76,7 @@ namespace ReSharperTutorials.Checker
 
             if (_currentStep.Check != null)
             {
-                var mInfo = typeof (MainChecker).GetMethod(_currentStep.Check);
+                var mInfo = typeof (MainChecker).GetMethod(_currentStep.Check.Method);
                 if (mInfo != null)
                 {
                     var checkMethod = (Func<bool>) Delegate.CreateDelegate(typeof (Func<bool>), this, mInfo);
@@ -95,7 +95,7 @@ namespace ReSharperTutorials.Checker
                                 () => { _currentStep.IsCheckDone = true; });                            
                             break;
                         case OnEvent.AfterAction:
-                            _stepActionChecker.StepActionName = _currentStep.Action;
+                            _stepActionChecker.StepActionName = _currentStep.Check.Action;
                             _stepActionChecker.Check = checkMethod;
                             _stepActionChecker.AfterActionApplied.Advise(_lifetime,
                                 () =>
@@ -116,8 +116,8 @@ namespace ReSharperTutorials.Checker
                     throw new Exception($"Unable to find the checker method {_currentStep.Check}. Please reinstall the plugin.");
             }
 
-            if (_currentStep.Action == null || attr.OnEvent == OnEvent.AfterAction) return;
-            _stepActionChecker.StepActionName = _currentStep.Action;
+            if (_currentStep.Check.Action == null || attr.OnEvent == OnEvent.AfterAction) return;
+            _stepActionChecker.StepActionName = _currentStep.Check.Action;
             _stepActionChecker.AfterActionApplied.Advise(_lifetime, 
                 () => { _currentStep.IsActionDone = true; });
         }
@@ -131,7 +131,7 @@ namespace ReSharperTutorials.Checker
         private bool StringExists(string text, string fileName = null)
         {
             if (fileName == null)
-                fileName = _currentStep.FileName;
+                fileName = _currentStep.NavNode.FileName;
             return ConvertFileToString(fileName).Contains(text);
         }
         
@@ -141,7 +141,7 @@ namespace ReSharperTutorials.Checker
 
             _shellLocks.TryExecuteWithReadLock(() =>
             {
-                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.ProjectName);
+                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.NavNode.ProjectName);
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
                 
                 if (file == null) return;
@@ -165,11 +165,11 @@ namespace ReSharperTutorials.Checker
         {
             ITreeNode node = null;
             if (fileName == null)            
-                fileName = _currentStep.FileName;
+                fileName = _currentStep.NavNode.FileName;
                         
             _shellLocks.TryExecuteWithReadLock(() =>
             {
-                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.ProjectName);                
+                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.NavNode.ProjectName);                
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
                 node = PsiNavigationHelper.GetTypeNodeByFullClrName(file, typeName);
             });
@@ -182,17 +182,17 @@ namespace ReSharperTutorials.Checker
         /// Finds method declaration in scope specified in the current step
         /// </summary>
         /// <returns>Returns true if $typeName$ is found</returns>
-        private bool MethodDeclarationExists(string typeName, string methodName, string fileName = null)
+        private bool MethodDeclarationExists(string typeName, string methodName, int methodOccurrence, string fileName = null)
         {
             ITreeNode node = null;
             if (fileName == null)
-                fileName = _currentStep.FileName;
+                fileName = _currentStep.NavNode.FileName;
 
             _shellLocks.TryExecuteWithReadLock(() =>
             {
-                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.ProjectName);
+                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.NavNode.ProjectName);
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
-                node = PsiNavigationHelper.GetMethodNodeByFullClrName(file, typeName, methodName);
+                node = PsiNavigationHelper.GetMethodNodeByFullClrName(file, typeName, methodName, methodOccurrence);
             });
 
             return node != null;
@@ -207,13 +207,13 @@ namespace ReSharperTutorials.Checker
         {
             ITreeNode node = null;
             if (fileName == null)
-                fileName = _currentStep.FileName;
+                fileName = _currentStep.NavNode.FileName;
 
             _shellLocks.TryExecuteWithReadLock(() =>
             {
-                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.ProjectName);
+                var project = PsiNavigationHelper.GetProjectByName(_solution, _currentStep.NavNode.ProjectName);
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
-                node = PsiNavigationHelper.GetTreeNodeForStep(file, _currentStep.TypeName, _currentStep.MethodName, text, occurrence);
+                node = PsiNavigationHelper.GetTreeNodeForStep(file, _currentStep.NavNode.TypeName, _currentStep.NavNode.MethodName, _currentStep.NavNode.MethodNameOccurrence, text, occurrence);
             });
 
             return node != null;

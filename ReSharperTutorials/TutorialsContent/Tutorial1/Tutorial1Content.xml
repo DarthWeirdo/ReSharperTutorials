@@ -9,7 +9,7 @@
   </intro>
 
   <steps>
-    <step li="1" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass">
+    <step li="1">
       <text>
         <h1>Alt+Enter</h1>
         <p>Used to apply quick fixes to inspections ("squigglies"), or apply context specific actions, depending on location of text caret. Also allows searching and applying all ReSharper commands direct from the menu. </p>
@@ -18,7 +18,9 @@
       </text>
     </step>
     
-    <step li="2" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass" action="ReSharper_AltEnter" check="CheckTutorial1Step2" nextStep="Auto" strikeOnDone ="true">
+    <step li="2" nextStep="Auto" strikeOnDone ="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass"/>
+      <check action="ReSharper_AltEnter" method="CheckTutorial1Step2"/>
       <text>
         <h1>Apply QuickFix for an inspection</h1>
         <p>
@@ -37,7 +39,9 @@
       </text>
     </step>
 
-    <step li="3" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg" textToFindOccurrence ="2" action="ReSharper_AltEnter" check="CheckTutorial1Step3" nextStep="Auto" strikeOnDone ="true">
+    <step li="3" nextStep="Auto" strikeOnDone ="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg" textToFindOccurrence ="2"/>
+      <check action="ReSharper_AltEnter" method="CheckTutorial1Step3"/>
       <text>
         <h1>Apply context action</h1>
         <ol>
@@ -54,7 +58,9 @@
       </text>
     </step>
 
-    <step li="4" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.GoToAction" action="ReSharper_AltEnter" check="CheckTutorial1Step4" nextStep="Auto" strikeOnDone ="true">
+    <step li="4" nextStep="Auto" strikeOnDone ="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.GoToAction"/>
+      <check action="ReSharper_AltEnter" method="CheckTutorial1Step4"/>
       <text>
         <h1>Go to action</h1>
         <ol>
@@ -74,7 +80,9 @@
       </text>
     </step>
 
-    <step li="5" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.BadlyNamedClass" textToFind="SomeClass" textToFindOccurrence ="1" action="ReSharper.ReSharper_GotoDeclaration" check="CheckTutorial1Step5" nextStep="Auto" strikeOnDone ="true">
+    <step li="5" nextStep="Auto" strikeOnDone ="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.BadlyNamedClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
+      <check action="ReSharper.ReSharper_GotoDeclaration" method="CheckTutorial1Step5" />
       <text>
         <h1>Go To Declaration</h1>
         <p>
@@ -91,7 +99,7 @@
       </text>
     </step>          
     
-    <step li="6" project="Tutorial1_EssentialShortcuts" file="Essentials.cs" >
+    <step li="6">
       <text>
         <h1>That's All!</h1>
         <p>

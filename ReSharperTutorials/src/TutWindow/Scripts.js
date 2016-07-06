@@ -2,7 +2,6 @@
     var pElem = document.getElementById("prevStep");
     var pHeight = pElem.clientHeight;
     var cElem = document.getElementById("currentStep");
-//    cElem.style.top = pHeight;
     cElem.style.top = pHeight + "px";
 }
 

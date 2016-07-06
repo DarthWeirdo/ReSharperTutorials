@@ -40,17 +40,19 @@ namespace ReSharperTutorials.CodeNavigator
 
         public void Navigate(TutStep.TutorialStep step)
         {
-            if (step.TypeName == null && step.MethodName == null && step.TextToFind == null)            
-                return;            
+            if (step.NavNode == null) 
+                return;
+            if (step.NavNode.TypeName == null && step.NavNode.MethodName == null && step.NavNode.TextToFind == null)
+                return;
 
             _shellLocks.ExecuteOrQueueReadLock(_lifetime, "Navigate", () =>
             {
-                var project = PsiNavigationHelper.GetProjectByName(Solution, step.ProjectName);
+                var project = PsiNavigationHelper.GetProjectByName(Solution, step.NavNode.ProjectName);
 
-                var file = PsiNavigationHelper.GetCSharpFile(project, step.FileName);
+                var file = PsiNavigationHelper.GetCSharpFile(project, step.NavNode.FileName);
 
-                var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.TypeName, step.MethodName, step.TextToFind,
-                    step.TextToFindOccurrence);
+                var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName, step.NavNode.MethodName, 
+                    step.NavNode.MethodNameOccurrence, step.NavNode.TextToFind, step.NavNode.TextToFindOccurrence);
 
                 NavigateToNode(node, true);
             });
@@ -60,18 +62,19 @@ namespace ReSharperTutorials.CodeNavigator
         private void NavigateToNode(ITreeNode treeNode, bool activate)
         {
             //            if (!IsUpToDate()) return;
-                var range = treeNode.GetDocumentRange();
-                if (!range.IsValid()) return;                
+            if (treeNode == null) return;
 
-                var projectFile = _documentManager.TryGetProjectFile(range.Document);
-                if (projectFile == null) return;
+            var range = treeNode.GetDocumentRange();
+            if (!range.IsValid()) return;                
 
-                var textControl = _editorManager.OpenProjectFile(projectFile, activate);                
+            var projectFile = _documentManager.TryGetProjectFile(range.Document);
+            if (projectFile == null) return;
 
-                textControl.Caret.MoveTo(
-                    range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
+            var textControl = _editorManager.OpenProjectFile(projectFile, activate);
 
-                textControl.Selection.SetRange(range.TextRange);
+            textControl.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
+
+            textControl.Selection.SetRange(range.TextRange);
         }
 
 

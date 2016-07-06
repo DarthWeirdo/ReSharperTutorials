@@ -60,39 +60,61 @@ namespace ReSharperTutorials.Utils
         
         public static Dictionary<int, TutorialStep> ReadTutorialSteps(string path)
         {
-            var result = new Dictionary<int, TutorialStep>();
+            var result = new Dictionary<int, TutorialStep>();            
+            NavNode navNode = null;
+            Check check = null;
+            string text = null;
 
             using (var reader = XmlReader.Create(new StreamReader(path)))
-            {
+                {
                 while (reader.ReadToFollowing("step"))
                 {
-                    var li = Convert.ToInt32(reader.GetAttribute("li"));                    
-                    var file = reader.GetAttribute("file");
-                    var typeName = reader.GetAttribute("type");
-                    var methodName = reader.GetAttribute("method");
-                    var projectName = reader.GetAttribute("project");
-                    var textToFind = reader.GetAttribute("textToFind");
-                    var textToFindOccurrence = Convert.ToInt32(reader.GetAttribute("textToFindOccurrence"));
-                    var action = reader.GetAttribute("action");
-                    var check = reader.GetAttribute("check");
+                    var li = Convert.ToInt32(reader.GetAttribute("li"));                                                            
                     var nextStep = reader.GetAttribute("nextStep");
                     var strikeOnDone = Convert.ToBoolean(reader.GetAttribute("strikeOnDone"));
-                    reader.ReadToFollowing("text");
-                    var text = reader.ReadInnerXml();
-                    text = Regex.Replace(text, @"\s+", " ");
+                    var subTreeReader = reader.ReadSubtree();
 
-                    if ((file == null) || (projectName == null))
+                    while (subTreeReader.Read())
                     {
-                        throw new Exception("Tutorial content file is corrupted. Please reinstall the plugin.");
+                        switch (subTreeReader.Name)
+                        {
+                            case "navigate":
+                                var projectName = reader.GetAttribute("project");
+                                var file = reader.GetAttribute("file");
+                                var typeName = reader.GetAttribute("type");
+                                var methodName = reader.GetAttribute("method");
+                                var methodNameOccurrence = Convert.ToInt32(reader.GetAttribute("methodOccurrence"));
+                                var textToFind = reader.GetAttribute("textToFind");
+                                var textToFindOccurrence = Convert.ToInt32(reader.GetAttribute("textToFindOccurrence"));
+                                navNode = new NavNode(projectName, file, typeName, methodName, methodNameOccurrence, textToFind, textToFindOccurrence);
+                                break;
+
+                            case "check":
+                                var action = reader.GetAttribute("action");
+                                var method = reader.GetAttribute("method");
+                                if (action != null || method != null)
+                                    check = new Check(action, method);
+                                break;
+
+                            case "text":
+                                text = reader.ReadInnerXml();
+                                text = Regex.Replace(text, @"\s+", " ");
+                                text = SubstituteShortcuts(text);
+                                break;                                
+                        }
                     }
-                    var step = new TutorialStep(li, text, file, projectName, typeName, methodName, textToFind, 
-                        textToFindOccurrence, action, check, nextStep, strikeOnDone);                    
+                                        
+                    var step = new TutorialStep(li, navNode, check, text, nextStep, strikeOnDone);                    
                     result.Add(li, step);
                 }
             }
             return result;
         }
-    }
 
-        
-    }
+        private static string SubstituteShortcuts(string text)
+        {
+            // TODO: Implement substitution
+            return text;
+        }
+    }        
+}

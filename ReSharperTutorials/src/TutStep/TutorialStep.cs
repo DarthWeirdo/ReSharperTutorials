@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using JetBrains.DataFlow;
 using ReSharperTutorials.Checker;
 
@@ -12,16 +13,11 @@ namespace ReSharperTutorials.TutStep
     public class TutorialStep 
     {
         public int Id { get; }
-        public string ProjectName { get;}
-        public string FileName { get; }
-        public string TypeName { get; }
-        public string MethodName { get; }
-        public string TextToFind { get; }
-        public int TextToFindOccurrence { get; }
-        public string Action { get; }
-        public string Check { get; }
         public bool StrikeOnDone { get; }
         public string Text { get; set; }
+        public NavNode NavNode { get; set; }
+        public Check Check { get; set; }
+
         /// <summary>
         /// If GoToNextStep is specified as Manual or not specified, 
         /// a user can proceed to the next step ONLY by clicking the Next button. 
@@ -46,7 +42,7 @@ namespace ReSharperTutorials.TutStep
                 if (value == _isActionDone) return;                
                 _isActionDone = value;
 
-                if (Check == null || IsCheckDone)                
+                if (Check.Method == null || IsCheckDone)                
                     OnStepIsDone();                
             }
         }
@@ -62,32 +58,25 @@ namespace ReSharperTutorials.TutStep
                 if (value == _isCheckDone) return;
                 _isCheckDone = value;
 
-                if (Action != null && IsActionDone)                
+                if (Check.Action != null && IsActionDone)                
                     OnStepIsDone();                
-                else if (Action == null)
+                else if (Check.Action == null)
                     OnStepIsDone();                
             }
         } 
         
 
-        public TutorialStep(int li, string text, string file, string projectName, string typeName, string methodName, 
-            string textToFind, int textToFindOccurrence, string action, string check, string goToNextStep, bool strkieOnDone)
+        public TutorialStep(int li, NavNode navNode, Check check, string text, string goToNextStep, bool strkieOnDone)
         {
             Id = li;
-            Text = text;
-            FileName = file;
-            TypeName = typeName;
-            Action = action;
-            TextToFindOccurrence = textToFindOccurrence;
-            ProjectName = projectName;
-            MethodName = methodName;
-            TextToFind = textToFind;            
+            NavNode = navNode;
+            Text = text;                       
             Check = check;
             StrikeOnDone = strkieOnDone;
             _processingLifetime = null;
 
-            if (goToNextStep != null && goToNextStep.ToLower() == "auto") GoToNextStep = GoToNextStep.Auto;
-            else GoToNextStep = GoToNextStep.Manual;                                   
+//            if (goToNextStep != null && goToNextStep.ToLower() == "auto") GoToNextStep = GoToNextStep.Auto;
+            GoToNextStep = check != null ? GoToNextStep.Auto : GoToNextStep.Manual;                                   
         }
        
 

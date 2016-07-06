@@ -190,37 +190,39 @@ namespace ReSharperTutorials.CodeNavigator
 
 
         [CanBeNull]
-        public static ITreeNode GetMethodNodeByFullClrName(ICSharpFile file, string typeName, string methodName)
+        public static ITreeNode GetMethodNodeByFullClrName(ICSharpFile file, string typeName, string methodName, int methodOccurrence)
         {
             var typeNode = GetTypeNodeByFullClrName(file, typeName);
             if (typeNode == null) return null;
 
             var treeNodeList = typeNode.EnumerateTo(typeNode.NextSibling);
 
-            return (from treeNode in treeNodeList
-                    where treeNode is IMethodDeclaration
-                    let method = (IMethodDeclaration)treeNode
-                    where method.DeclaredName == methodName
-                    select treeNode).FirstOrDefault();
+            var resultList = (from treeNode in treeNodeList
+                               where treeNode is IMethodDeclaration
+                               let method = (IMethodDeclaration)treeNode
+                               where method.DeclaredName == methodName
+                               select treeNode);
+
+            return resultList.AsArray().Length > 0 ? resultList.AsArray()[methodOccurrence] : null;
         }
 
 
         [CanBeNull]
-        public static ITreeNode GetTreeNodeForStep(ICSharpFile file, string typeName, string methodName, string text, int textOccurrence)
+        public static ITreeNode GetTreeNodeForStep(ICSharpFile file, string typeName, string methodName, int methodOccurrence, string text, int textOccurrence)
         {
             IEnumerable<ITreeNode> treeNodeList;
             string navText;
-            var occIndex = 0;   // TODO: provide occurence # for methods as well (for overloads)
+            var tOccIndex = 0;   
+            var mOccIndex = 0;
 
             if (text != null)
             {
                 navText = text;
-                if (textOccurrence > 0) occIndex = textOccurrence - 1;
+                if (textOccurrence > 0) tOccIndex = textOccurrence - 1;
             }
             else if (methodName != null)
             {
-                navText = methodName;
-                occIndex = 0;
+                navText = methodName;                
             }
             else            
                 navText = GetShortNameFromFqn(typeName);
@@ -229,7 +231,8 @@ namespace ReSharperTutorials.CodeNavigator
                 treeNodeList = file.EnumerateTo(file.LastChild);
             else if (typeName != null && methodName != null)
             {
-                var node = GetMethodNodeByFullClrName(file, typeName, methodName);
+                if (methodOccurrence > 0) mOccIndex = methodOccurrence - 1;
+                var node = GetMethodNodeByFullClrName(file, typeName, methodName, mOccIndex);
                 if (node == null) return null;
                 treeNodeList = node.EnumerateTo(node.NextSibling);
             }
@@ -246,7 +249,7 @@ namespace ReSharperTutorials.CodeNavigator
                          where treeNode.GetText() == navText
                          select treeNode;
 
-            return result.AsArray().Length > 0 ? result.AsArray()[occIndex] : null;
+            return result.AsArray().Length > 0 ? result.AsArray()[tOccIndex] : null;
             
         }
 
