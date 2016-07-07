@@ -69,6 +69,8 @@ namespace ReSharperTutorials.TutWindow
 //                cursor: pointer;                      
             } 
 //            .nextButton:hover { background-color: BTNHVRCLR; }
+            
+            .shortcut { font-weight: bold; }
             #prevStep { text-decoration:line-through; color:DISFNT; position: absolute; padding-right: 10px; padding-left: 10px;}            
             #currentStep { position: absolute; padding-right: 10px; padding-left: 10px;}
         </style>

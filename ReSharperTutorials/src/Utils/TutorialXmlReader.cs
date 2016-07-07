@@ -11,8 +11,7 @@ namespace ReSharperTutorials.Utils
     {
 
         public static int ReadCurrentStep(string path)
-        {
-            return 1; // always run from the beginning
+        {            
             using (var reader = XmlReader.Create(new StreamReader(path)))
             {
                 while (reader.ReadToFollowing("currentStep"))
@@ -99,7 +98,7 @@ namespace ReSharperTutorials.Utils
                             case "text":
                                 text = reader.ReadInnerXml();
                                 text = Regex.Replace(text, @"\s+", " ");
-                                text = SubstituteShortcuts(text);
+//                                text = SubstituteShortcuts(text);
                                 break;                                
                         }
                     }
@@ -109,12 +108,6 @@ namespace ReSharperTutorials.Utils
                 }
             }
             return result;
-        }
-
-        private static string SubstituteShortcuts(string text)
-        {
-            // TODO: Implement substitution
-            return text;
         }
     }        
 }

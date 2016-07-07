@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tutorial>
   <currentStep>1</currentStep>
-  
+
   <intro>
     <Run FontSize="36">Tutorial 1. Essential Shortcuts</Run>
     <LineBreak/>
@@ -17,8 +17,8 @@
         <button class="nextButton" onclick="buttonClick()">Got it!</button>
       </text>
     </step>
-    
-    <step li="2" nextStep="Auto" strikeOnDone ="true">
+
+    <step li="2" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass"/>
       <check action="ReSharper_AltEnter" method="CheckTutorial1Step2"/>
       <text>
@@ -28,18 +28,19 @@
         </p>
         <ol>
           <li>
-            Place text caret on "squiggly". Note the lightbulb in the margin on the left.</li>
+            Place text caret on "squiggly". Note the lightbulb in the margin on the left.
+          </li>
           <li>
-            Click the light bulb, or hit <b>Alt+Enter</b>.
+            Click the light bulb, or hit <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
           <li>
             Select <b>Rename to 'BadlyNamedClass'</b> to apply the fix.
           </li>
-        </ol> 
+        </ol>
       </text>
     </step>
 
-    <step li="3" nextStep="Auto" strikeOnDone ="true">
+    <step li="3" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg" textToFindOccurrence ="2"/>
       <check action="ReSharper_AltEnter" method="CheckTutorial1Step3"/>
       <text>
@@ -49,7 +50,7 @@
             Place text caret on <code>arg</code>. Note the hammer action - a context action is available.
           </li>
           <li>
-            Hit <b>Alt+Enter</b>.
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
           <li>
             Select <b>To string.Format invocation</b>.
@@ -68,7 +69,7 @@
             Place caret on <code>GoToAction</code> class name.
           </li>
           <li>
-            Hit <b>Alt+Enter</b>. Note the magnifying glass.
+            Hit <shortcut>ReSharper_AltEnter</shortcut>. Note the magnifying glass.
           </li>
           <li>
             Start typing "rename".
@@ -90,15 +91,15 @@
         </p>
         <ol>
           <li>
-            Place text caret on the <code>SomeClass</code> in the field declaration.            
+            Place text caret on the <code>SomeClass</code> in the field declaration.
           </li>
           <li>
-            Hit <b>Ctrl + B</b> (VS) to navigate to type declaration.
+            Hit <shortcut>ReSharper.ReSharper_GotoDeclaration</shortcut> to navigate to type declaration.
           </li>
         </ol>
       </text>
-    </step>          
-    
+    </step>
+
     <step li="6">
       <text>
         <h1>That's All!</h1>
@@ -106,7 +107,7 @@
           Thanks for passing the tutorial. Now you can proceed to the next tutorial that will show you ReSharper navigation tricks.
         </p>
       </text>
-    </step>           
+    </step>
   </steps>
-  
+
 </tutorial>

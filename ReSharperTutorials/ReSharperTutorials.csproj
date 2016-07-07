@@ -308,6 +308,7 @@
     </Compile>
     <Compile Include="src\TutWindow\TutorialWindow.cs" />
     <Compile Include="src\TutWindow\TutorialWindowDescriptor.cs" />
+    <Compile Include="src\Utils\ActionToShortcutConverter.cs" />
     <Compile Include="src\Utils\SolutionCopyHelper.cs" />
     <Compile Include="src\Utils\TutorialXmlReader.cs" />
     <Compile Include="src\Utils\VsIntegration.cs" />

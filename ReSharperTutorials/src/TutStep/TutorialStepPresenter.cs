@@ -57,8 +57,14 @@ namespace ReSharperTutorials.TutStep
                 documentManager, environment);                        
             _steps = new Dictionary<int, TutorialStep>();
             _steps = TutorialXmlReader.ReadTutorialSteps(contentPath);
+            
+            var converter = new ActionToShortcutConverter(actionManager);
+            foreach (var step in _steps.Values)            
+                step.Text = converter.SubstituteShortcutsViaVs(step.Text);                        
 
-            _currentStepId = TutorialXmlReader.ReadCurrentStep(contentPath);
+            // always start from the beginning
+            // _currentStepId = TutorialXmlReader.ReadCurrentStep(contentPath);
+            _currentStepId = 1; 
             CurrentStep = _steps[_currentStepId];
             _stepView.StepCount = _steps.Count;            
 

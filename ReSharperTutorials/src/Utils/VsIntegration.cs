@@ -13,6 +13,23 @@ namespace ReSharperTutorials.Utils
     public static class VsIntegration
     {
 
+        public static string GetActionShortcut(string actionName)
+        {
+            var vsInstance = GetCurrentVsInstance();
+            Properties props = vsInstance?.Properties["Environment", "Keyboard"];
+            Command cmd = vsInstance?.Commands.Item(actionName);
+            try
+            {
+                var sc = cmd?.Bindings[0].ToString();
+                var index = sc?.LastIndexOf(":", StringComparison.Ordinal) + 1;
+                return sc?.Substring(index);
+            }
+            catch (Exception)
+            {
+                return "Undefined";
+            }
+        }
+
         public static bool FindTextInCurrentDocument(string text)
         {
             var vsInstance = GetCurrentVsInstance();
