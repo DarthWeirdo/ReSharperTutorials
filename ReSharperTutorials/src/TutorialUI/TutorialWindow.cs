@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,9 +25,8 @@ using JetBrains.UI.CrossFramework;
 using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
 using ReSharperTutorials.TutStep;
-using ReSharperTutorials.Utils;
 
-namespace ReSharperTutorials.TutWindow
+namespace ReSharperTutorials.TutorialUI
 {
     public class TutorialWindow : IStepView
     {
@@ -87,10 +85,11 @@ namespace ReSharperTutorials.TutWindow
         private HtmlViewControl _viewControl = new HtmlViewControl(null, null);
         private string _stepText;
         private TutorialStepPresenter _stepPresenter;
-        private readonly Lifetime _lifetime;
+        private readonly Lifetime _tutorialLifetime;
         private readonly IColorThemeManager _colorThemeManager;
         private string _textColor;
-        private readonly ToolWindowClass _toolWindowClass;
+        private readonly TabbedToolWindowClass _toolWindowClass;
+        private readonly ToolWindowInstance _toolWindowInstance;
         private string _scrollBackColor;
         private string _scrollFaceColor;
         private string _disabledTextColor;
@@ -118,12 +117,12 @@ namespace ReSharperTutorials.TutWindow
                 // DIRTY HACK!
                 if (_stepText != null && _stepText.Contains("prevStep"))
                 {
-                    _animationLifetime = Lifetimes.Define(_lifetime);
+                    _animationLifetime = Lifetimes.Define(_tutorialLifetime);
 
                     _htmlMediator.AllAnimationsDone.Advise(_animationLifetime.Lifetime, () =>
                     {
                         _stepText = value;
-                        _shellLocks.ExecuteOrQueue(_lifetime, "TutorialTextUpdate",
+                        _shellLocks.ExecuteOrQueue(_tutorialLifetime, "TutorialTextUpdate",
                             () => { _viewControl.DocumentText = PrepareHtmlContent(_stepText); });
 
                         _animationLifetime.Terminate();
@@ -134,35 +133,38 @@ namespace ReSharperTutorials.TutWindow
                 else
                 {
                     _stepText = value;
-                    _shellLocks.ExecuteOrQueue(_lifetime, "TutorialTextUpdate",
+                    _shellLocks.ExecuteOrQueue(_tutorialLifetime, "TutorialTextUpdate",
                         () => { _viewControl.DocumentText = PrepareHtmlContent(_stepText); });
                 }                               
             }
         }        
 
         
-        public TutorialWindow(string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
+        public TutorialWindow(string contentPath, Lifetime tutorialLifetime, ISolution solution, IPsiFiles psiFiles,
                                   TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
                                   DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
-                                  ToolWindowManager toolWindowManager, TutorialWindowDescriptor toolWindowDescriptor,
-                                  IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
-                                  IColorThemeManager colorThemeManager)
+                                  TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager, 
+                                  IPsiServices psiServices, IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager)
         {
-            _lifetime = lifetime;
+            _tutorialLifetime = tutorialLifetime;
             _solution = solution;
             _actionManager = actionManager;
             _shellLocks = shellLocks;
             _psiServices = psiServices;
             _shortcutManager = shortcutManager;
             _colorThemeManager = colorThemeManager;
-            _toolWindowClass = toolWindowManager.Classes[toolWindowDescriptor];
+//            _toolWindowClass = toolWindowManager.Classes[toolWindowDescriptor];
+//            _toolWindowClass = toolWindowManager.Classes[toolWindowDescriptor] as TabbedToolWindowClass;
+            _toolWindowClass = toolWindowClass;
 
             if (solution.GetComponent<ISolutionOwner>().IsRealSolutionOwner)
             {
-                var toolWindowInstance = _toolWindowClass.RegisterInstance(
-                    lifetime, null, null,
+                _toolWindowInstance = _toolWindowClass.RegisterInstance(
+                    tutorialLifetime, null, null,
                     (lt, twi) =>
                     {
+                        twi.QueryClose.Value = true;
+
                         var containerControl = new TutorialPanel(environment).BindToLifetime(lt);                                                
                                                                                             
                         var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
@@ -189,19 +191,17 @@ namespace ReSharperTutorials.TutWindow
                             () => _containerControl.Controls.Add(_viewControl),
                             () => _containerControl.Controls.Remove(_viewControl));
 
-                        _colorThemeManager.ColorThemeChanged.Advise(lifetime, RefreshKeepContent);
+                        _colorThemeManager.ColorThemeChanged.Advise(tutorialLifetime, RefreshKeepContent);
 
                         SetColors();                        
 
-                        _htmlMediator = new HtmlMediator(lifetime, _viewControl);
-                        _htmlMediator.OnButtonClick.Advise(lifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
+                        _htmlMediator = new HtmlMediator(tutorialLifetime, _viewControl);
+                        _htmlMediator.OnButtonClick.Advise(tutorialLifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
 
                         return new EitherControl(lt, containerControl);
-                    });
-                
-                _toolWindowClass.QueryCloseInstances.Advise(_lifetime, args => {Close();} );    // not working
+                    });                
 
-                _stepPresenter = new TutorialStepPresenter(this, contentPath, lifetime, solution, psiFiles, textControlManager, 
+                _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles, textControlManager, 
                     shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);
             }
         }
@@ -217,18 +217,23 @@ namespace ReSharperTutorials.TutWindow
 
         public void Show()
         {
-            foreach (var toolWindowInstance in _toolWindowClass.Instances)            
-                toolWindowInstance.EnsureControlCreated().Show();                                    
+//            foreach (var toolWindowInstance in _toolWindowClass.Instances)            
+//                toolWindowInstance.EnsureControlCreated().Show();                                    
+            _toolWindowInstance.Show(true);
         }
 
 
         public void Close()
         {
-            foreach (var toolWindowInstance in _toolWindowClass.Instances)            
-                toolWindowInstance.Close();
-            
-            _toolWindowClass.Close();
-            VsIntegration.CloseVsSolution(true);
+//            foreach (var toolWindowInstance in _toolWindowClass.Instances)
+//                // TODO: looks dirty. Refactor
+//                if (toolWindowInstance.Title.Value != "Home") 
+//                {
+//                    toolWindowInstance.QueryClose.Value = false;
+//                    toolWindowInstance.Close();
+//                }
+            _toolWindowInstance.QueryClose.Value = false;
+            _toolWindowInstance.Close();
         }
 
 
@@ -240,17 +245,17 @@ namespace ReSharperTutorials.TutWindow
 
         private void SetColors()
         {            
-            var backViewColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ToolWindowBackground);
-            backViewColor.ForEachValue(_lifetime, (lt, color) =>_viewControl.BackColor = color.GDIColor);
+            var backViewColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowBackground);
+            backViewColor.ForEachValue(_tutorialLifetime, (lt, color) =>_viewControl.BackColor = color.GDIColor);
 
-            var foreViewColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ToolWindowForeground);
-            foreViewColor.ForEachValue(_lifetime, (lt, color) => _viewControl.ForeColor = color.GDIColor);
+            var foreViewColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
+            foreViewColor.ForEachValue(_tutorialLifetime, (lt, color) => _viewControl.ForeColor = color.GDIColor);
 
-            var backControlColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ToolWindowBackground);
-            backControlColor.ForEachValue(_lifetime, (lt, color) => _containerControl.BackColor = color.GDIColor);
+            var backControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowBackground);
+            backControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.BackColor = color.GDIColor);
 
-            var foreControlColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ToolWindowForeground);
-            foreControlColor.ForEachValue(_lifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);            
+            var foreControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
+            foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);            
 
         }
 
@@ -299,26 +304,26 @@ namespace ReSharperTutorials.TutWindow
 
         private void BuildHeader(StringBuilder html)
         {
-            var fontColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.WindowText);
-            fontColor.ForEachValue(_lifetime, (lt, color) => _textColor = ColorAsHtmlRgb(color));
+            var fontColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.WindowText);
+            fontColor.ForEachValue(_tutorialLifetime, (lt, color) => _textColor = ColorAsHtmlRgb(color));
 
-            var disabledFontColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.DisabledText);
-            disabledFontColor.ForEachValue(_lifetime, (lt, color) => _disabledTextColor = ColorAsHtmlRgb(color));
+            var disabledFontColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.DisabledText);
+            disabledFontColor.ForEachValue(_tutorialLifetime, (lt, color) => _disabledTextColor = ColorAsHtmlRgb(color));
 
-            var scrollBackColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ScrollBarBackground);
-            scrollBackColor.ForEachValue(_lifetime, (lt, color) => _scrollBackColor = ColorAsHtmlRgb(color));
+            var scrollBackColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ScrollBarBackground);
+            scrollBackColor.ForEachValue(_tutorialLifetime, (lt, color) => _scrollBackColor = ColorAsHtmlRgb(color));
 
-            var scrollFaceColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
-            scrollFaceColor.ForEachValue(_lifetime, (lt, color) => _scrollFaceColor = ColorAsHtmlRgb(color));
+            var scrollFaceColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.TabStripButtonForeground);
+            scrollFaceColor.ForEachValue(_tutorialLifetime, (lt, color) => _scrollFaceColor = ColorAsHtmlRgb(color));
 
-            var buttonBackColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ContextMenuIconBackgroundGradientMiddle);
-            buttonBackColor.ForEachValue(_lifetime, (lt, color) => _buttonBackColor = ColorAsHtmlRgb(color));
+            var buttonBackColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ContextMenuIconBackgroundGradientMiddle);
+            buttonBackColor.ForEachValue(_tutorialLifetime, (lt, color) => _buttonBackColor = ColorAsHtmlRgb(color));
 
-            var buttonForeColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
-            buttonForeColor.ForEachValue(_lifetime, (lt, color) => _buttonForeColor = ColorAsHtmlRgb(color));
+            var buttonForeColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.TabStripButtonForeground);
+            buttonForeColor.ForEachValue(_tutorialLifetime, (lt, color) => _buttonForeColor = ColorAsHtmlRgb(color));
 
-            var buttonHoverColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ContextMenuItemMouseOverBackgroundGradientMiddle1);
-            buttonHoverColor.ForEachValue(_lifetime, (lt, color) => _buttonHoverColor = ColorAsHtmlRgb(color));
+            var buttonHoverColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ContextMenuItemMouseOverBackgroundGradientMiddle1);
+            buttonHoverColor.ForEachValue(_tutorialLifetime, (lt, color) => _buttonHoverColor = ColorAsHtmlRgb(color));
 
             html.AppendLine(HtmlDoctype);
             html.AppendLine(HtmlHead);

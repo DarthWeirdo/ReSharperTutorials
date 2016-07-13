@@ -4,7 +4,7 @@ using JetBrains.UI.Application;
 using JetBrains.UI.CommonControls;
 using SystemColors = System.Drawing.SystemColors;
 
-namespace ReSharperTutorials.TutWindow
+namespace ReSharperTutorials.TutorialUI
 {
     internal class TutorialPanel : SafePanel
     {

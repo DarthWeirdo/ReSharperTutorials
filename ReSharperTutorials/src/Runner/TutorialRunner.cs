@@ -15,7 +15,7 @@ using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
 using JetBrains.UI.ToolWindowManagement;
-using ReSharperTutorials.TutWindow;
+using ReSharperTutorials.TutorialUI;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
@@ -46,33 +46,37 @@ namespace ReSharperTutorials.Runner
                 {
                     solutionStateTracker.AfterPsiLoaded.Advise(lifetime,
                         sol =>
-                            RunTutorial(globalSettings.GetPath(tutorial.Key, PathType.WorkCopyContentFile), lifetime,
-                                solution, psiFiles,
+                            RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles,
                                 textControlManager, shellLocks, editorManager, documentManager, environment,
-                                actionManager, toolWindowManager,
-                                tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager,
-                                colorThemeManager, threading));
+                                actionManager, windowsHookManager, psiServices, shortcutManager, colorThemeManager, 
+                                threading));
                 }
             }
         }
 
-        private static void RunTutorial(string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-            TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
-            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
-            ToolWindowManager toolWindowManager, TutorialWindowDescriptor tutorialWindowDescriptor,
+        private static void RunTutorial(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime, ISolution solution, 
+            IPsiFiles psiFiles, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
+            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,            
             IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
             IColorThemeManager colorThemeManager, IThreading threading)
-        {
-            threading.ExecuteOrQueue("RunTutorialWindow", () =>
-            {
-                var tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager,
-                    shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager,
-                    tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
+        {            
+            if (globalSettings.TutorialWindowManager == null)           
+                throw new ApplicationException("Expected globalSettings.TutorialWindowManager");
 
-                lifetime.AddBracket(
-                    () => tutorialWindow.Show(),
-                    () => tutorialWindow.Close());
-            });
+            globalSettings.TutorialWindowManager.ShowTutorialWindow(globalSettings, tutorialId, lifetime, solution, psiFiles, textControlManager,
+                shellLocks, editorManager, documentManager, environment, actionManager, 
+                windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);                                                               
+
+            //            threading.ExecuteOrQueue("RunTutorialWindow", () =>
+            //            {
+            //                var tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager,
+            //                    shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager,
+            //                    tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
+            //
+            //                lifetime.AddBracket(
+            //                    () => tutorialWindow.Show(),
+            //                    () => tutorialWindow.Close());
+            //            });
         }
 
     }

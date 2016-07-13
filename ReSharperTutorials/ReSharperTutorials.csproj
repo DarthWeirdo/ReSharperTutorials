@@ -288,6 +288,7 @@
     <Compile Include="src\CodeNavigator\PsiNavigationHelper.cs" />
     <Compile Include="src\CodeNavigator\SourceCodeNavigator.cs" />
     <Compile Include="src\CodeNavigator\TypeElementExtensions.cs" />
+    <Compile Include="src\TutorialUI\HomeWindow.cs" />
     <Compile Include="src\Runner\ActionGroupOpenTutorial.cs" />
     <Compile Include="src\Runner\ActionOpenTutorial.cs" />
     <Compile Include="src\Runner\GlobalSettings.cs" />
@@ -299,15 +300,16 @@
     <Compile Include="src\TutStep\NavNode.cs" />
     <Compile Include="src\TutStep\TutorialStep.cs" />
     <Compile Include="src\TutStep\TutorialStepPresenter.cs" />
-    <Compile Include="src\TutWindow\CustomProgressBar.cs">
+    <Compile Include="src\TutorialUI\CustomProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\TutWindow\HtmlMediator.cs" />
-    <Compile Include="src\TutWindow\TutorialPanel.cs">
+    <Compile Include="src\TutorialUI\HtmlMediator.cs" />
+    <Compile Include="src\TutorialUI\TutorialPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\TutWindow\TutorialWindow.cs" />
-    <Compile Include="src\TutWindow\TutorialWindowDescriptor.cs" />
+    <Compile Include="src\TutorialUI\TutorialWindow.cs" />
+    <Compile Include="src\TutorialUI\TutorialWindowDescriptor.cs" />
+    <Compile Include="src\TutorialUI\TutorialWindowManager.cs" />
     <Compile Include="src\Utils\ActionToShortcutConverter.cs" />
     <Compile Include="src\Utils\SolutionCopyHelper.cs" />
     <Compile Include="src\Utils\TutorialXmlReader.cs" />
@@ -320,13 +322,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="src\TutWindow\Scripts.js" />
+    <EmbeddedResource Include="src\TutorialUI\Scripts.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TutorialsContent\Tutorial1\Tutorial1Content.xml">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Antlr2.Tools.2.7.6.4\build\Antlr2.Tools.targets" Condition="Exists('..\packages\Antlr2.Tools.2.7.6.4\build\Antlr2.Tools.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

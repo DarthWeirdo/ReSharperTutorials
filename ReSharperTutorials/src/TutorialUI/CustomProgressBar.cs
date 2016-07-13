@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ReSharperTutorials.TutWindow
+namespace ReSharperTutorials.TutorialUI
 {
     internal class CustomProgressBar : ProgressBar
     {

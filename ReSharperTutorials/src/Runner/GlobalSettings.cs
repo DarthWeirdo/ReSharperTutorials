@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using JetBrains.Application;
+using JetBrains.DataFlow;
+using ReSharperTutorials.TutorialUI;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
@@ -20,9 +22,13 @@ namespace ReSharperTutorials.Runner
         private readonly string _commonTutorialPath;
         private readonly string _commonWorkCopyPath;
         public readonly Dictionary<TutorialId, string> AvailableTutorials;
+        public readonly Lifetime Lifetime;        
+        public TutorialWindowManager TutorialWindowManager = null;
 
-        public GlobalSettings()
-        {        
+        public GlobalSettings(Lifetime lifetime)
+        {
+            Lifetime = lifetime;
+
             _commonTutorialPath = SolutionCopyHelper.GetTutorialsPath();
             _commonWorkCopyPath = SolutionCopyHelper.GetWorkingCopyPath();
 

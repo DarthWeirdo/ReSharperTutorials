@@ -2,9 +2,15 @@
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.DataContext;
+using JetBrains.Application.Interop.NativeHook;
 using JetBrains.DataFlow;
+using JetBrains.Threading;
 using JetBrains.UI.ActionsRevised;
+using JetBrains.UI.Application;
+using JetBrains.UI.Components.Theming;
+using JetBrains.UI.ToolWindowManagement;
 using JetBrains.Util;
+using ReSharperTutorials.TutorialUI;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
@@ -31,59 +37,24 @@ namespace ReSharperTutorials.Runner
             var step = TutorialXmlReader.ReadCurrentStep(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
             var firstTime = step == 1;
 
-//            var titleWnd = new TitleWindow(titleString, firstTime);
-
             var result =
                 MessageBox.ShowYesNo(
                     "This will close your current solution and open the tutorial solution. Run the tutorial?",
                     "ReSharper Tutorials");
-//            if (titleWnd.ShowDialog() != true) return;
-//            if (titleWnd.Restart)
+
             if (result)
             {
-//                var locks = context.GetComponent<IShellLocks>();
-//
-//                if (VsIntegration.IsAnySolutionOpened())
-//                {
-//                    var lt = Lifetimes.Define();                    
-//                    var stateTracker = context.GetComponent<SolutionStateTracker>();
-//                    stateTracker.BeforeSolutionClosed.Advise(lt.Lifetime, () =>
-//                    {
-//                        SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
-//                            globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
-//                        VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
-//                        lt.Terminate();
-//                    });
-//
-//                    VsIntegration.CloseVsSolution();
-//                }
-//                else
-//                {
-//                    locks.ExecuteWithReadLock(() =>
-//                    {
-                        VsIntegration.CloseVsSolution();
-                        SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
-                            globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
-                        VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
-//                    });
-                }
-                
-//                VsIntegration.CloseVsSolution();
-
-//                SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
-//                    globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
-
-                // now we always run from the beginning 
-//                GC.Collect();                
-//                TutorialXmlReader.WriteCurrentStep(globalOptions.GetPath(id, PathType.WorkCopyContentFile), "1");
-
-//                VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
+                VsIntegration.CloseVsSolution();
+                SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
+                    globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
+                VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
             }
-//            else
-//                VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
+                
+
         }
 
-//    }
+    }
+
 
     [Action("ActionOpenTutorial1", "Start Tutorial 1 - Essential Shortcuts", Id = 100)]
     public class ActionOpenTutorial1 : ActionOpenTutorial
@@ -91,6 +62,35 @@ namespace ReSharperTutorials.Runner
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
         {
             OpenOrRestart(context, TutorialId.Tutorial1);
+        }
+    }
+
+    [Action("ActionShowMainTutorialWindow", "Show Tutorials List", Id = 121)]
+    public class ActionShowMainTutorialWindow : ActionOpenTutorial
+    {
+        protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
+        {
+            var globalSettings = context.GetComponent<GlobalSettings>();
+            if (globalSettings.TutorialWindowManager != null && globalSettings.TutorialWindowManager.WindowsExist())
+            {
+//                globalSettings.TutorialWindowManager.ShowWindowByTitle("Main");
+                globalSettings.TutorialWindowManager.ShowHomeWindow();
+                return;
+            }                
+            
+            var shellLocks = context.GetComponent<IShellLocks>();
+            var environment = context.GetComponent<IUIApplication>();
+            var actionManager = context.GetComponent<IActionManager>();
+            var toolWindowManager = context.GetComponent<ToolWindowManager>();
+            var toolWindowDescriptor = context.GetComponent<TutorialWindowDescriptor>();
+            var windowsHookManager = context.GetComponent<IWindowsHookManager>();
+            var colorThemeManager = context.GetComponent<IColorThemeManager>();
+            var threading = context.GetComponent<IThreading>();
+
+            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime, shellLocks, 
+                toolWindowManager, toolWindowDescriptor, environment, actionManager, windowsHookManager, colorThemeManager, threading);
+
+            globalSettings.TutorialWindowManager.ShowHomeWindow();
         }
     }
 }

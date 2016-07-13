@@ -1,8 +1,7 @@
 ﻿using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
-using JetBrains.Util;
 
-namespace ReSharperTutorials.TutWindow
+namespace ReSharperTutorials.TutorialUI
 {
     /// <summary>
     /// Used to communicate with HTML / JavaScript content in TutorialWindow (e.g., animates step text change, passes button click events)  
