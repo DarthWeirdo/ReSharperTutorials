@@ -30,7 +30,7 @@ namespace ReSharperTutorials.Runner
 
         protected abstract void OpenTutorial(IDataContext context, DelegateExecute nextExecute);
 
-        public void OpenOrRestart(IDataContext context, TutorialId id)
+        protected static void OpenOrRestart(IDataContext context, TutorialId id)
         {
             var globalOptions = context.GetComponent<GlobalSettings>();
             var titleString = TutorialXmlReader.ReadIntro(globalOptions.GetPath(id, PathType.WorkCopyContentFile));

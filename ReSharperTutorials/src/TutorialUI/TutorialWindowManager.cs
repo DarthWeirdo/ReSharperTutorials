@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.Interop.NativeHook;
@@ -15,28 +14,28 @@ using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
 using JetBrains.UI.ToolWindowManagement;
+using JetBrains.Util;
 using ReSharperTutorials.Runner;
 using ReSharperTutorials.Utils;
-using MessageBox = JetBrains.Util.MessageBox;
 
 namespace ReSharperTutorials.TutorialUI
 {
     public class TutorialWindowManager
     {
-        private readonly TabbedToolWindowClass _toolWindowClass;
+        private readonly IActionManager _actionManager;
+        private readonly IColorThemeManager _colorThemeManager;
+        private readonly IUIApplication _environment;
         private readonly Lifetime _shellLifetime;
         private readonly IShellLocks _shellLocks;
-        private TutorialId _runningTutorial;
-        private readonly IUIApplication _environment;
-        private readonly IActionManager _actionManager;
-        private readonly IWindowsHookManager _windowsHookManager;
-        private readonly IColorThemeManager _colorThemeManager;
         private readonly IThreading _threading;
-        private HomeWindow _homeWindow = null;
-        private TutorialWindow _tutorialWindow = null;
+        private readonly TabbedToolWindowClass _toolWindowClass;
+        private readonly IWindowsHookManager _windowsHookManager;
+        private HomeWindow _homeWindow;
+        private TutorialId _runningTutorial;
+        private TutorialWindow _tutorialWindow;
 
-        public TutorialWindowManager(Lifetime shellLifetime, IShellLocks shellLocks, ToolWindowManager toolWindowManager, 
-            TutorialWindowDescriptor toolWindowDescriptor, IUIApplication environment, IActionManager actionManager, 
+        public TutorialWindowManager(Lifetime shellLifetime, IShellLocks shellLocks, ToolWindowManager toolWindowManager,
+            TutorialWindowDescriptor toolWindowDescriptor, IUIApplication environment, IActionManager actionManager,
             IWindowsHookManager windowsHookManager, IColorThemeManager colorThemeManager, IThreading threading)
         {
             _shellLifetime = shellLifetime;
@@ -51,7 +50,7 @@ namespace ReSharperTutorials.TutorialUI
 
             _toolWindowClass = toolWindowManager.Classes[toolWindowDescriptor] as TabbedToolWindowClass;
             if (_toolWindowClass == null)
-                throw new ApplicationException("Expected tabbed tool window");            
+                throw new ApplicationException("Expected tabbed tool window");
 
             _toolWindowClass.QueryCloseInstances.Advise(shellLifetime, args =>
             {
@@ -60,10 +59,9 @@ namespace ReSharperTutorials.TutorialUI
                     "This will close the tutorial solution as well. Tutorial progress will be lost. Close the tutorial?",
                     "ReSharper Tutorials");
                 if (args.Cancel) return;
-                VsIntegration.CloseVsSolution(true);                
+                VsIntegration.CloseVsSolution(true);
             });
-
-        }        
+        }
 
 
         public bool WindowsExist()
@@ -72,10 +70,10 @@ namespace ReSharperTutorials.TutorialUI
         }
 
 
-        public void ShowTutorialWindow(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime, 
-            ISolution solution, IPsiFiles psiFiles, TextControlManager textControlManager, IShellLocks shellLocks, 
-            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment, 
-            IActionManager actionManager, IWindowsHookManager windowsHookManager, IPsiServices psiServices, 
+        public void ShowTutorialWindow(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime,
+            ISolution solution, IPsiFiles psiFiles, TextControlManager textControlManager, IShellLocks shellLocks,
+            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
+            IActionManager actionManager, IWindowsHookManager windowsHookManager, IPsiServices psiServices,
             IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager, IThreading threading)
         {
             var contentPath = globalSettings.GetPath(tutorialId, PathType.WorkCopyContentFile);
@@ -84,14 +82,15 @@ namespace ReSharperTutorials.TutorialUI
             threading.ExecuteOrQueue("RunTutorialWindow", () =>
             {
                 _tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager,
-                    shellLocks, editorManager, documentManager, environment, actionManager, _toolWindowClass, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
+                    shellLocks, editorManager, documentManager, environment, actionManager, _toolWindowClass,
+                    windowsHookManager, psiServices, shortcutManager, colorThemeManager);
 
                 lifetime.AddBracket(
                     () => _tutorialWindow.Show(),
                     () =>
                     {
-                        _tutorialWindow.Close();                        
-                        _tutorialWindow = null; // TODO: do we need it? 
+                        _tutorialWindow.Close();
+                        _tutorialWindow = null;  
                         _runningTutorial = TutorialId.None;
                     });
             });
@@ -105,13 +104,17 @@ namespace ReSharperTutorials.TutorialUI
                 _homeWindow.Show();
                 return;
             }
-            
+
             _threading.ExecuteOrQueue("RunMainWindow", () =>
             {
-                _homeWindow = new HomeWindow(_shellLifetime, _shellLocks, _environment, _actionManager, _toolWindowClass, _windowsHookManager, _colorThemeManager);
+                _homeWindow = new HomeWindow(_shellLifetime, _shellLocks, _environment, _actionManager, _toolWindowClass,
+                    _windowsHookManager, _colorThemeManager)
+                {
+                    PageText = HtmlGenerator.GetResource("HomePage.html")
+                };
 
                 _homeWindow.Show();
             });
-        }        
+        }
     }
 }

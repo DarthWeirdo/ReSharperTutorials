@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Media;
+using Brushes = System.Drawing.Brushes;
+using Color = System.Drawing.Color;
+using FontFamily = System.Drawing.FontFamily;
 
 namespace ReSharperTutorials.TutorialUI
 {
@@ -8,7 +12,7 @@ namespace ReSharperTutorials.TutorialUI
     {
         public CustomProgressBar()
         {            
-            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);            
         }                
         
         public string CustomText { get; set; }
@@ -16,14 +20,16 @@ namespace ReSharperTutorials.TutorialUI
         protected override void OnPaint(PaintEventArgs e)
         {
             var rect = ClientRectangle;
-            var g = e.Graphics;            
+            var g = e.Graphics;
+            var brush = new SolidBrush(Color.FromArgb(122, 193, 255));  // TODO: move to global settings?
 
             ProgressBarRenderer.DrawHorizontalBar(g, rect);
-            rect.Inflate(-1, -1);
+            rect.Inflate(0, 0);
             if (Value > 0)
             {                
                 var clip = new Rectangle(rect.X, rect.Y, (int) Math.Round((float) Value/Maximum*rect.Width), rect.Height);
-                ProgressBarRenderer.DrawHorizontalChunks(g, clip);
+                ProgressBarRenderer.DrawHorizontalBar(g, clip);
+                g.FillRectangle(brush, 0, 0, clip.Width, clip.Height);
             }                                
 
             using (var f = new Font(FontFamily.GenericSansSerif, 10))

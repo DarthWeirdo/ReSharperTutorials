@@ -31,3 +31,7 @@ function moveOutPrevStep() {
 function buttonClick() {    
     window.external.ClickNextButton();
 }
+
+function runTutorial(id) {
+    window.external.RunTutorial(id);
+}

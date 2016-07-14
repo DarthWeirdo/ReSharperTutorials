@@ -1,0 +1,22 @@
+﻿html,
+body 
+{
+    font-family:Tahoma, Geneva, sans-serif; font-size: 100%; color: FNTCLR;
+    overflow: auto;
+    scrollbar-face-color: SCRLFACECLR;
+    scrollbar-highlight-color: SCRLHLCLR;
+    scrollbar-3dlight-color: SCRLHLCLR;
+    scrollbar-darkshadow-color: SCRLHLCLR;
+    scrollbar-shadow-color: SCRLHLCLR;
+    scrollbar-arrow-color: SCRLARROWCLR;
+    scrollbar-base-color: SCRLTRCKCLR;
+}
+
+p { text-align:justify }          
+.done { text-decoration:line-through; color:DISFNT; } 
+.nextButton {float: right;}             
+.shortcut { font-weight: bold; }
+.title { margin-bottom: 10px;}
+.disabled {}
+#prevStep { text-decoration:line-through; color:DISFNT; position: absolute; padding-right: 10px; padding-left: 10px;}            
+#currentStep { position: absolute; padding-right: 10px; padding-left: 10px;}

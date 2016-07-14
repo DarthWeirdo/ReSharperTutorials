@@ -6,11 +6,9 @@ namespace ReSharperTutorials.TutorialUI
 {
     [ToolWindowDescriptor(
         ProductNeutralId = "TutorialWindow",
-        Text = "ReSharper Tutorial",
+        Text = "ReSharper Tutorials",
         Icon = typeof(JetBrains.Ide.Resources.IdeThemedIcons.TextDocument),
-//        Type = ToolWindowType.SingleInstance,
         Type = ToolWindowType.MultiInstance,
-//        VisibilityPersistenceScope = ToolWindowVisibilityPersistenceScope.Solution,        
         VisibilityPersistenceScope = ToolWindowVisibilityPersistenceScope.Global,        
         InitialDocking = ToolWindowInitialDocking.Right)
         ]

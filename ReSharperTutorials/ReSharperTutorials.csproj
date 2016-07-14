@@ -295,6 +295,7 @@
     <Compile Include="src\Runner\SolutionStateTracker.cs" />
     <Compile Include="src\Runner\TutorialRunner.cs" />
     <Compile Include="src\Runner\TutorialRunnerEventArgs.cs" />
+    <Compile Include="src\TutorialUI\HtmlGenerator.cs" />
     <Compile Include="src\TutStep\Check.cs" />
     <Compile Include="src\TutStep\IStepView.cs" />
     <Compile Include="src\TutStep\NavNode.cs" />
@@ -325,6 +326,8 @@
     <EmbeddedResource Include="src\TutorialUI\Scripts.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="src\TutorialUI\Styles.css" />
+    <EmbeddedResource Include="src\TutorialUI\HomePage.html" />
     <Content Include="TutorialsContent\Tutorial1\Tutorial1Content.xml">
       <SubType>Designer</SubType>
     </Content>
