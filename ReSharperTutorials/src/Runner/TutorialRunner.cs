@@ -63,7 +63,7 @@ namespace ReSharperTutorials.Runner
             if (globalSettings.TutorialWindowManager == null)           
                 throw new ApplicationException("Expected globalSettings.TutorialWindowManager");
 
-            globalSettings.TutorialWindowManager.ShowTutorialWindow(globalSettings, tutorialId, lifetime, solution, psiFiles, textControlManager,
+            globalSettings.TutorialWindowManager.ShowTutorialWindow(tutorialId, lifetime, solution, psiFiles, textControlManager,
                 shellLocks, editorManager, documentManager, environment, actionManager, 
                 windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);                                                               
 

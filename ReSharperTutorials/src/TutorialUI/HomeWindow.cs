@@ -11,10 +11,11 @@ using JetBrains.UI.CrossFramework;
 using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
 using ReSharperTutorials.Runner;
+using MessageBox = JetBrains.Util.MessageBox;
 
 namespace ReSharperTutorials.TutorialUI
 {
-    class HomeWindow
+    class HomeWindow: IHtmlCommunication
     {
         private readonly TabbedToolWindowClass _toolWindowClass;
         private readonly ToolWindowInstance _toolWindowInstance;
@@ -28,6 +29,9 @@ namespace ReSharperTutorials.TutorialUI
         private string _pageText;
         private readonly HtmlGenerator _htmlGenerator;
         private HtmlMediator _htmlMediator;
+        private GlobalSettings _globalSettings;
+        public HtmlMediator HtmlMediator => _htmlMediator;
+        public HtmlViewControl HtmlViewControl => _viewControl;        
 
         public string PageText
         {
@@ -42,10 +46,12 @@ namespace ReSharperTutorials.TutorialUI
         }
 
 
-        public HomeWindow(Lifetime lifetime, IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager,
-            TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager, IColorThemeManager colorThemeManager)
+        public HomeWindow(Lifetime lifetime, GlobalSettings globalSettings, IShellLocks shellLocks, IUIApplication environment, 
+            IActionManager actionManager, TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager,
+            IColorThemeManager colorThemeManager)
         {
-            _lifetime = lifetime;            
+            _lifetime = lifetime;
+            _globalSettings = globalSettings;
             _actionManager = actionManager;
             _shellLocks = shellLocks;                      
             _colorThemeManager = colorThemeManager;
@@ -72,16 +78,13 @@ namespace ReSharperTutorials.TutorialUI
 
                     lt.AddBracket(
                         () => _viewControl = viewControl,
-                        () => _viewControl = null);
-
-                    viewControl.LocalNavigation +=
-                        ((o, args) => _shellLocks.ExecuteOrQueue(lt, "HomePageLink", () => LinkClicked(args)));
+                        () => _viewControl = null);                    
 
                     lt.AddBracket(
                         () => _containerControl.Controls.Add(_viewControl),
                         () => _containerControl.Controls.Remove(_viewControl));
 
-                    _htmlMediator = new HtmlMediator(lifetime, _viewControl, _actionManager, _shellLocks);
+                    _htmlMediator = new HtmlMediator(lifetime, this, _actionManager, _shellLocks);
 
                     _colorThemeManager.ColorThemeChanged.Advise(lifetime, RefreshKeepContent);
 
@@ -90,28 +93,22 @@ namespace ReSharperTutorials.TutorialUI
                     return new EitherControl(lt, containerControl);
                 });
                         
-            _toolWindowInstance.Title.Value = "Home";
-            
+            _toolWindowInstance.Title.Value = "Home";            
         }
 
-
-        private void LinkClicked(HtmlViewControl.StringEventArgs args)
+        public void EnableButtons(bool state)
         {
-            var parts = args.String.Split(':');
-            if (parts.Length < 2)
-                return;
-            switch (parts[0])
-            {
-                case "config":
-                    
-                    break;
-                case "textpage":
-                    
-                    break;
-                case "page":
-                    
-                    break;
-            }
+            _htmlMediator?.EnableButtons(state);
+        }
+
+        public void HideLoadingImages()
+        {
+            _htmlMediator?.HideImages();
+        }
+
+        private void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
+        {
+            _htmlMediator?.AgreeToRunTutorial(htmlTutorialId,imgSrc);
         }
 
 
@@ -141,6 +138,28 @@ namespace ReSharperTutorials.TutorialUI
         private void RefreshKeepContent(bool obj)
         {
             PageText = _pageText;
+        }        
+
+        public void RunTutorial(string htmlTutorialId)
+        {
+            var result =
+                MessageBox.ShowYesNo(
+                    "This will close your current solution and open the tutorial solution. Run the tutorial?",
+                    "ReSharper Tutorials");
+            if (!result) return;
+
+            // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
+            var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
+            EnableButtons(false);
+            AgreeToRunTutorial(htmlTutorialId,loadingImgPath);
+
+            switch (htmlTutorialId)
+            {
+                case "1":                    
+                    _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
+                        () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
+                    break;
+            }
         }
     }
 }

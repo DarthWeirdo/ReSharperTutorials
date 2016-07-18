@@ -2,17 +2,29 @@
     <h1>ReSharper Tutorials</h1>
 </div>
 <hr/>
-<div class="title">
-    <h3>ReSharper Essentials</h3>
-    <p>
-        In this tutorial you will learn a number of essential ReSharper shortcuts that you will probably use most often in your day-to-day work.
-    </p>
-    <button class="nextButton" onclick="runTutorial(1)">Run Tutorial</button>
+
+<div class="loading" id="loading">
+    <span>Loading...</span>
 </div>
 
-<div class="title">
-    <h3>What's New in ReSharper 2016.2</h3>
-    <p>
-        ReSharper 2016.2 brings a whole bunch of new cool features. Take this tutorial to learn the most important ones.        
-    </p>
-</div>
+<table>
+    <tr class="border_bottom">
+        <td class="title">
+            <h3>ReSharper Essentials</h3>
+            <p>
+                In this tutorial you will learn a number of essential ReSharper shortcuts that you will probably use most often in your day-to-day work.
+            </p>
+            <button class="runButton" id="1" onclick="runTutorial(this.id)">Run Tutorial</button>            
+        </td>
+    </tr>
+
+    <tr class="border_bottom">
+        <td class="title">
+            <h3>What's New in ReSharper 2016.2</h3>
+            <p>
+                ReSharper 2016.2 brings a whole bunch of new cool features. Take this tutorial to learn the most important ones.
+            </p>
+            <button class="runButton" id="2" onclick="runTutorial(1)">Run Tutorial</button>
+        </td>
+    </tr>
+</table>

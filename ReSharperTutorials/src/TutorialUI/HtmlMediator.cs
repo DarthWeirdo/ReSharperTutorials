@@ -1,4 +1,5 @@
-﻿using JetBrains.ActionManagement;
+﻿using System;
+using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
@@ -19,7 +20,8 @@ namespace ReSharperTutorials.TutorialUI
         private bool _moveOutStepDone;
         private IActionManager _actionManager;
         private IShellLocks _shellLocks;
-        private Lifetime _lifetime;
+        private Lifetime _lifetime;        
+        private IHtmlCommunication _window;
 
         private bool MoveOutStepDone
         {
@@ -40,12 +42,13 @@ namespace ReSharperTutorials.TutorialUI
             AllAnimationsDone.Fire(true);           
         }
 
-        public HtmlMediator(Lifetime lifetime, HtmlViewControl viewControl, IActionManager actionManager, IShellLocks shellLocks)
+        public HtmlMediator(Lifetime lifetime, IHtmlCommunication window, IActionManager actionManager, IShellLocks shellLocks)
         {
-            _lifetime = lifetime;          
+            _lifetime = lifetime;
+            _window = window;       
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
             OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
-            _viewControl = viewControl;
+            _viewControl = window.HtmlViewControl;
             _viewControl.ObjectForScripting = this;
             _actionManager = actionManager;
             _shellLocks = shellLocks;
@@ -54,6 +57,25 @@ namespace ReSharperTutorials.TutorialUI
         public void Animate()
         {
             _viewControl.Document?.InvokeScript("moveOutPrevStep");
+        }
+
+        public void EnableButtons(bool state)
+        {
+            _viewControl.Document?.InvokeScript(state ? "enableButtons" : "disableButtons");
+        }
+
+        public void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
+        {
+            var objArray = new object[2];
+            objArray[0] = htmlTutorialId;
+            objArray[1] = imgSrc;
+//            _viewControl.Document?.InvokeScript("agreeToRunTutorial", objArray);            
+            _viewControl.Document?.InvokeScript("agreeToRunTutorial");            
+        }
+
+        public void HideImages()
+        {            
+            _viewControl.Document?.InvokeScript("hideImages");
         }
 
         public void MoveOutPrevStepDone()
@@ -68,13 +90,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public void RunTutorial(object id)
         {            
-            switch (id.ToString())
-            {
-                case "1":
-                    _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
-                        () => _actionManager.ExecuteAction<ActionOpenTutorial1>());                    
-                    break;
-            }                        
+            _window.RunTutorial(id.ToString());
         }
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
@@ -28,7 +24,7 @@ using ReSharperTutorials.TutStep;
 
 namespace ReSharperTutorials.TutorialUI
 {
-    public class TutorialWindow : IStepView
+    public class TutorialWindow : IStepView, IHtmlCommunication
     {
         private readonly IPsiServices _psiServices;
         private readonly IActionShortcuts _shortcutManager;
@@ -49,6 +45,8 @@ namespace ReSharperTutorials.TutorialUI
         private HtmlMediator _htmlMediator;
         private CustomProgressBar _progressBar = new CustomProgressBar { Visible = true, Step = 1, Value = 0, Dock = DockStyle.Bottom,};
         private readonly HtmlGenerator _htmlGenerator;
+        public HtmlMediator HtmlMediator => _htmlMediator;
+        public HtmlViewControl HtmlViewControl => _viewControl;
 
         public int StepCount
         {            
@@ -142,7 +140,7 @@ namespace ReSharperTutorials.TutorialUI
 
                         SetColors();                        
 
-                        _htmlMediator = new HtmlMediator(tutorialLifetime, _viewControl, _actionManager, _shellLocks);
+                        _htmlMediator = new HtmlMediator(tutorialLifetime, this, _actionManager, _shellLocks);
                         _htmlMediator.OnButtonClick.Advise(tutorialLifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
 
                         return new EitherControl(lt, containerControl);
@@ -195,6 +193,11 @@ namespace ReSharperTutorials.TutorialUI
             var foreControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
             foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);            
 
+        }
+
+        public void RunTutorial(string htmlTutorialId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

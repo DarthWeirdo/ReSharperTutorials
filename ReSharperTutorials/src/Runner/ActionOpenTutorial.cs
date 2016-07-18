@@ -8,6 +8,7 @@ using JetBrains.Threading;
 using JetBrains.UI.ActionsRevised;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
+using JetBrains.UI.MenuGroups;
 using JetBrains.UI.ToolWindowManagement;
 using JetBrains.Util;
 using ReSharperTutorials.TutorialUI;
@@ -36,21 +37,11 @@ namespace ReSharperTutorials.Runner
             var titleString = TutorialXmlReader.ReadIntro(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
             var step = TutorialXmlReader.ReadCurrentStep(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
             var firstTime = step == 1;
-
-            var result =
-                MessageBox.ShowYesNo(
-                    "This will close your current solution and open the tutorial solution. Run the tutorial?",
-                    "ReSharper Tutorials");
-
-            if (result)
-            {
-                VsIntegration.CloseVsSolution();
-                SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
-                    globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
-                VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
-            }
                 
-
+            VsIntegration.CloseVsSolution();
+            SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
+                globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
+            VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));                
         }
 
     }
@@ -65,15 +56,14 @@ namespace ReSharperTutorials.Runner
         }
     }
 
-    [Action("ActionShowMainTutorialWindow", "Show Tutorials List", Id = 121)]
-    public class ActionShowMainTutorialWindow : ActionOpenTutorial
+    [Action("ActionShowMainTutorialWindow", "ReSharper Tutorials...", Id = 121)]
+    public class ActionShowMainTutorialWindow : ActionOpenTutorial, IInsertLast<MainMenuFeaturesGroup>
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
         {
             var globalSettings = context.GetComponent<GlobalSettings>();
             if (globalSettings.TutorialWindowManager != null && globalSettings.TutorialWindowManager.WindowsExist())
             {
-//                globalSettings.TutorialWindowManager.ShowWindowByTitle("Main");
                 globalSettings.TutorialWindowManager.ShowHomeWindow();
                 return;
             }                
@@ -87,7 +77,7 @@ namespace ReSharperTutorials.Runner
             var colorThemeManager = context.GetComponent<IColorThemeManager>();
             var threading = context.GetComponent<IThreading>();
 
-            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime, shellLocks, 
+            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime, globalSettings, shellLocks, 
                 toolWindowManager, toolWindowDescriptor, environment, actionManager, windowsHookManager, colorThemeManager, threading);
 
             globalSettings.TutorialWindowManager.ShowHomeWindow();

@@ -1,7 +1,7 @@
 ﻿html,
 body 
 {
-    font-family:Tahoma, Geneva, sans-serif; font-size: 100%; color: FNTCLR;
+    font-family:Tahoma, Geneva, sans-serif; font-size: 95%; color: FNTCLR;
     overflow: auto;
     scrollbar-face-color: SCRLFACECLR;
     scrollbar-highlight-color: SCRLHLCLR;
@@ -15,8 +15,27 @@ body
 p { text-align:justify }          
 .done { text-decoration:line-through; color:DISFNT; } 
 .nextButton {float: right;}             
+.runButton {float: right; margin-bottom: 10px}             
 .shortcut { font-weight: bold; }
-.title { margin-bottom: 10px;}
+.title { margin-bottom: 10px; margin-top: 5px}
 .disabled {}
+.loading {
+    position: absolute;   
+    z-index: 100;  
+    top:50%;  
+    left:50%;
+    margin-left: -50px;
+    margin-top: -30px;
+    border-radius: 2px;
+    padding: 10px 30px;    
+    text-align: center;
+    font-size: 90%;
+    font-weight: bold;
+    background-color: DISFNT;
+    visibility: hidden;   
+}
+tr.border_bottom td {
+  border-bottom:1pt dotted;
+}
 #prevStep { text-decoration:line-through; color:DISFNT; position: absolute; padding-right: 10px; padding-left: 10px;}            
 #currentStep { position: absolute; padding-right: 10px; padding-left: 10px;}

@@ -5,6 +5,7 @@ using JetBrains.DataFlow;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.Tasks;
 using JetBrains.ReSharper.Psi;
+using JetBrains.Threading;
 
 namespace ReSharperTutorials.Runner
 {
@@ -16,7 +17,7 @@ namespace ReSharperTutorials.Runner
         ISignal<ISolution> AfterSolutionContainerCreated { get; }
         ISignal<ISolution> AfterSolutionOpened { get; }
         ISignal<ISolution> BeforeSolutionClosed { get; }
-        ISignal<ISolution> AfterPsiLoaded { get; } 
+        ISignal<ISolution> AfterPsiLoaded { get; }      
     }
 
     [ShellComponent]
@@ -27,14 +28,14 @@ namespace ReSharperTutorials.Runner
             AfterSolutionContainerCreated = new Signal<ISolution>(lifetime, "SolutionStateTracker.AfterSolutionContainerCreated");
             AfterSolutionOpened = new Signal<ISolution>(lifetime, "SolutionStateTracker.AfterSolutionOpened");
             BeforeSolutionClosed = new Signal<ISolution>(lifetime, "SolutionStateTracker.BeforeSolutionClosed");
-            AfterPsiLoaded = new Signal<ISolution>(lifetime, "SolutionStateTracker.AfterPsiLoaded");
+            AfterPsiLoaded = new Signal<ISolution>(lifetime, "SolutionStateTracker.AfterPsiLoaded");            
         }
 
         public ISolution Solution { get; private set; }
         public ISignal<ISolution> AfterSolutionContainerCreated { get; private set; }
         public ISignal<ISolution> AfterSolutionOpened { get; private set; }
         public ISignal<ISolution> BeforeSolutionClosed { get; private set; }
-        public ISignal<ISolution> AfterPsiLoaded { get; private set; } 
+        public ISignal<ISolution> AfterPsiLoaded { get; private set; }         
 
         private void HandleSolutionContainerCreated(ISolution solution)
         {
@@ -52,6 +53,7 @@ namespace ReSharperTutorials.Runner
             Solution = solution;
             AfterPsiLoaded.Fire(solution);
         }
+        
 
         private void HandleSolutionClosed()
         {
@@ -62,12 +64,14 @@ namespace ReSharperTutorials.Runner
             BeforeSolutionClosed.Fire(Solution);
             Solution = null;
         }
+        
 
         [SolutionComponent]
         private class SolutionStateNotifier
-        {
+        {            
             public SolutionStateNotifier([NotNull] Lifetime lifetime,
                                          [NotNull] ISolution solution,
+                                         [NotNull] IShellLocks shellLocks,
                                          [NotNull] ISolutionLoadTasksScheduler scheduler,
                                          [NotNull] SolutionStateTracker solutionStateTracker,
                                          [NotNull] IPsiServices psiServices)
@@ -76,10 +80,12 @@ namespace ReSharperTutorials.Runner
                     throw new ArgumentNullException("lifetime");
                 if (solution == null)
                     throw new ArgumentNullException("solution");
+                if (shellLocks == null)
+                    throw new ArgumentNullException("shellLocks");
                 if (scheduler == null)
                     throw new ArgumentNullException("scheduler");
                 if (solutionStateTracker == null)
-                    throw new ArgumentNullException("solutionStateTracker");
+                    throw new ArgumentNullException("solutionStateTracker");                
 
                 scheduler.EnqueueTask(new SolutionLoadTask("SolutionStateTracker",
                     SolutionLoadTaskKinds.SolutionContainer, () => solutionStateTracker.HandleSolutionContainerCreated(solution)));
@@ -91,9 +97,8 @@ namespace ReSharperTutorials.Runner
                     SolutionLoadTaskKinds.AfterDone, () => psiServices.CachesState.IsIdle.WhenTrueOnce(lifetime, () => 
                     solutionStateTracker.HandlePsiLoaded(solution))));
 
-                lifetime.AddAction(solutionStateTracker.HandleSolutionClosed);
-                
-            }
+                lifetime.AddAction(solutionStateTracker.HandleSolutionClosed);                
+            }            
         }
     }
 }

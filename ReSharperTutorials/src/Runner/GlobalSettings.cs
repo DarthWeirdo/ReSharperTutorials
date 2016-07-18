@@ -42,6 +42,11 @@ namespace ReSharperTutorials.Runner
 
         }
 
+        public string GetGlobalImgPath()
+        {
+            return _commonWorkCopyPath + "\\Content\\img";
+        }
+
         public string GetPath(TutorialId tutorialId, PathType pType)
         {
             switch (tutorialId)
