@@ -29,7 +29,8 @@ namespace ReSharperTutorials.TutorialUI
         private string _pageText;
         private readonly HtmlGenerator _htmlGenerator;
         private HtmlMediator _htmlMediator;
-        private GlobalSettings _globalSettings;
+        private readonly GlobalSettings _globalSettings;
+        private readonly SolutionStateTracker _solutionStateTracker;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;        
 
@@ -46,11 +47,12 @@ namespace ReSharperTutorials.TutorialUI
         }
 
 
-        public HomeWindow(Lifetime lifetime, GlobalSettings globalSettings, IShellLocks shellLocks, IUIApplication environment, 
-            IActionManager actionManager, TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager,
-            IColorThemeManager colorThemeManager)
+        public HomeWindow(Lifetime lifetime, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings, 
+            IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager, 
+            TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager, IColorThemeManager colorThemeManager)
         {
             _lifetime = lifetime;
+            _solutionStateTracker = solutionStateTracker;
             _globalSettings = globalSettings;
             _actionManager = actionManager;
             _shellLocks = shellLocks;                      
@@ -84,7 +86,7 @@ namespace ReSharperTutorials.TutorialUI
                         () => _containerControl.Controls.Add(_viewControl),
                         () => _containerControl.Controls.Remove(_viewControl));
 
-                    _htmlMediator = new HtmlMediator(lifetime, this, _actionManager, _shellLocks);
+                    _htmlMediator = new HtmlMediator(lifetime, this);
 
                     _colorThemeManager.ColorThemeChanged.Advise(lifetime, RefreshKeepContent);
 
@@ -148,11 +150,17 @@ namespace ReSharperTutorials.TutorialUI
                     "ReSharper Tutorials");
             if (!result) return;
 
-            // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
-            var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
-            EnableButtons(false);
-            AgreeToRunTutorial(htmlTutorialId,loadingImgPath);
+            var loadingLifetime = Lifetimes.Define();
+            _solutionStateTracker.AgreeToRunTutorial.Advise(loadingLifetime.Lifetime, () =>
+            {
+                var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
+                EnableButtons(false);
+                AgreeToRunTutorial(htmlTutorialId, loadingImgPath);
+            });
 
+            _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());                        
+            
+            // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
             switch (htmlTutorialId)
             {
                 case "1":                    

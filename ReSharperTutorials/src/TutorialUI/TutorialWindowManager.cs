@@ -34,13 +34,15 @@ namespace ReSharperTutorials.TutorialUI
         private TutorialId _runningTutorial;
         private TutorialWindow _tutorialWindow;
         private readonly GlobalSettings _globalSettings;
+        private SolutionStateTracker _solutionStateTracker;
 
-        public TutorialWindowManager(Lifetime shellLifetime, GlobalSettings globalSettings, IShellLocks shellLocks, 
-            ToolWindowManager toolWindowManager, TutorialWindowDescriptor toolWindowDescriptor, IUIApplication environment, 
-            IActionManager actionManager, IWindowsHookManager windowsHookManager, IColorThemeManager colorThemeManager, 
-            IThreading threading)
+        public TutorialWindowManager(Lifetime shellLifetime, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
+            IShellLocks shellLocks, ToolWindowManager toolWindowManager, TutorialWindowDescriptor toolWindowDescriptor, 
+            IUIApplication environment, IActionManager actionManager, IWindowsHookManager windowsHookManager, 
+            IColorThemeManager colorThemeManager, IThreading threading)
         {
             _shellLifetime = shellLifetime;
+            _solutionStateTracker = solutionStateTracker;
             _globalSettings = globalSettings;
             _shellLocks = shellLocks;
             _environment = environment;
@@ -115,8 +117,8 @@ namespace ReSharperTutorials.TutorialUI
 
             _threading.ExecuteOrQueue("RunMainWindow", () =>
             {
-                _homeWindow = new HomeWindow(_shellLifetime, _globalSettings, _shellLocks, _environment, _actionManager, _toolWindowClass,
-                    _windowsHookManager, _colorThemeManager)
+                _homeWindow = new HomeWindow(_shellLifetime, _solutionStateTracker, _globalSettings, _shellLocks, _environment, 
+                    _actionManager, _toolWindowClass, _windowsHookManager, _colorThemeManager)
                 {
                     PageText = HtmlGenerator.GetResource("HomePage.html")
                 };

@@ -18,6 +18,7 @@ namespace ReSharperTutorials.Runner
         ISignal<ISolution> AfterSolutionOpened { get; }
         ISignal<ISolution> BeforeSolutionClosed { get; }
         ISignal<ISolution> AfterPsiLoaded { get; }      
+        ISignal<bool> AgreeToRunTutorial { get; }      
     }
 
     [ShellComponent]
@@ -29,13 +30,15 @@ namespace ReSharperTutorials.Runner
             AfterSolutionOpened = new Signal<ISolution>(lifetime, "SolutionStateTracker.AfterSolutionOpened");
             BeforeSolutionClosed = new Signal<ISolution>(lifetime, "SolutionStateTracker.BeforeSolutionClosed");
             AfterPsiLoaded = new Signal<ISolution>(lifetime, "SolutionStateTracker.AfterPsiLoaded");            
+            AgreeToRunTutorial = new Signal<bool>(lifetime, "SolutionStateTracker.AgreeToRunTutorial");            
         }
 
         public ISolution Solution { get; private set; }
         public ISignal<ISolution> AfterSolutionContainerCreated { get; private set; }
         public ISignal<ISolution> AfterSolutionOpened { get; private set; }
         public ISignal<ISolution> BeforeSolutionClosed { get; private set; }
-        public ISignal<ISolution> AfterPsiLoaded { get; private set; }         
+        public ISignal<ISolution> AfterPsiLoaded { get; private set; }
+        public ISignal<bool> AgreeToRunTutorial { get; }
 
         private void HandleSolutionContainerCreated(ISolution solution)
         {
@@ -63,6 +66,11 @@ namespace ReSharperTutorials.Runner
 
             BeforeSolutionClosed.Fire(Solution);
             Solution = null;
+        }
+
+        public void NotifyAgreeToRunTutorial()
+        {
+            AgreeToRunTutorial.Fire(true);
         }
         
 
@@ -95,7 +103,7 @@ namespace ReSharperTutorials.Runner
 
                 scheduler.EnqueueTask(new SolutionLoadTask("SolutionStateTracker", 
                     SolutionLoadTaskKinds.AfterDone, () => psiServices.CachesState.IsIdle.WhenTrueOnce(lifetime, () => 
-                    solutionStateTracker.HandlePsiLoaded(solution))));
+                    solutionStateTracker.HandlePsiLoaded(solution))));                
 
                 lifetime.AddAction(solutionStateTracker.HandleSolutionClosed);                
             }            

@@ -1,12 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tutorial>
   <currentStep>1</currentStep>
-
-  <intro>
-    <Run FontSize="36">Tutorial 1. Essential Shortcuts</Run>
-    <LineBreak/>
-    <Run  FontSize="14">In this tutorial you will learn a number of essential ReSharper shortcuts that you will probably use most often in your day-to-day work. The goal of this tutorial is only to give you a "taste" of ReSharper. All these shortcuts will be covered in next tutorials in more details.</Run>
-  </intro>
+  <title>ReSharper Essentials</title>
 
   <steps>
     <step li="1">

@@ -56,7 +56,17 @@ namespace ReSharperTutorials.Utils
             return "Missing tutorial content. Please reinstall the plugin!";            
         }
 
-        
+        public static string ReadTitle(string path)
+        {
+            using (var reader = XmlReader.Create(new StreamReader(path)))
+            {
+                
+                reader.ReadToFollowing("title");
+                reader.Read();
+                return reader.Value;
+            }
+        }
+
         public static Dictionary<int, TutorialStep> ReadTutorialSteps(string path)
         {
             var result = new Dictionary<int, TutorialStep>();            

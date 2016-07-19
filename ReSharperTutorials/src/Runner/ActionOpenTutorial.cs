@@ -34,11 +34,13 @@ namespace ReSharperTutorials.Runner
         protected static void OpenOrRestart(IDataContext context, TutorialId id)
         {
             var globalOptions = context.GetComponent<GlobalSettings>();
+            var solutionStateTracker = context.GetComponent<SolutionStateTracker>();
             var titleString = TutorialXmlReader.ReadIntro(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
             var step = TutorialXmlReader.ReadCurrentStep(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
-            var firstTime = step == 1;
-                
+            var firstTime = step == 1;            
+
             VsIntegration.CloseVsSolution();
+            solutionStateTracker.NotifyAgreeToRunTutorial();
             SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
                 globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
             VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));                
@@ -56,7 +58,7 @@ namespace ReSharperTutorials.Runner
         }
     }
 
-    [Action("ActionShowMainTutorialWindow", "ReSharper Tutorials...", Id = 121)]
+    [Action("ActionShowMainTutorialWindow", "Tutorials...", Id = 121)]
     public class ActionShowMainTutorialWindow : ActionOpenTutorial, IInsertLast<MainMenuFeaturesGroup>
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
@@ -66,8 +68,9 @@ namespace ReSharperTutorials.Runner
             {
                 globalSettings.TutorialWindowManager.ShowHomeWindow();
                 return;
-            }                
-            
+            }
+
+            var solutionStateTracker = context.GetComponent<SolutionStateTracker>();
             var shellLocks = context.GetComponent<IShellLocks>();
             var environment = context.GetComponent<IUIApplication>();
             var actionManager = context.GetComponent<IActionManager>();
@@ -77,8 +80,9 @@ namespace ReSharperTutorials.Runner
             var colorThemeManager = context.GetComponent<IColorThemeManager>();
             var threading = context.GetComponent<IThreading>();
 
-            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime, globalSettings, shellLocks, 
-                toolWindowManager, toolWindowDescriptor, environment, actionManager, windowsHookManager, colorThemeManager, threading);
+            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime, solutionStateTracker, 
+                globalSettings, shellLocks, toolWindowManager, toolWindowDescriptor, environment, actionManager, windowsHookManager, 
+                colorThemeManager, threading);
 
             globalSettings.TutorialWindowManager.ShowHomeWindow();
         }

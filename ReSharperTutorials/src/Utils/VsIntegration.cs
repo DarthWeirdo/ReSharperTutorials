@@ -120,6 +120,7 @@ namespace ReSharperTutorials.Utils
             if (saveFirst)
                 SaveVsSolution();
             
+//            solution.Close();
             vsInstance.ExecuteCommand("File.CloseSolution");
         }
 
@@ -128,6 +129,7 @@ namespace ReSharperTutorials.Utils
             var vsInstance = GetCurrentVsInstance();
             var solution = vsInstance?.Solution;
             if (solution?.FileName == "") return;
+//            solution?.Close();
             vsInstance?.ExecuteCommand("File.CloseSolution");
         }
 

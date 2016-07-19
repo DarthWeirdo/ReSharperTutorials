@@ -34,6 +34,7 @@ namespace ReSharperTutorials.TutStep
         public readonly DocumentManager DocumentManager;
         public readonly IUIApplication Environment;
         public readonly IActionManager ActionManager;
+        public readonly string Title;
         public TutorialStep CurrentStep { get; set; }
 
 
@@ -57,7 +58,8 @@ namespace ReSharperTutorials.TutStep
                 documentManager, environment);                        
             _steps = new Dictionary<int, TutorialStep>();
             _steps = TutorialXmlReader.ReadTutorialSteps(contentPath);
-            
+            Title = TutorialXmlReader.ReadTitle(contentPath);
+
             var converter = new ActionToShortcutConverter(actionManager);
             foreach (var step in _steps.Values)            
                 step.Text = converter.SubstituteShortcutsViaVs(step.Text);                        

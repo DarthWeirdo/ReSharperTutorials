@@ -76,6 +76,7 @@ namespace ReSharperTutorials.Checker
 
             if (_currentStep.Check != null)
             {
+                // TODO: pass method FQN, parse class name, e.g. ReSharperTutorials.Checker.Tutorial1Checks.CheckMethod1
                 var mInfo = typeof (MainChecker).GetMethod(_currentStep.Check.Method);
                 if (mInfo != null)
                 {

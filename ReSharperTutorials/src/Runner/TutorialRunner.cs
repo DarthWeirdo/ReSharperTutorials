@@ -39,6 +39,7 @@ namespace ReSharperTutorials.Runner
             if (globalSettings == null)
                 throw new ArgumentNullException("globalSettings");
 
+            
 
             foreach (var tutorial in globalSettings.AvailableTutorials)
             {
@@ -65,18 +66,7 @@ namespace ReSharperTutorials.Runner
 
             globalSettings.TutorialWindowManager.ShowTutorialWindow(tutorialId, lifetime, solution, psiFiles, textControlManager,
                 shellLocks, editorManager, documentManager, environment, actionManager, 
-                windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);                                                               
-
-            //            threading.ExecuteOrQueue("RunTutorialWindow", () =>
-            //            {
-            //                var tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager,
-            //                    shellLocks, editorManager, documentManager, environment, actionManager, toolWindowManager,
-            //                    tutorialWindowDescriptor, windowsHookManager, psiServices, shortcutManager, colorThemeManager);
-            //
-            //                lifetime.AddBracket(
-            //                    () => tutorialWindow.Show(),
-            //                    () => tutorialWindow.Close());
-            //            });
+                windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);                                                                          
         }
 
     }

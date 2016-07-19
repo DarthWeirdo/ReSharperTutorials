@@ -140,7 +140,7 @@ namespace ReSharperTutorials.TutorialUI
 
                         SetColors();                        
 
-                        _htmlMediator = new HtmlMediator(tutorialLifetime, this, _actionManager, _shellLocks);
+                        _htmlMediator = new HtmlMediator(tutorialLifetime, this);
                         _htmlMediator.OnButtonClick.Advise(tutorialLifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
 
                         return new EitherControl(lt, containerControl);
@@ -148,6 +148,8 @@ namespace ReSharperTutorials.TutorialUI
 
                 _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles, textControlManager, 
                     shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);
+
+                _toolWindowInstance.Title.Value = _stepPresenter.Title;
             }
         }
 

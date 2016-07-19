@@ -1,6 +1,4 @@
 ﻿using System;
-using JetBrains.ActionManagement;
-using JetBrains.Application;
 using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
 using JetBrains.Threading;
@@ -18,9 +16,6 @@ namespace ReSharperTutorials.TutorialUI
         public ISignal<bool> OnButtonClick { get; }
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
-        private IActionManager _actionManager;
-        private IShellLocks _shellLocks;
-        private Lifetime _lifetime;        
         private IHtmlCommunication _window;
 
         private bool MoveOutStepDone
@@ -42,16 +37,13 @@ namespace ReSharperTutorials.TutorialUI
             AllAnimationsDone.Fire(true);           
         }
 
-        public HtmlMediator(Lifetime lifetime, IHtmlCommunication window, IActionManager actionManager, IShellLocks shellLocks)
+        public HtmlMediator(Lifetime lifetime, IHtmlCommunication window)
         {
-            _lifetime = lifetime;
             _window = window;       
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
             OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
             _viewControl = window.HtmlViewControl;
             _viewControl.ObjectForScripting = this;
-            _actionManager = actionManager;
-            _shellLocks = shellLocks;
         }
 
         public void Animate()
