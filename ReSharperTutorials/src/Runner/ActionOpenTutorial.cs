@@ -41,6 +41,7 @@ namespace ReSharperTutorials.Runner
 
             VsIntegration.CloseVsSolution();
             solutionStateTracker.NotifyAgreeToRunTutorial();
+            SolutionCopyHelper.CleanUpDirectory(globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
             SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
                 globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
             VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));                

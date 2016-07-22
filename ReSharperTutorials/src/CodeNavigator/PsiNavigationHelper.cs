@@ -87,7 +87,7 @@ namespace ReSharperTutorials.CodeNavigator
         public static ICSharpFile GetCSharpFile(IProject project, string filename)
         {            
                 IPsiSourceFile file = project.GetPsiSourceFileInProject(FileSystemPath.Parse(filename));
-                return file.GetPsiFiles<CSharpLanguage>().SafeOfType<ICSharpFile>().SingleOrDefault();        
+                return file?.GetPsiFiles<CSharpLanguage>().SafeOfType<ICSharpFile>().SingleOrDefault();        
         }
 
         [CanBeNull]
@@ -176,7 +176,7 @@ namespace ReSharperTutorials.CodeNavigator
         [CanBeNull]
         public static ITreeNode GetTypeNodeByFullClrName(ICSharpFile file, string name)
         {
-            var treeNodeList = file.EnumerateTo(file.LastChild);
+            var treeNodeList = file.EnumerateTo(file.LastChild);            
 
             var resultList = (from node in treeNodeList
                               let element = GetDeclaredElement(node)

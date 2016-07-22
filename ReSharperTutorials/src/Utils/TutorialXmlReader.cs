@@ -115,6 +115,8 @@ namespace ReSharperTutorials.Utils
                                         
                     var step = new TutorialStep(li, navNode, check, text, nextStep, strikeOnDone);                    
                     result.Add(li, step);
+                    navNode = null;
+                    check = null;
                 }
             }
             return result;

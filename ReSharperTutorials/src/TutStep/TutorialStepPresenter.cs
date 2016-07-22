@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
+using JetBrains.Application.changes;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
@@ -28,6 +29,7 @@ namespace ReSharperTutorials.TutStep
         public readonly Lifetime Lifetime;
         public readonly ISolution Solution;
         public readonly IPsiFiles PsiFiles;
+        public readonly ChangeManager ChangeManager;
         public readonly TextControlManager TextControlManager;
         public readonly IShellLocks ShellLocks;
         public readonly IEditorManager EditorManager;
@@ -39,7 +41,7 @@ namespace ReSharperTutorials.TutStep
 
 
         public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-            TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
+            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
             DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
             IPsiServices psiServices, IActionShortcuts shortcutManager)
         {
@@ -47,6 +49,7 @@ namespace ReSharperTutorials.TutStep
             Lifetime = lifetime;
             Solution = solution;
             PsiFiles = psiFiles;
+            ChangeManager = changeManager;
             TextControlManager = textControlManager;
             ShellLocks = shellLocks;
             EditorManager = editorManager;

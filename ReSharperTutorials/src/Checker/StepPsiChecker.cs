@@ -1,13 +1,16 @@
 ﻿using System;
 using JetBrains.Application;
+using JetBrains.Application.changes;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
+using JetBrains.DocumentManagers.impl;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
+using JetBrains.Threading;
 using JetBrains.UI.Application;
 
 namespace ReSharperTutorials.Checker
@@ -34,7 +37,7 @@ namespace ReSharperTutorials.Checker
 
         public ISignal<bool> AfterPsiChangesDone { get; private set; }
 
-        public StepPsiChecker(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
+        public StepPsiChecker(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles, ChangeManager changeManager,
                                   TextControlManager textControlManager, IShellLocks shellLocks,
                                   IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment)
         {
@@ -54,7 +57,10 @@ namespace ReSharperTutorials.Checker
               () => psiFiles.AfterPsiChanged += psiChanged,
               () => psiFiles.AfterPsiChanged -= psiChanged);
 
+//            changeManager.Changed2.Advise(lifetime, OnPsiChanged);
+
             AfterPsiChangesDone = new Signal<bool>(lifetime, "StepPsiChecker.AfterPsiChangesDone");
+            
         }
 
         public bool IsUpToDate()
@@ -71,8 +77,18 @@ namespace ReSharperTutorials.Checker
         private void OnPsiChanged()
         {
             _shellLocks.QueueReadLock("StepPsiChecker.CheckOnPsiChanged",
-                  () => _psiFiles.CommitAllDocumentsAsync(CheckCode));
+                  () => _psiFiles.CommitAllDocumentsAsync(CheckCode));     
         }
+
+//        private void OnPsiChanged(ChangeEventArgs args)
+//        {
+//            var change = args.ChangeMap.GetChange<ProjectFileDocumentChange>(_documentManager.ChangeProvider);
+//            if (change == null)
+//                return;
+//
+//            _shellLocks.QueueReadLock("StepPsiChecker.CheckOnPsiChanged",
+//                  () => _psiFiles.CommitAllDocumentsAsync(CheckCode));
+//        }
 
         private void CheckCode()
         {

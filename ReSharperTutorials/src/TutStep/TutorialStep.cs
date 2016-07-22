@@ -91,7 +91,9 @@ namespace ReSharperTutorials.TutStep
         {
             _processingLifetime = Lifetimes.Define(stepPresenter.Lifetime);
 
-            var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution, stepPresenter.PsiFiles, stepPresenter.TextControlManager, stepPresenter.ShellLocks, stepPresenter.EditorManager, stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
+            var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution, stepPresenter.PsiFiles,
+                stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks, stepPresenter.EditorManager,
+                stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
 
             checker.PerformStepChecks();
         }

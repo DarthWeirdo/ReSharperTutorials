@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
+using JetBrains.Application.changes;
 using JetBrains.Application.DataContext;
 using JetBrains.Application.Interop.NativeHook;
 using JetBrains.Application.Settings;
@@ -87,10 +88,9 @@ namespace ReSharperTutorials.TutorialUI
 
         
         public TutorialWindow(string contentPath, Lifetime tutorialLifetime, ISolution solution, IPsiFiles psiFiles,
-                                  TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
-                                  DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
-                                  TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager, 
-                                  IPsiServices psiServices, IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager)
+            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
+            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager, TabbedToolWindowClass toolWindowClass, 
+            WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager)
         {
             _htmlGenerator = new HtmlGenerator(tutorialLifetime, colorThemeManager);
             _tutorialLifetime = tutorialLifetime;
@@ -146,8 +146,8 @@ namespace ReSharperTutorials.TutorialUI
                         return new EitherControl(lt, containerControl);
                     });                
 
-                _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles, textControlManager, 
-                    shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);
+                _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles, changeManager,
+                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);
 
                 _toolWindowInstance.Title.Value = _stepPresenter.Title;
             }

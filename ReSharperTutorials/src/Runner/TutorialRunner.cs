@@ -2,6 +2,7 @@
 using JetBrains.ActionManagement;
 using JetBrains.Annotations;
 using JetBrains.Application;
+using JetBrains.Application.changes;
 using JetBrains.Application.Interop.NativeHook;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
@@ -24,12 +25,12 @@ namespace ReSharperTutorials.Runner
     public class TutorialRunner
     {
         public TutorialRunner([NotNull] Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-            [NotNull] ISolutionStateTracker solutionStateTracker,
+            ChangeManager changeManager, [NotNull] ISolutionStateTracker solutionStateTracker,
             [NotNull] GlobalSettings globalSettings, TextControlManager textControlManager, IShellLocks shellLocks,
             IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
             IActionManager actionManager, ToolWindowManager toolWindowManager,
             TutorialWindowDescriptor tutorialWindowDescriptor,
-            IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
+            WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
             IColorThemeManager colorThemeManager, IThreading threading)
         {
             if (lifetime == null)
@@ -47,7 +48,7 @@ namespace ReSharperTutorials.Runner
                 {
                     solutionStateTracker.AfterPsiLoaded.Advise(lifetime,
                         sol =>
-                            RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles,
+                            RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles, changeManager,
                                 textControlManager, shellLocks, editorManager, documentManager, environment,
                                 actionManager, windowsHookManager, psiServices, shortcutManager, colorThemeManager, 
                                 threading));
@@ -56,16 +57,16 @@ namespace ReSharperTutorials.Runner
         }
 
         private static void RunTutorial(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime, ISolution solution, 
-            IPsiFiles psiFiles, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
-            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,            
-            IWindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
+            IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, 
+            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,            
+            WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
             IColorThemeManager colorThemeManager, IThreading threading)
         {            
             if (globalSettings.TutorialWindowManager == null)           
                 throw new ApplicationException("Expected globalSettings.TutorialWindowManager");
 
-            globalSettings.TutorialWindowManager.ShowTutorialWindow(tutorialId, lifetime, solution, psiFiles, textControlManager,
-                shellLocks, editorManager, documentManager, environment, actionManager, 
+            globalSettings.TutorialWindowManager.ShowTutorialWindow(tutorialId, lifetime, solution, psiFiles, changeManager, 
+                textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, 
                 windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);                                                                          
         }
 

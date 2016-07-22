@@ -51,7 +51,7 @@ function disableButtons() {
     var buttons = document.getElementsByTagName("button");
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true;
-        buttons[i].title = "You must first close the currently open tutorial before opening the another one";
+        buttons[i].title = "You must first close the currently open tutorial";
     }
 }
 

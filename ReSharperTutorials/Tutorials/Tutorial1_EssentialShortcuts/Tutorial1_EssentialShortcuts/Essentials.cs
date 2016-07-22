@@ -21,6 +21,11 @@ namespace Tutorial1_EssentialShortcuts
             return new SomeClass();
         }
 
+        public string ReturnString(string stringArg, int intArg)
+        {
+            return (intArg.ToString() + stringArg);
+        }
+
     }
     
     public class GoToAction

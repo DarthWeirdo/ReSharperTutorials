@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
+using JetBrains.Application.changes;
 using JetBrains.Application.Interop.NativeHook;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
@@ -76,9 +77,9 @@ namespace ReSharperTutorials.TutorialUI
 
 
         public void ShowTutorialWindow(TutorialId tutorialId, Lifetime lifetime,
-            ISolution solution, IPsiFiles psiFiles, TextControlManager textControlManager, IShellLocks shellLocks,
-            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
-            IActionManager actionManager, IWindowsHookManager windowsHookManager, IPsiServices psiServices,
+            ISolution solution, IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager, 
+            IShellLocks shellLocks, IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
+            IActionManager actionManager, WindowsHookManager windowsHookManager, IPsiServices psiServices,
             IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager, IThreading threading)
         {
             var contentPath = _globalSettings.GetPath(tutorialId, PathType.WorkCopyContentFile);            
@@ -86,7 +87,7 @@ namespace ReSharperTutorials.TutorialUI
 
             threading.ExecuteOrQueue("RunTutorialWindow", () =>
             {                
-                _tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, textControlManager,
+                _tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, changeManager, textControlManager,
                     shellLocks, editorManager, documentManager, environment, actionManager, _toolWindowClass,
                     windowsHookManager, psiServices, shortcutManager, colorThemeManager);
 

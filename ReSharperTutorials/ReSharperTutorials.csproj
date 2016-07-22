@@ -15,7 +15,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
-    <HostFullIdentifier>ReSharperPlatformVs14testW06</HostFullIdentifier>
+    <HostFullIdentifier>ReSharperPlatformVs14newW06</HostFullIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

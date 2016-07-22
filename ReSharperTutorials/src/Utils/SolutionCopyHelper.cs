@@ -8,7 +8,13 @@ namespace ReSharperTutorials.Utils
     {
         public const string PluginName = "JetBrains.ReSharperTutorials";
 
-
+        public static void CleanUpDirectory(string folder)
+        {
+            var directory = new DirectoryInfo(folder);
+            foreach (var file in directory.GetFiles()) file.Delete();
+            foreach (var subDirectory in directory.GetDirectories()) subDirectory.Delete(true);
+        }
+        
         public static void CopySolution(string sourceFolder, string targetFolder)
         {
             //            var dir = new DirectoryInfo(sourceFolder);

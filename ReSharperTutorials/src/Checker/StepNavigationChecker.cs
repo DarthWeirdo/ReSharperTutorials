@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using JetBrains.Application;
+using JetBrains.Application.changes;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.DocumentManagers.Transactions;
@@ -46,7 +47,7 @@ namespace ReSharperTutorials.Checker
             _shellLocks = shellLocks;
             _documentManager = documentManager;
             _environment = environment;
-            _editorManager = editorManager;
+            _editorManager = editorManager;                        
 
             EventHandler caretMoved = (sender, args) =>
             {
@@ -74,6 +75,8 @@ namespace ReSharperTutorials.Checker
 
         private void CheckCode()
         {
+            if (!_psiFiles.AllDocumentsAreCommitted) return;                
+            
             if (Check == null) return;
             if (Check())
                 AfterNavigationDone.Fire(true);
@@ -83,7 +86,7 @@ namespace ReSharperTutorials.Checker
         [CanBeNull]
         public ITreeNode GetTreeNodeUnderCaret()
         {
-            if (!_solution.GetPsiServices().Files.AllDocumentsAreCommitted) return null;
+//            if (!_solution.GetPsiServices().Files.AllDocumentsAreCommitted) return null;
 
             var projectFile = GetProjectFile(_textControlManager.LastFocusedTextControl.Value);
             if (projectFile == null)
