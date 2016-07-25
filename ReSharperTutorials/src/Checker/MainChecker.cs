@@ -76,7 +76,7 @@ namespace ReSharperTutorials.Checker
         {            
             var attr = new RunCheckAttribute(OnEvent.None);
 
-            if (_currentStep.Check != null)
+            if (_currentStep.Check.Method != null)
             {
                 // TODO: pass method FQN, parse class name, e.g. ReSharperTutorials.Checker.Tutorial1Checks.CheckMethod1
                 var mInfo = typeof (MainChecker).GetMethod(_currentStep.Check.Method);

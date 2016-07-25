@@ -46,15 +46,18 @@ namespace ReSharperTutorials.CodeNavigator
                 return;
 
             _shellLocks.ExecuteOrQueueReadLock(_lifetime, "Navigate", () =>
-            {
-                var project = PsiNavigationHelper.GetProjectByName(Solution, step.NavNode.ProjectName);
+            {                
+                _psiFiles.CommitAllDocumentsAsync(() =>
+                {
+                    var project = PsiNavigationHelper.GetProjectByName(Solution, step.NavNode.ProjectName);
 
-                var file = PsiNavigationHelper.GetCSharpFile(project, step.NavNode.FileName);
+                    var file = PsiNavigationHelper.GetCSharpFile(project, step.NavNode.FileName);
 
-                var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName, step.NavNode.MethodName, 
-                    step.NavNode.MethodNameOccurrence, step.NavNode.TextToFind, step.NavNode.TextToFindOccurrence);
+                    var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName, step.NavNode.MethodName,
+                        step.NavNode.MethodNameOccurrence, step.NavNode.TextToFind, step.NavNode.TextToFindOccurrence);
 
-                NavigateToNode(node, true);
+                    NavigateToNode(node, true);
+                });                                
             });
         }
     

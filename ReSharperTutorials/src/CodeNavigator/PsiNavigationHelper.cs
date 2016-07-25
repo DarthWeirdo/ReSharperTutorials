@@ -90,101 +90,26 @@ namespace ReSharperTutorials.CodeNavigator
                 return file?.GetPsiFiles<CSharpLanguage>().SafeOfType<ICSharpFile>().SingleOrDefault();        
         }
 
-        [CanBeNull]
-        public static IDeclaration GetDeclaration(ITreeNode node)
-        {
-            while (null != node)
-            {
-                var declaration = node as IDeclaration;
-                if (null != declaration)
-                    return declaration;
-                node = node.Parent;
-            }
-            return null;
-        }
-
-        [CanBeNull]
-        public static IDeclaredElement GetDeclaredElement(ITreeNode node)
-        {
-            var declaration = GetDeclaration(node);            
-            return declaration?.DeclaredElement;
-        }
-
-        #region High-level R# navigation (not used)
-
-        public static void NavigateToMethod(ICSharpFile file, string typeName, string methodName, IShellLocks shellLocks, Lifetime lifetime)
-        {
-            var treeNodeList = file.EnumerateTo(file.LastChild);            
-
-            var methods = (from treeNode in treeNodeList
-                let element = GetDeclaredElement(treeNode)
-                let typeElement = element as ITypeElement
-                where typeElement != null
-                where typeElement.GetFullClrName() == typeName
-                select typeElement.GetAllMethods()).FirstOrDefault();
-
-            if (methods == null) return;
-
-            var targetMethod = methods.FirstOrDefault(method => method.ShortName == methodName);            
-
-            shellLocks.ReentrancyGuard.ExecuteOrQueue("Navigate", () =>
-            {
-                targetMethod.Navigate(true);                
-            });            
-        }        
-
-        public static void NavigateToType(ICSharpFile file, string typeName, IShellLocks shellLocks, Lifetime lifetime)
-        {
-            var treeNodeList = file.EnumerateTo(file.LastChild);
-
-            var targetType = (from treeNode in treeNodeList
-                let element = GetDeclaredElement(treeNode)
-                let typeElement = element as ITypeElement
-                where typeElement != null                           
-                where typeElement.GetFullClrName() == typeName
-                select typeElement).FirstOrDefault();
-
-           shellLocks.ReentrancyGuard.ExecuteOrQueue("Navigate", () =>
-           {
-               targetType.Navigate(true);
-           });
-        }
-
-        public static void NavigateToText(ICSharpFile file, string typeName, string methodName, string text, int textOcc, IShellLocks shellLocks, Lifetime lifetime)
-        {
-            var treeNodeList = file.EnumerateTo(file.LastChild);
-
-            var methods = (from treeNode in treeNodeList
-                           let element = GetDeclaredElement(treeNode)
-                           let typeElement = element as ITypeElement
-                           where typeElement != null
-                           where typeElement.GetFullClrName() == typeName
-                           select typeElement.GetAllMethods()).FirstOrDefault();
-
-            if (methods == null) return;
-
-            var targetMethod = methods.FirstOrDefault(method => method.ShortName == methodName);
-
-            shellLocks.ReentrancyGuard.ExecuteOrQueue("Navigate", () => { targetMethod.Navigate(true);});
-            shellLocks.ReentrancyGuard.ExecuteOrQueue("FindText", () =>
-            {
-                VsIntegration.NavigateToTextInCurrentDocument(text, textOcc);
-            });            
-        }
-        #endregion
 
         [CanBeNull]
         public static ITreeNode GetTypeNodeByFullClrName(ICSharpFile file, string name)
         {
-            var treeNodeList = file.EnumerateTo(file.LastChild);            
+            
+            var namespaceName = GetNamespaceNameFromFqn(name);
+            var shortName = GetShortNameFromFqn(name);
 
-            var resultList = (from node in treeNodeList
-                              let element = GetDeclaredElement(node)
-                              let typeElement = element as ITypeElement
-                              where typeElement != null && typeElement.GetFullClrName() == name
+            var namespaceDecls = file.NamespaceDeclarationsEnumerable;
+            var namespaceDecl = (from decl in namespaceDecls
+                                 where decl.DeclaredName == namespaceName
+                                 select decl).FirstOrDefault();
+
+            if (namespaceDecl == null) return null;                    
+            var typeDecls = namespaceDecl.TypeDeclarationsEnumerable;
+            var resultList = (from node in typeDecls
+                              where node.DeclaredName == shortName
                               select node).ToList();
 
-            return resultList.FirstOrDefault();
+            return resultList.FirstOrDefault();           
         }
 
 
@@ -201,9 +126,9 @@ namespace ReSharperTutorials.CodeNavigator
                                where treeNode is IMethodDeclaration
                                let method = (IMethodDeclaration)treeNode
                                where method.DeclaredName == methodName
-                               select treeNode);
+                               select treeNode).AsArray();
 
-            return resultList.AsArray().Length > 0 ? resultList.AsArray()[methodOccurrence] : null;
+            return resultList.Length > 0 ? resultList[methodOccurrence] : null;
         }
 
 
@@ -245,11 +170,11 @@ namespace ReSharperTutorials.CodeNavigator
             else
                 return null;                
 
-            var result = from treeNode in treeNodeList
+            var result = (from treeNode in treeNodeList
                          where treeNode.GetText() == navText
-                         select treeNode;
+                         select treeNode).AsArray();
 
-            return result.AsArray().Length > 0 ? result.AsArray()[tOccIndex] : null;
+            return result.Length > 0 ? result[tOccIndex] : null;
             
         }
 
@@ -258,6 +183,13 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var pos = fqn.LastIndexOf(".", StringComparison.Ordinal) + 1;
             return pos > 0 ? fqn.Substring(pos) : fqn;
+        }
+
+
+        private static string GetNamespaceNameFromFqn(string fqn)
+        {
+            var pos = fqn.LastIndexOf(".", StringComparison.Ordinal) + 1;
+            return pos > 0 ? fqn.Substring(0, pos - 1) : fqn;
         }
 
 
