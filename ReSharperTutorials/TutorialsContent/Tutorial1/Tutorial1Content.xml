@@ -17,7 +17,7 @@
     </step>
 
     <step li="2">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass"/>
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep2"/>
       <text>
         <h1>
           <shortcut>ReSharper_AltEnter</shortcut>
@@ -132,7 +132,7 @@
     </step>    
 
     <step li="8" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.SomeClass"/>
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep8"/>
       <check method="CheckTutorial1Step8"/>
       <text>
         <h1>Create a class</h1>
@@ -156,8 +156,20 @@
       </text>
     </step>
 
-    <step li="9" strikeOnDone ="true">      
-      <check method="CheckTutorial1Step9"/>
+    <step li="9" strikeOnDone ="true">
+      <check Action="Edit.InsertTab" method="CheckTutorial1Step9"/>
+      <text>
+        <h1>Create a class</h1>        
+        <ol>
+          <li>
+            Hit <span class="shortcut">Tab</span> to finish class creation.
+          </li>          
+        </ol>
+      </text>
+    </step>
+
+    <step li="10" strikeOnDone ="true">      
+      <check method="CheckTutorial1Step10"/>
       <text>
         <h1>Create a constructor</h1>
         <p>
@@ -177,8 +189,9 @@
       </text>
     </step>
 
-    <step li="10" strikeOnDone ="true">
-      <check method="CheckTutorial1Step10"/>
+    <step li="11" strikeOnDone ="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep11"/>
+      <check method="CheckTutorial1Step11"/>
       <text>
         <h1>Create a property</h1>
         <p>
@@ -198,7 +211,7 @@
       </text>
     </step>
 
-    <step li="11">
+    <step li="12">
       <text>
         <h1>Predefined live templates</h1>
         <p>
@@ -215,7 +228,7 @@
       </text>
     </step>
 
-    <step li="12">
+    <step li="13">
       <text>
         <h1>Refactorings</h1>
         <p>
@@ -226,7 +239,7 @@
       </text>
     </step>
 
-    <step li="13" strikeOnDone ="true">
+    <step li="14" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.MyNewClass"/>
       <check action="ReSharper.ReSharper_RefactorThis" method="CheckTutorial1Step12"/>
       <text>
@@ -248,7 +261,7 @@
       </text>
     </step>
 
-    <step li="14">
+    <step li="15">
       <text>
         <h1>Refactorings</h1>
         <p>
@@ -259,7 +272,7 @@
       </text>
     </step>
 
-    <step li="15" strikeOnDone ="true">
+    <step li="16" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="MyNewClass.cs" type="Tutorial1_EssentialShortcuts.MyNewClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
       <check method="CheckTutorial1Step1519" />
       <text>
@@ -279,7 +292,7 @@
       </text>
     </step>
 
-    <step li="16" strikeOnDone ="true">      
+    <step li="17" strikeOnDone ="true">      
       <check action="ReSharper.ReSharper_FindUsages" method="CheckTutorial1Step16" />
       <text>
         <h1>Find usages</h1>
@@ -300,7 +313,7 @@
       </text>
     </step>
 
-    <step li="17" strikeOnDone ="true">
+    <step li="18" strikeOnDone ="true">
       <check action="ReSharper.ReSharper_GotoType" method="CheckTutorial1Step17" />
       <text>
         <h1>Go to everything</h1>
@@ -323,7 +336,7 @@
       </text>
     </step>
 
-    <step li="18">
+    <step li="19">
       <text>
         <h1>Navigate to</h1>
         <p>
@@ -335,7 +348,7 @@
       </text>
     </step>
 
-    <step li="19" strikeOnDone ="true">
+    <step li="20" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="MyNewClass.cs" type="Tutorial1_EssentialShortcuts.MyNewClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
       <check action="ReSharper.ReSharper_NavigateTo" method="CheckTutorial1Step1519" />
       <text>
@@ -357,7 +370,7 @@
       </text>
     </step>
 
-    <step li="20">
+    <step li="21">
       <text>
         <h1>Rearranging code elements</h1>
         <p>
@@ -369,7 +382,7 @@
       </text>
     </step>
 
-    <step li="21" strikeOnDone ="true">
+    <step li="22" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence ="1"/>
       <check action="ReSharper.ReSharper_MoveRight" method="CheckTutorial1Step21" />
       <text>
@@ -388,7 +401,7 @@
       </text>
     </step>
 
-    <step li="22" strikeOnDone ="true">
+    <step li="23" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence ="1"/>
       <check action="ReSharper.ReSharper_MoveUp"/>
       <text>
@@ -407,7 +420,7 @@
       </text>
     </step>
 
-    <step li="23">
+    <step li="24">
       <text>
         <h1>That's All!</h1>
         <p>

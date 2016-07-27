@@ -95,7 +95,7 @@ namespace ReSharperTutorials.CodeNavigator
         public static ITreeNode GetTypeNodeByFullClrName(ICSharpFile file, string name)
         {
             
-            var namespaceName = GetNamespaceNameFromFqn(name);
+            var namespaceName = GetLongNameFromFqn(name);
             var shortName = GetShortNameFromFqn(name);
 
             var namespaceDecls = file.NamespaceDeclarationsEnumerable;
@@ -118,15 +118,21 @@ namespace ReSharperTutorials.CodeNavigator
         public static ITreeNode GetMethodNodeByFullClrName(ICSharpFile file, string typeName, string methodName, int methodOccurrence)
         {
             var typeNode = GetTypeNodeByFullClrName(file, typeName);
-            if (typeNode == null) return null;
+            var typeDecl = typeNode as IClassDeclaration;
+            if (typeDecl == null) return null;
+            var methodDecls = typeDecl.MethodDeclarationsEnumerable;
 
-            var treeNodeList = typeNode.EnumerateTo(typeNode.NextSibling);
+            var resultList = (from decl in methodDecls
+                              where decl.DeclaredName == methodName
+                              select decl).AsArray();
 
-            var resultList = (from treeNode in treeNodeList
-                               where treeNode is IMethodDeclaration
-                               let method = (IMethodDeclaration)treeNode
-                               where method.DeclaredName == methodName
-                               select treeNode).AsArray();
+//            var treeNodeList = typeNode.EnumerateTo(typeNode.NextSibling);
+//
+//            var resultList = (from treeNode in treeNodeList
+//                               where treeNode is IMethodDeclaration
+//                               let method = (IMethodDeclaration)treeNode
+//                               where method.DeclaredName == methodName
+//                               select treeNode).AsArray();
 
             return resultList.Length > 0 ? resultList[methodOccurrence] : null;
         }
@@ -179,14 +185,14 @@ namespace ReSharperTutorials.CodeNavigator
         }
 
 
-        private static string GetShortNameFromFqn(string fqn)
+        public static string GetShortNameFromFqn(string fqn)
         {
             var pos = fqn.LastIndexOf(".", StringComparison.Ordinal) + 1;
             return pos > 0 ? fqn.Substring(pos) : fqn;
         }
 
 
-        private static string GetNamespaceNameFromFqn(string fqn)
+        public static string GetLongNameFromFqn(string fqn)
         {
             var pos = fqn.LastIndexOf(".", StringComparison.Ordinal) + 1;
             return pos > 0 ? fqn.Substring(0, pos - 1) : fqn;

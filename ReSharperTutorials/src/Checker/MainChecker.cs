@@ -255,14 +255,20 @@ namespace ReSharperTutorials.Checker
             return TypeDeclarationExists("Tutorial1_EssentialShortcuts", "Essentials.cs", "Tutorial1_EssentialShortcuts.MyNewClass");
         }
 
-        [RunCheck(OnEvent.PsiChange)]
+        [RunCheck(OnEvent.CaretMove)]
         public bool CheckTutorial1Step9()
+        {
+            return TypeDeclarationExists("Tutorial1_EssentialShortcuts", "Essentials.cs", "Tutorial1_EssentialShortcuts.MyNewClass");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step10()
         {
             return StringExists("Tutorial1_EssentialShortcuts", "Essentials.cs", "public MyNewClass()");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step10()
+        public bool CheckTutorial1Step11()
         {
             return StringExists("Tutorial1_EssentialShortcuts", "Essentials.cs", "public SomeClass SomeClass");
         }

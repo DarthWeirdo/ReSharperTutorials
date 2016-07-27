@@ -2,8 +2,8 @@
 {
     public class Check
     {
-        public string Action;
-        public string Method;
+        public readonly string Action;
+        public readonly string Method;
 
 
         public Check(string action, string method)

@@ -9,9 +9,10 @@
         public readonly int MethodNameOccurrence;
         public readonly string TextToFind;
         public readonly int TextToFindOccurrence;
+        public readonly string RunMethod;
 
 
-        public NavNode(string projectName, string fileName, string typeName, string methodName, int methodNameOccurrence, string textToFind, int textToFindOccurrence)
+        public NavNode(string projectName, string fileName, string typeName, string methodName, int methodNameOccurrence, string textToFind, int textToFindOccurrence, string runMethod)
         {
             ProjectName = projectName;
             FileName = fileName;
@@ -20,6 +21,7 @@
             MethodNameOccurrence = methodNameOccurrence;
             TextToFind = textToFind;
             TextToFindOccurrence = textToFindOccurrence;
+            RunMethod = runMethod;
         }        
 
     }

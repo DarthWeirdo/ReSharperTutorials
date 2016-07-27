@@ -95,7 +95,9 @@ namespace ReSharperTutorials.Utils
                                 var methodNameOccurrence = Convert.ToInt32(reader.GetAttribute("methodOccurrence"));
                                 var textToFind = reader.GetAttribute("textToFind");
                                 var textToFindOccurrence = Convert.ToInt32(reader.GetAttribute("textToFindOccurrence"));
-                                navNode = new NavNode(projectName, file, typeName, methodName, methodNameOccurrence, textToFind, textToFindOccurrence);
+                                var runMethod = reader.GetAttribute("runMethod");
+                                navNode = new NavNode(projectName, file, typeName, methodName, methodNameOccurrence, textToFind, 
+                                    textToFindOccurrence, runMethod);
                                 break;
 
                             case "check":
