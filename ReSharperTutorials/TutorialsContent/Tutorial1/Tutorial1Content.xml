@@ -7,6 +7,38 @@
     <step li="1">
       <text>
         <h1>
+          Welcome!
+        </h1>
+        <p>
+          We're glad to welcome you to our first interactive tutorial that will acquaint you with the most important ReSharper features. 
+          Please read the notes below before running the tutorial.          
+        </p>
+        <p>
+          <b>IMPORTANT NOTES:</b>
+          <list>
+            <li>
+              The tutorial uses its own sample solution and doesn't affect your Visual Studio instance in any way.
+            </li>
+            <li>
+              The tutorial is interactive: 
+              <list>
+                <li>It consists from a number of steps.</li>
+                <li>Each step is a set of actions you should perform.</li>
+                <li>Your progress is checked automatically.</li>
+              </list>              
+            </li>
+            <li>
+              Please follow the instructions precisely and do not take any actions other than those suggested in a step.
+            </li>            
+          </list>
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Let's Start!</button>
+      </text>
+    </step>
+    
+    <step li="2" strikeOnDone ="true">
+      <text>
+        <h1>
           <shortcut>ReSharper_AltEnter</shortcut>
         </h1>
         <p>
@@ -16,7 +48,7 @@
       </text>
     </step>
 
-    <step li="2">
+    <step li="3" strikeOnDone ="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep2"/>
       <text>
         <h1>
@@ -29,21 +61,23 @@
               A "squiggle" under a code element, e.g. <code class="squiggly">badlyNamedClass</code>.
             </li>
             <li>
-              Icon displayed in gutter margin on left, e.g.
-              <p>Yellow lightbulb to fix warning,</p>
-            </li>
-            <li>Red light bulb to fix error,</li>
-            <li>Hammer to context action,</li>
-            <li>etc.</li>
+              Icon displayed in gutter margin on left, e.g.:
+              <list>
+                <li>Yellow lightbulb to fix warning,</li>
+                <li>Red light bulb to fix error,</li>
+                <li>Hammer to context action,</li>
+                <li>etc.</li>    
+              </list>              
+            </li>            
           </list>
         </p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
     </step>
 
-    <step li="3" strikeOnDone ="true">
+    <step li="4" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass"/>
-      <check action="ReSharper_AltEnter" method="CheckTutorial1Step2"/>
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2"/>
       <text>
         <h1>Apply QuickFix for an inspection</h1>
         <p>
@@ -63,9 +97,9 @@
       </text>
     </step>
 
-    <step li="4" strikeOnDone ="true">
+    <step li="5" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg" textToFindOccurrence ="2"/>
-      <check action="ReSharper_AltEnter" method="CheckTutorial1Step3"/>
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step3"/>
       <text>
         <h1>Apply context action</h1>
         <ol>
@@ -82,9 +116,9 @@
       </text>
     </step>
 
-    <step li="5" nextStep="Auto" strikeOnDone ="true">
+    <step li="6" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.GoToAction"/>
-      <check action="ReSharper_AltEnter" method="CheckTutorial1Step4"/>
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step4"/>
       <text>
         <h1>Go to and apply an action</h1>
         <p>
@@ -108,7 +142,7 @@
       </text>
     </step>
 
-    <step li="6">
+    <step li="7" strikeOnDone ="true">
       <text>        
         <p>
           Note how many different types of actions we've performed with only one shortcut.
@@ -119,7 +153,7 @@
       </text>
     </step>
 
-    <step li="7">
+    <step li="8" strikeOnDone ="true">
       <text>
         <h1>Predefined live templates</h1>
         <p>
@@ -131,9 +165,9 @@
       </text>
     </step>    
 
-    <step li="8" strikeOnDone ="true">
+    <step li="9" strikeOnDone ="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep8"/>
-      <check method="CheckTutorial1Step8"/>
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step8"/>
       <text>
         <h1>Create a class</h1>
         <p>
@@ -156,8 +190,8 @@
       </text>
     </step>
 
-    <step li="9" strikeOnDone ="true">
-      <check Action="Edit.InsertTab" method="CheckTutorial1Step9"/>
+    <step li="10" strikeOnDone ="true">
+      <check Action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step9"/>
       <text>
         <h1>Create a class</h1>        
         <ol>
@@ -168,8 +202,8 @@
       </text>
     </step>
 
-    <step li="10" strikeOnDone ="true">      
-      <check method="CheckTutorial1Step10"/>
+    <step li="11" strikeOnDone ="true">      
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step10"/>
       <text>
         <h1>Create a constructor</h1>
         <p>
@@ -189,9 +223,9 @@
       </text>
     </step>
 
-    <step li="11" strikeOnDone ="true">
+    <step li="12" strikeOnDone ="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep11"/>
-      <check method="CheckTutorial1Step11"/>
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step11"/>
       <text>
         <h1>Create a property</h1>
         <p>
@@ -211,7 +245,7 @@
       </text>
     </step>
 
-    <step li="12">
+    <step li="13" strikeOnDone ="true">
       <text>
         <h1>Predefined live templates</h1>
         <p>
@@ -228,7 +262,7 @@
       </text>
     </step>
 
-    <step li="13">
+    <step li="14" strikeOnDone ="true">
       <text>
         <h1>Refactorings</h1>
         <p>
@@ -239,9 +273,9 @@
       </text>
     </step>
 
-    <step li="14" strikeOnDone ="true">
+    <step li="15" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.MyNewClass"/>
-      <check action="ReSharper.ReSharper_RefactorThis" method="CheckTutorial1Step12"/>
+      <check action="ReSharper.ReSharper_RefactorThis" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step12"/>
       <text>
         <h1>Move to another file</h1>
         <p>
@@ -261,7 +295,7 @@
       </text>
     </step>
 
-    <step li="15">
+    <step li="16" strikeOnDone ="true">
       <text>
         <h1>Refactorings</h1>
         <p>
@@ -272,9 +306,9 @@
       </text>
     </step>
 
-    <step li="16" strikeOnDone ="true">
+    <step li="17" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="MyNewClass.cs" type="Tutorial1_EssentialShortcuts.MyNewClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
-      <check method="CheckTutorial1Step1519" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step1519" />
       <text>
         <h1>Go To Declaration</h1>
         <p>
@@ -292,8 +326,8 @@
       </text>
     </step>
 
-    <step li="17" strikeOnDone ="true">      
-      <check action="ReSharper.ReSharper_FindUsages" method="CheckTutorial1Step16" />
+    <step li="18" strikeOnDone ="true">      
+      <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step16" />
       <text>
         <h1>Find usages</h1>
         <p>
@@ -313,8 +347,8 @@
       </text>
     </step>
 
-    <step li="18" strikeOnDone ="true">
-      <check action="ReSharper.ReSharper_GotoType" method="CheckTutorial1Step17" />
+    <step li="19" strikeOnDone ="true">
+      <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step17" />
       <text>
         <h1>Go to everything</h1>
         <p>
@@ -336,7 +370,7 @@
       </text>
     </step>
 
-    <step li="19">
+    <step li="20" strikeOnDone ="true">
       <text>
         <h1>Navigate to</h1>
         <p>
@@ -348,9 +382,9 @@
       </text>
     </step>
 
-    <step li="20" strikeOnDone ="true">
+    <step li="21" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="MyNewClass.cs" type="Tutorial1_EssentialShortcuts.MyNewClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
-      <check action="ReSharper.ReSharper_NavigateTo" method="CheckTutorial1Step1519" />
+      <check action="ReSharper.ReSharper_NavigateTo" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step1519" />
       <text>
         <h1>Navigate to</h1>
         <p>
@@ -370,7 +404,7 @@
       </text>
     </step>
 
-    <step li="21">
+    <step li="22" strikeOnDone ="true">
       <text>
         <h1>Rearranging code elements</h1>
         <p>
@@ -382,9 +416,9 @@
       </text>
     </step>
 
-    <step li="22" strikeOnDone ="true">
+    <step li="23" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence ="1"/>
-      <check action="ReSharper.ReSharper_MoveRight" method="CheckTutorial1Step21" />
+      <check action="ReSharper.ReSharper_MoveRight" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step21" />
       <text>
         <h1>Rearranging code elements</h1>
         <p>
@@ -401,7 +435,7 @@
       </text>
     </step>
 
-    <step li="23" strikeOnDone ="true">
+    <step li="24" strikeOnDone ="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence ="1"/>
       <check action="ReSharper.ReSharper_MoveUp"/>
       <text>
@@ -420,7 +454,7 @@
       </text>
     </step>
 
-    <step li="24">
+    <step li="25">
       <text>
         <h1>That's All!</h1>
         <p>

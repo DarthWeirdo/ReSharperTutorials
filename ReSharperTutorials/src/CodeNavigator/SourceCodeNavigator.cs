@@ -63,7 +63,7 @@ namespace ReSharperTutorials.CodeNavigator
                     var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName, step.NavNode.MethodName,
                         step.NavNode.MethodNameOccurrence, step.NavNode.TextToFind, step.NavNode.TextToFindOccurrence);
 
-                    NavigateToNode(node, true);
+                    PsiNavigationHelper.NavigateToNode(_documentManager, _editorManager, node, true);
                 });                                
             });
         }
@@ -76,9 +76,9 @@ namespace ReSharperTutorials.CodeNavigator
             var customType = Type.GetType(typeName);
             if (customType == null)
                 throw new ApplicationException("Unknown custom navigation class. Try reinstalling the plugin.");                        
-
             var checkMethod = customType.GetMethod(methodName);
-            if (checkMethod == null) return;
+            if (checkMethod == null)
+                throw new ApplicationException("Unknown custom navigation method. Try reinstalling the plugin."); 
             var parameterArray = new object[] { _solution, _editorManager, _documentManager };
             var customInst = Activator.CreateInstance(customType, parameterArray);
 
@@ -87,25 +87,5 @@ namespace ReSharperTutorials.CodeNavigator
                 _psiFiles.CommitAllDocumentsAsync(() => { checkMethod.Invoke(customInst, null);});
             });            
         }
-
-
-        private void NavigateToNode(ITreeNode treeNode, bool activate)
-        {            
-            if (treeNode == null) return;
-
-            var range = treeNode.GetDocumentRange();
-            if (!range.IsValid()) return;                
-
-            var projectFile = _documentManager.TryGetProjectFile(range.Document);
-            if (projectFile == null) return;
-
-            var textControl = _editorManager.OpenProjectFile(projectFile, activate);
-
-            textControl?.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
-
-//            textControl.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
-//            textControl.Selection.SetRange(range.TextRange);
-        }
-        
     }
 }

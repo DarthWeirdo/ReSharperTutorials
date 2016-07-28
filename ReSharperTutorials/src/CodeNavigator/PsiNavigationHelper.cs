@@ -6,6 +6,7 @@ using JetBrains.Application;
 using JetBrains.Application.platforms;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
+using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Feature.Services.Navigation;
 using JetBrains.ReSharper.Psi;
@@ -13,8 +14,10 @@ using JetBrains.ReSharper.Psi.Caches;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Files;
+using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Paths;
 using JetBrains.ReSharper.Psi.Tree;
+using JetBrains.TextControl;
 using JetBrains.Util;
 using ReSharperTutorials.Utils;
 using PlatformID = JetBrains.Application.platforms.PlatformID;
@@ -199,5 +202,29 @@ namespace ReSharperTutorials.CodeNavigator
         }
 
 
+        public static IPsiModule GetPsiModuleByName(ISolution solution, IProject project, string name)
+        {
+            var modules = solution.PsiModules().GetPsiModules(project);
+            return modules.FirstOrDefault(psiModule => psiModule.DisplayName == name);
+        }
+
+
+        public static void NavigateToNode(DocumentManager documentManager, IEditorManager editorManager, ITreeNode treeNode, bool activate)
+        {            
+            if (treeNode == null) return;
+
+            var range = treeNode.GetDocumentRange();
+            if (!range.IsValid()) return;                
+
+            var projectFile = documentManager.TryGetProjectFile(range.Document);
+            if (projectFile == null) return;
+
+            var textControl = editorManager.OpenProjectFile(projectFile, activate);
+
+            textControl?.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
+
+//            textControl.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
+//            textControl.Selection.SetRange(range.TextRange);
+        }
     }
 }

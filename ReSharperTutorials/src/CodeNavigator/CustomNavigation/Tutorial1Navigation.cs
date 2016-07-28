@@ -60,7 +60,6 @@ namespace ReSharperTutorials.CodeNavigator
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
             textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
-
         }
 
         public void NavigateStep11()
@@ -80,7 +79,6 @@ namespace ReSharperTutorials.CodeNavigator
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
             textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
-
         }
 
         #region Don't forget
@@ -101,30 +99,6 @@ namespace ReSharperTutorials.CodeNavigator
         //            if (projectFile == null) return;
         //            var textControl = EditorManager.OpenProjectFile(projectFile, true);
         //            textControl?.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
-        #endregion
-
-
-        private void NavigateToNode(ITreeNode treeNode, bool activate)
-        {
-            if (treeNode == null) return;
-
-            var range = treeNode.GetDocumentRange();
-            if (!range.IsValid()) return;
-
-            var projectFile = DocumentManager.TryGetProjectFile(range.Document);
-            if (projectFile == null) return;
-
-            var textControl = EditorManager.OpenProjectFile(projectFile, activate);
-
-            textControl.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
-
-//            textControl.Selection.SetRange(range.TextRange);
-        }
-
-        private static IPsiModule GetPsiModuleByName(ISolution solution, IProject project, string name)
-        {
-            var modules = solution.PsiModules().GetPsiModules(project);
-            return modules.FirstOrDefault(psiModule => psiModule.DisplayName == name);
-        }
+        #endregion        
     }
 }

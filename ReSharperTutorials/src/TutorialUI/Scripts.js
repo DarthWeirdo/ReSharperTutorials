@@ -22,6 +22,13 @@ function stepLoad() {
     var pHeight = pElem.clientHeight;
     var cElem = document.getElementById("currentStep");
     cElem.style.top = pHeight + "px";
+
+    var buttons = document.querySelectorAll("div.prevStep button");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;        
+        buttons[i].style.textDecoration = "line-through";
+    }
+
 }
 
 function moveOutPrevStep() {

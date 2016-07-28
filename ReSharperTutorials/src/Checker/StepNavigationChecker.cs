@@ -59,13 +59,7 @@ namespace ReSharperTutorials.Checker
                 () => textControlManager.Legacy.CaretMoved -= caretMoved);
 
             AfterNavigationDone = new Signal<bool>(lifetime, "StepNavigationChecker.AfterNavigationDone");
-        }
-
-        public bool IsUpToDate()
-        {
-            // PsiTimestamp is a time stamp for PsiFiles - use it to check the current PSI is up to date
-            return _psiTimestamp == Solution.GetPsiServices().Files.PsiTimestamp;
-        }
+        }        
 
         public ISolution Solution
         {
@@ -80,39 +74,6 @@ namespace ReSharperTutorials.Checker
             if (Check == null) return;
             if (Check())
                 AfterNavigationDone.Fire(true);
-        }
-
-
-        [CanBeNull]
-        public ITreeNode GetTreeNodeUnderCaret()
-        {
-//            if (!_solution.GetPsiServices().Files.AllDocumentsAreCommitted) return null;
-
-            var projectFile = GetProjectFile(_textControlManager.LastFocusedTextControl.Value);
-            if (projectFile == null)
-                return null;
-
-            var textControl = _textControlManager.LastFocusedTextControl.Value;
-            if (textControl == null)
-                return null;
-
-            var range = textControl.Selection.HasSelection()
-                ? textControl.Selection.RandomRange()
-                : new TextRange(textControl.Caret.Offset());
-
-            var psiSourceFile = projectFile.ToSourceFile().NotNull("File is null");
-
-            var documentRange = range.CreateDocumentRange(projectFile);            
-            var file = psiSourceFile.GetPsiFile(psiSourceFile.PrimaryPsiLanguage, documentRange);
-
-            var element = file?.FindNodeAt(documentRange);
-            return element;
-        }
-
-        [CanBeNull]
-        private IProjectFile GetProjectFile([CanBeNull] ITextControl textControl)
-        {
-            return textControl == null ? null : _documentManager.TryGetProjectFile(textControl.Document);
-        }
+        }        
     }
 }

@@ -116,13 +116,14 @@ namespace ReSharperTutorials.TutStep
 
         private void ShowText(TutorialStep step)
         {
-            var result = $"<div id =\"currentStep\">{step.Text}</div>";
+            var result = $"<div id =\"currentStep\" class =\"currentStep\">{step.Text}</div>";
 
             if (step.Id > 1)
             {
                 var prevStep = _steps[step.Id - 1];
-                if ((prevStep.StrikeOnDone && step.GoToNextStep == GoToNextStep.Auto) || (prevStep.StrikeOnDone && step.Id == _steps.Count))    
-                    result = $"<div id=\"prevStep\">{prevStep.Text}</div> <div id=\"currentStep\">{step.Text}</div>";                
+//                if ((prevStep.StrikeOnDone && step.GoToNextStep == GoToNextStep.Auto) || (prevStep.StrikeOnDone && step.Id == _steps.Count))    
+                if (prevStep.StrikeOnDone)    
+                    result = $"<div id=\"prevStep\" class=\"prevStep\">{prevStep.Text}</div> <div id=\"currentStep\" class =\"currentStep\">{step.Text}</div>"; 
             }
 
             _stepView.StepText = result;
