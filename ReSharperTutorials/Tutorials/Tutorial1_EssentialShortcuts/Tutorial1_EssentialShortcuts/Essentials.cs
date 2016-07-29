@@ -28,7 +28,7 @@ namespace Tutorial1_EssentialShortcuts
 
     }
     
-    public class GoToAction
+    public class FindAction
     {
     }
 

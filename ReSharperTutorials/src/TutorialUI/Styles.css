@@ -12,11 +12,41 @@ body
     scrollbar-base-color: SCRLTRCKCLR;
 }
 
+li { margin: 0 0 5px 0; }
 p { text-align:justify }          
 .done { text-decoration:line-through; color:DISFNT; } 
 .nextButton {float: right;}             
 .runButton {float: right; margin-bottom: 10px}             
-.shortcut { font-weight: bold; }
+.shortcut {
+    font-family: monospace;
+    position:relative;
+    display:inline-block;
+    margin:0 2px;
+    padding:4px 8px;
+    background-color:transparent;
+    border:1px solid #cccbcb;
+    border-radius:25px;
+    line-height:1em;
+    white-space:nowrap;
+    -webkit-box-shadow:0 2px 0 -1px #fff,0 2px 0 #cccbcb;
+    box-shadow:0 2px 0 -1px #fff,0 2px 0 #cccbcb;
+}
+
+code {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace; 
+    background-color:CDECLR;
+    /*box-shadow:0 0 5px rgba(0,0,0,0.12), 0 0 5px rgba(0,0,0,0.24);*/
+    margin: 4px 2px;
+    padding: 4px 8px; 
+    white-space:nowrap;   
+    border-radius: 2px;    
+    font-style: normal;
+    line-height: 1em;
+    vertical-align: baseline;
+    display:inline-block;
+    position:relative;
+}
+
 .title { margin-bottom: 10px; margin-top: 5px}
 .loading {
     position: absolute;   

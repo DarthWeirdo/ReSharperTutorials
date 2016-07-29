@@ -15,22 +15,22 @@
         </p>
         <p>
           <b>IMPORTANT NOTES:</b>
-          <list>
+          <ul>
             <li>
               The tutorial uses its own sample solution and doesn't affect your Visual Studio instance in any way.
             </li>
             <li>
               The tutorial is interactive: 
-              <list>
+              <ul>
                 <li>It consists from a number of steps.</li>
                 <li>Each step is a set of actions you should perform.</li>
                 <li>Your progress is checked automatically.</li>
-              </list>              
+              </ul>              
             </li>
             <li>
               Please follow the instructions precisely and do not take any actions other than those suggested in a step.
             </li>            
-          </list>
+          </ul>
         </p>
         <button class="nextButton" onclick="buttonClick()">Let's Start!</button>
       </text>
@@ -39,7 +39,7 @@
     <step li="2" strikeOnDone ="true">
       <text>
         <h1>
-          <shortcut>ReSharper_AltEnter</shortcut>
+          Alt+Enter
         </h1>
         <p>
           This is by far the <b>most important shortcut</b> in ReSharper. It's used to apply quick fixes to inspections, or apply context specific actions, depending on location of text caret. Also it allows searching and applying all ReSharper commands direct from the menu. 
@@ -52,24 +52,24 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep2"/>
       <text>
         <h1>
-          <shortcut>ReSharper_AltEnter</shortcut>
+          Alt+Enter
         </h1>        
         <p>
           ReSharper always gives you a clue when <shortcut>ReSharper_AltEnter</shortcut> can be applied:
-          <list>
+          <ul>
             <li>
-              A "squiggle" under a code element, e.g. <code class="squiggly">badlyNamedClass</code>.
+              A <span class="squiggly">squiggle</span> under a code element, e.g. <code>badlyNamedClass</code>.
             </li>
             <li>
               Icon displayed in gutter margin on left, e.g.:
-              <list>
-                <li>Yellow lightbulb to fix warning,</li>
-                <li>Red light bulb to fix error,</li>
-                <li>Hammer to context action,</li>
-                <li>etc.</li>    
-              </list>              
+              <ul>
+                <li>Yellow lightbulb to fix warning</li>
+                <li>Red light bulb to fix error</li>
+                <li>Hammer to context action</li>
+                <li>and others...</li>    
+              </ul>              
             </li>            
-          </list>
+          </ul>
         </p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
@@ -85,7 +85,7 @@
         </p>
         <ol>
           <li>
-            Place text caret on <code class="squiggly">badlyNamedClass</code>. Note the lightbulb in the margin on the left.
+            The caret must be on <code>badlyNamedClass</code>. Note the lightbulb in the margin on the left.
         </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut>.
@@ -104,7 +104,7 @@
         <h1>Apply context action</h1>
         <ol>
           <li>
-            Place text caret behind <code>arg</code>. Note the hammer action - a context action is available.
+            The text caret must be behind <code>arg</code>. Note the hammer action - a context action is available.
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut>.
@@ -120,14 +120,14 @@
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.GoToAction"/>
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step4"/>
       <text>
-        <h1>Go to and apply an action</h1>
+        <h1>Find and apply an action</h1>
         <p>
           Use <shortcut>ReSharper_AltEnter</shortcut> to run any ReSharper command. For example, 
           let's use it to rename a class.
         </p>
         <ol>
           <li>
-            Place caret on <code>GoToAction</code> class name.
+            The caret must be on <code>FindAction</code> class name.
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut>. Note the magnifying glass.
@@ -143,7 +143,8 @@
     </step>
 
     <step li="7" strikeOnDone ="true">
-      <text>        
+      <text>
+        <h1>Alt+Enter</h1>
         <p>
           Note how many different types of actions we've performed with only one shortcut.
           But enough for today with <shortcut>ReSharper_AltEnter</shortcut>!
@@ -175,7 +176,7 @@
         </p>
         <ol>
           <li>
-            Move caret to a free place where you want to create a new class.
+            The caret should be on some free place where a new class can be created.
           </li>
           <li>
             Start typing <span class="userInput">class</span>.
@@ -194,7 +195,7 @@
       <check Action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step9"/>
       <text>
         <h1>Create a class</h1>        
-        <ol>
+        <ol start="5">
           <li>
             Hit <span class="shortcut">Tab</span> to finish class creation.
           </li>          
@@ -211,7 +212,7 @@
         </p>
         <ol>
           <li>
-            Place caret on a new line inside the class.
+            The caret must be on a new line inside the class.
           </li>
           <li>
             Start typing <span class="userInput">ctor</span>.
@@ -233,10 +234,10 @@
         </p>        
         <ol>
           <li>
-            Place caret on a new line inside the class.
+            The caret must be on a new line inside the class.
           </li>
           <li>
-            Start typing <span class="userInput">prop</span>. <i>Don't forget that R# has templates for almost everything including properties!</i>
+            Start typing <span class="userInput">prop</span>.
           </li>
           <li>
             Create the <code>public SomeClass SomeClass</code> property.
@@ -283,7 +284,7 @@
         </p>
         <ol>
           <li>
-            Place caret on the <code>MyNewClass</code> declaration.
+            The caret must be on the <code>MyNewClass</code> declaration.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
@@ -335,13 +336,13 @@
         </p>
         <ol>
           <li>
-            Place caret on <code>SomeClass</code>.
+            The caret must be on <code>SomeClass</code>.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
           </li>
           <li>
-            Using the <b>Find Results</b> window, navigate to the first usage of the class - <code>private SomeClass _someField</code>.
+            Using the <b>Find Results</b> window, navigate to the first usage of the class in <b>Essentials.cs</b> - <code>private SomeClass _someField</code> (using double-click).
           </li>
         </ol>
       </text>
@@ -354,7 +355,7 @@
         <p>
           Great! Now, say, we want to navigate back to <code>MyNewClass</code>. Let's do this by using
           the superhelpful <b>Go to everything</b> (<shortcut>ReSharper.ReSharper_GotoType</shortcut>) shortcut.
-          It allows you to navigate to 
+          It allows you to navigate to any type, symbol, file, recent edit or file, or recently viewed method.
         </p>
         <ol>
           <li>
@@ -364,7 +365,7 @@
             R# supports camelhumps, so you can simply type <span class="userInput">mnc</span> in the opened menu.
           </li>
           <li>
-            Select <code>MyNewClass</code> in the menu and navigate to it.
+            Select <code>MyNewClass</code> in the list and navigate to it.
           </li>
         </ol>
       </text>
@@ -392,7 +393,7 @@
         </p>
         <ol>
           <li>
-            Place caret on the <code>SomeClass</code> type in the property declaration.
+            The caret must be on the <code>SomeClass</code> type in the property declaration.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
@@ -441,11 +442,11 @@
       <text>
         <h1>Rearranging code elements</h1>
         <p>
-          Now, we want to move <code>ReturnString</code> up - above the .
+          Now, we want to move <code>ReturnString</code> up - above the <code>ReturnSomeClass()</code> method.
         </p>
         <ol>
           <li>
-            Place caret on the <code>ReturnString</code> method declaration.
+            The caret can be anywhere in the <code>ReturnString</code> method declaration.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_MoveUp</shortcut>.

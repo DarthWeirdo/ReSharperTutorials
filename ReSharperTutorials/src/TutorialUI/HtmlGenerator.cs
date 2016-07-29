@@ -19,6 +19,7 @@ namespace ReSharperTutorials.TutorialUI
         private string _buttonBackColor;
         private string _buttonForeColor;
         private string _buttonHoverColor;
+        private string _codeColor;
         private const string HtmlDoctype = "<!DOCTYPE html>";
         private const string HtmlHead = @"<HTML><HEAD><TITLE></TITLE>";
 
@@ -90,6 +91,10 @@ namespace ReSharperTutorials.TutorialUI
             var buttonHoverColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ContextMenuItemMouseOverBackgroundGradientMiddle1);
             buttonHoverColor.ForEachValue(_lifetime, (lt, color) => _buttonHoverColor = ColorAsHtmlRgb(color));
 
+//            var codeColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ContextMenuItemMouseOverBackgroundGradientEnd);
+            var codeColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ToolWindowSelectedInactiveTreeItemBackground);
+            codeColor.ForEachValue(_lifetime, (lt, color) => _codeColor = ColorAsHtmlRgb(color));
+
             html.AppendLine(HtmlDoctype);
             html.AppendLine(HtmlHead);
             BuildCss(html);
@@ -103,6 +108,7 @@ namespace ReSharperTutorials.TutorialUI
             html.Replace("BTNBCKCLR", _buttonBackColor);  // button background
             html.Replace("BTNFORECLR", _buttonForeColor);  // button text                        
             html.Replace("BTNHVRCLR", _buttonForeColor);  // button text                        
+            html.Replace("CDECLR", _codeColor);  // button text                        
         }
 
         private static void BuildFooter(StringBuilder html)

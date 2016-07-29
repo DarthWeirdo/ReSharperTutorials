@@ -60,8 +60,7 @@ namespace ReSharperTutorials.TutorialUI
         {
             get { return _stepText; }
             set
-            {                
-                // seems to be a dirty hack, but I lack any better ideas
+            {                                
                 if (_stepText != null && _stepText.Contains("prevStep"))
                 {
                     _animationLifetime = Lifetimes.Define(_tutorialLifetime);
@@ -193,8 +192,7 @@ namespace ReSharperTutorials.TutorialUI
             backControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.BackColor = color.GDIColor);
 
             var foreControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
-            foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);            
-
+            foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);                        
         }
 
         public void RunTutorial(string htmlTutorialId)
