@@ -44,7 +44,12 @@ namespace ReSharperTutorials.TutorialUI
         private readonly ToolWindowInstance _toolWindowInstance;
         private LifetimeDefinition _animationLifetime;
         private HtmlMediator _htmlMediator;
-        private CustomProgressBar _progressBar = new CustomProgressBar { Visible = true, Step = 1, Value = 0, Dock = DockStyle.Bottom,};
+        private CustomProgressBar _progressBar = new CustomProgressBar {
+            Visible = true,
+            Step = 1,
+            Value = 0,
+            Dock = DockStyle.Bottom
+        };
         private readonly HtmlGenerator _htmlGenerator;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;
@@ -109,31 +114,35 @@ namespace ReSharperTutorials.TutorialUI
                     {
                         twi.QueryClose.Value = true;
 
-                        var containerControl = new TutorialPanel(environment).BindToLifetime(lt);                                                
-                                                                                            
+                        var containerControl = new TutorialPanel(environment).BindToLifetime(lt);
+                        
                         var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
                         {                            
                             Dock = DockStyle.Fill, 
-                            WebBrowserShortcutsEnabled = false,
+                            WebBrowserShortcutsEnabled = false
                         }.BindToLifetime(lt);                                                                    
 
                         lt.AddBracket(
                             () => _containerControl = containerControl,
-                            () => _containerControl = null);
+                            () => _containerControl = null);                                              
 
                         lt.AddAction(() => _progressBar = null);
 
                         lt.AddBracket(
-                            () => _containerControl.Controls.Add(_progressBar),
-                            () => _containerControl.Controls.Remove(_progressBar));
-
-                        lt.AddBracket(
                             () => _viewControl = viewControl,
-                            () => _viewControl = null);                                                
+                            () => _viewControl = null);                        
 
                         lt.AddBracket(
-                            () => _containerControl.Controls.Add(_viewControl),
-                            () => _containerControl.Controls.Remove(_viewControl));
+                            () =>
+                            {
+                                _containerControl.Controls.Add(_viewControl);
+                                _containerControl.Controls.Add(_progressBar);
+                            },
+                            () =>
+                            {
+                                _containerControl.Controls.Remove(_viewControl);
+                                _containerControl.Controls.Remove(_progressBar);
+                            });
 
                         _colorThemeManager.ColorThemeChanged.Advise(tutorialLifetime, RefreshKeepContent);
 

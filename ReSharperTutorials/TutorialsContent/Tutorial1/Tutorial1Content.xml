@@ -117,7 +117,7 @@
     </step>
 
     <step li="6" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.GoToAction"/>
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.FindAction"/>
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step4"/>
       <text>
         <h1>Find and apply an action</h1>
