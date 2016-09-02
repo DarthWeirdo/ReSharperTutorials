@@ -63,6 +63,21 @@ namespace ReSharperTutorials.Checker
             return node != null;
         }
 
+        [CanBeNull]
+        public static ITreeNode GetTypeNode(ISolution solution, string projectName, string fileName, string typeName)
+        {
+            ITreeNode node = null;
+
+            solution.Locks.TryExecuteWithReadLock(() =>
+            {
+                var project = PsiNavigationHelper.GetProjectByName(solution, projectName);
+                var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
+                node = PsiNavigationHelper.GetTypeNodeByFullClrName(file, typeName);
+            });
+
+            return node;
+        }
+
         /// <summary>
         /// Finds method declaration in scope specified in the current step
         /// </summary>
@@ -79,6 +94,32 @@ namespace ReSharperTutorials.Checker
             });
 
             return node != null;
+        }
+
+
+        /// <summary>
+        /// Get ITreeNode by method's FQN
+        /// </summary>
+        /// <param name="solution">Solution</param>
+        /// <param name="projectName">Project name</param>
+        /// <param name="fileName">File name</param>
+        /// <param name="typeName">Type short name</param>
+        /// <param name="methodName">Method short name</param>
+        /// <param name="methodOccurrence">Method occurence (for overloads)</param>
+        /// <returns></returns>
+        [CanBeNull]
+        public static ITreeNode GetMethodNode(ISolution solution, string projectName, string fileName, string typeName, string methodName, int methodOccurrence)
+        {
+            ITreeNode node = null;
+
+            solution.Locks.TryExecuteWithReadLock(() =>
+            {
+                var project = PsiNavigationHelper.GetProjectByName(solution, projectName);
+                var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
+                node = PsiNavigationHelper.GetMethodNodeByFullClrName(file, typeName, methodName, methodOccurrence);
+            });
+
+            return node;
         }
 
         /// <summary>

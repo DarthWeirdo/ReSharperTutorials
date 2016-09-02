@@ -6,7 +6,7 @@ namespace Tutorial1_EssentialShortcuts
 {
     public class badlyNamedClass
     {
-        private SomeClass _someField;
+        private Coordinates _coordinates;
     }
 
     public class ContextAction
@@ -16,9 +16,9 @@ namespace Tutorial1_EssentialShortcuts
             return "Hello" + arg + "World";
         }
 
-        public SomeClass ReturnSomeClass()
+        public Coordinates ReturnCoordinates()
         {
-            return new SomeClass();
+            return new Coordinates();
         }
 
         public string ReturnString(string stringArg, int intArg)
@@ -32,7 +32,9 @@ namespace Tutorial1_EssentialShortcuts
     {
     }
 
-    public class SomeClass
-    {        
+    public class Coordinates
+    {
+        public int X;
+        public int Y;
     }
 }

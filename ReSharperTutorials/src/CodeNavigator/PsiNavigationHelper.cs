@@ -129,14 +129,15 @@ namespace ReSharperTutorials.CodeNavigator
                               where decl.DeclaredName == methodName
                               select decl).AsArray();
 
-//            var treeNodeList = typeNode.EnumerateTo(typeNode.NextSibling);
-//
-//            var resultList = (from treeNode in treeNodeList
-//                               where treeNode is IMethodDeclaration
-//                               let method = (IMethodDeclaration)treeNode
-//                               where method.DeclaredName == methodName
-//                               select treeNode).AsArray();
+            //            var treeNodeList = typeNode.EnumerateTo(typeNode.NextSibling);
+            //
+            //            var resultList = (from treeNode in treeNodeList
+            //                               where treeNode is IMethodDeclaration
+            //                               let method = (IMethodDeclaration)treeNode
+            //                               where method.DeclaredName == methodName
+            //                               select treeNode).AsArray();
 
+            if (methodOccurrence > 0) methodOccurrence = methodOccurrence - 1;
             return resultList.Length > 0 ? resultList[methodOccurrence] : null;
         }
 
@@ -165,8 +166,8 @@ namespace ReSharperTutorials.CodeNavigator
                 treeNodeList = file.EnumerateTo(file.LastChild);
             else if (typeName != null && methodName != null)
             {
-                if (methodOccurrence > 0) mOccIndex = methodOccurrence - 1;
-                var node = GetMethodNodeByFullClrName(file, typeName, methodName, mOccIndex);
+                //if (methodOccurrence > 0) mOccIndex = methodOccurrence - 1;
+                var node = GetMethodNodeByFullClrName(file, typeName, methodName, methodOccurrence);
                 if (node == null) return null;
                 treeNodeList = node.EnumerateTo(node.NextSibling);
             }

@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BadlyFormattedCode.cs" />
-    <Compile Include="Circle.cs" />
     <Compile Include="Essentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

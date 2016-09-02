@@ -29,7 +29,7 @@ namespace ReSharperTutorials.CodeNavigator
             DocumentManager = documentManager;
         }
 
-        public void NavigateStep2()
+        public void NavigateStep3()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
@@ -43,11 +43,11 @@ namespace ReSharperTutorials.CodeNavigator
             textControl?.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);            
         }
 
-        public void NavigateStep8()
+        public void NavigateStep9()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.SomeClass", null, 0, null, 0);            
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.Coordinates", null, 0, null, 0);            
             var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.LastChild;
             var range = node.GetDocumentRange();
@@ -62,11 +62,11 @@ namespace ReSharperTutorials.CodeNavigator
             textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
         }
 
-        public void NavigateStep11()
+        public void NavigateStep12()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyNewClass", null, 0, null, 0);
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
             var classDecl = (IClassDeclaration)node?.Parent;
             node = classDecl?.Body.FirstChild;
             var range = node.GetDocumentRange();
@@ -80,6 +80,46 @@ namespace ReSharperTutorials.CodeNavigator
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
             textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
         }
+
+        public void NavigateStep13()
+        {
+            var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
+            var classDecl = (IClassDeclaration)node?.Parent;
+            node = classDecl?.Body.FirstChild;
+            var range = node.GetDocumentRange();
+            if (!range.IsValid()) return;
+            var document = range.Document;
+            var text = $"{Environment.NewLine}\t\t";
+            document.InsertText(range.TextRange.EndOffset, text);
+
+            var projectFile = DocumentManager.TryGetProjectFile(document);
+            if (projectFile == null) return;
+            var textControl = EditorManager.OpenProjectFile(projectFile, true);
+            textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
+        }
+
+
+        public void NavigateStep16()
+        {
+            var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
+            var classDecl = (IClassDeclaration)node?.Parent;
+            node = classDecl?.Body.Constructors[0]?.LastChild;
+            var range = node.GetDocumentRange();
+            if (!range.IsValid()) return;
+            var document = range.Document;
+            var text = $"{Environment.NewLine}\t\t";
+            document.InsertText(range.TextRange.EndOffset, text);
+
+            var projectFile = DocumentManager.TryGetProjectFile(document);
+            if (projectFile == null) return;
+            var textControl = EditorManager.OpenProjectFile(projectFile, true);
+            textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
+        }
+
 
         #region Don't forget
         //            var module = GetPsiModuleByName(Solution, project, "Tutorial1_EssentialShortcuts");

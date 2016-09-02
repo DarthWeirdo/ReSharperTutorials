@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <tutorial>
   <currentStep>1</currentStep>
   <title>ReSharper Essentials</title>
@@ -10,8 +11,8 @@
           Welcome!
         </h1>
         <p>
-          We're glad to welcome you to our first interactive tutorial that will acquaint you with the most important ReSharper features. 
-          Please read the notes below before running the tutorial.          
+          We're glad to welcome you to our first interactive tutorial that will acquaint you with the most important ReSharper features.
+          Please read the notes below before running the tutorial.
         </p>
         <p>
           <b>IMPORTANT NOTES:</b>
@@ -20,40 +21,40 @@
               The tutorial uses its own sample solution and doesn't affect your Visual Studio instance in any way.
             </li>
             <li>
-              The tutorial is interactive: 
+              The tutorial is interactive:
               <ul>
                 <li>It consists from a number of steps.</li>
                 <li>Each step is a set of actions you should perform.</li>
                 <li>Your progress is checked automatically.</li>
-              </ul>              
+              </ul>
             </li>
             <li>
               Please follow the instructions precisely and do not take any actions other than those suggested in a step.
-            </li>            
+            </li>
           </ul>
         </p>
         <button class="nextButton" onclick="buttonClick()">Let's Start!</button>
       </text>
     </step>
-    
-    <step li="2" strikeOnDone ="true">
+
+    <step li="2" strikeOnDone="true">
       <text>
         <h1>
           Alt+Enter
         </h1>
         <p>
-          This is by far the <b>most important shortcut</b> in ReSharper. It's used to apply quick fixes to inspections, or apply context specific actions, depending on location of text caret. Also it allows searching and applying all ReSharper commands direct from the menu. 
+          This is by far the <b>most important shortcut</b> in ReSharper. It's used to apply quick fixes to inspections, or apply context specific actions, depending on location of text caret. Also it allows searching and applying all ReSharper commands direct from the menu.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Got it!</button>        
+        <button class="nextButton" onclick="buttonClick()">Got it!</button>
       </text>
     </step>
 
-    <step li="3" strikeOnDone ="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep2"/>
+    <step li="3" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep3" />
       <text>
         <h1>
           Alt+Enter
-        </h1>        
+        </h1>
         <p>
           ReSharper always gives you a clue when <shortcut>ReSharper_AltEnter</shortcut> can be applied:
           <ul>
@@ -66,18 +67,19 @@
                 <li>Yellow lightbulb to fix warning</li>
                 <li>Red light bulb to fix error</li>
                 <li>Hammer to context action</li>
-                <li>and others...</li>    
-              </ul>              
-            </li>            
+                <li>and others...</li>
+              </ul>
+            </li>
           </ul>
         </p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
     </step>
 
-    <step li="4" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.badlyNamedClass"/>
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2"/>
+    <step li="4" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.badlyNamedClass" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step4" />
       <text>
         <h1>Apply QuickFix for an inspection</h1>
         <p>
@@ -86,7 +88,7 @@
         <ol>
           <li>
             The caret must be on <code>badlyNamedClass</code>. Note the lightbulb in the margin on the left.
-        </li>
+          </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
@@ -97,9 +99,11 @@
       </text>
     </step>
 
-    <step li="5" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg" textToFindOccurrence ="2"/>
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step3"/>
+    <step li="5" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.ContextAction" method="FormatString" textToFind="arg"
+                textToFindOccurrence="2" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step5" />
       <text>
         <h1>Apply context action</h1>
         <ol>
@@ -116,13 +120,14 @@
       </text>
     </step>
 
-    <step li="6" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.FindAction"/>
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step4"/>
+    <step li="6" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.FindAction" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step6" />
       <text>
         <h1>Find and apply an action</h1>
         <p>
-          Use <shortcut>ReSharper_AltEnter</shortcut> to run any ReSharper command. For example, 
+          Use <shortcut>ReSharper_AltEnter</shortcut> to run any ReSharper command. For example,
           let's use it to rename a class.
         </p>
         <ol>
@@ -142,33 +147,33 @@
       </text>
     </step>
 
-    <step li="7" strikeOnDone ="true">
+    <step li="7" strikeOnDone="true">
       <text>
         <h1>Alt+Enter</h1>
         <p>
           Note how many different types of actions we've performed with only one shortcut.
           But enough for today with <shortcut>ReSharper_AltEnter</shortcut>!
-          Let's proceed to the other cool ReSharper's features. Please welcome <b>Predefined live templates</b>.         
+          Let's proceed to the other cool ReSharper's features. Please welcome <b>Predefined live templates</b>.
         </p>
         <button class="nextButton" onclick="buttonClick()">Proceed</button>
       </text>
     </step>
 
-    <step li="8" strikeOnDone ="true">
+    <step li="8" strikeOnDone="true">
       <text>
         <h1>Predefined live templates</h1>
         <p>
-          Live templates are code fragments that can be quickly inserted into your code. 
+          Live templates are code fragments that can be quickly inserted into your code.
           The code of the template can be a short expression, a complete construct, or even an entire class or method.
         </p>
         <p>To insert a template, you should write a short string of characters right in the place where you want to insert a code.</p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
-    </step>    
+    </step>
 
-    <step li="9" strikeOnDone ="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep8"/>
-      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step8"/>
+    <step li="9" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep9" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step9" />
       <text>
         <h1>Create a class</h1>
         <p>
@@ -185,26 +190,26 @@
             In the context menu, select <b>class</b> or simply push <span class="shortcut">Tab</span>.
           </li>
           <li>
-            Rename the class to <code>MyNewClass</code>.
+            Rename the class to <code>MyCircle</code>.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="10" strikeOnDone ="true">
-      <check Action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step9"/>
+    <step li="10" strikeOnDone="true">
+      <check Action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step10" />
       <text>
-        <h1>Create a class</h1>        
+        <h1>Create a class</h1>
         <ol start="5">
           <li>
             Hit <span class="shortcut">Tab</span> to finish class creation.
-          </li>          
+          </li>
         </ol>
       </text>
     </step>
 
-    <step li="11" strikeOnDone ="true">      
-      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step10"/>
+    <step li="11" strikeOnDone="true">
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step11" />
       <text>
         <h1>Create a constructor</h1>
         <p>
@@ -219,19 +224,19 @@
           </li>
           <li>
             In the context menu, select <b>ctor</b> or push <span class="shortcut">Tab</span>.
-          </li>          
+          </li>
         </ol>
       </text>
     </step>
 
-    <step li="12" strikeOnDone ="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep11"/>
-      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step11"/>
+    <step li="12" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep12" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step12" />
       <text>
         <h1>Create a property</h1>
         <p>
           In the same way we can add a property.
-        </p>        
+        </p>
         <ol>
           <li>
             The caret must be on a new line inside the class.
@@ -240,76 +245,166 @@
             Start typing <span class="userInput">prop</span>.
           </li>
           <li>
-            Create the <code>public SomeClass SomeClass</code> property.
+            Create the <code>public int Radius</code> property.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="13" strikeOnDone ="true">
+    <step li="13" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep13" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step13" />
+      <text>
+        <h1>Create a property</h1>
+        <p>
+          Let's add one more property for circle's center coordinates.
+        </p>
+        <ol>
+          <li>
+            The caret must be on a new line inside the class.
+          </li>
+          <li>
+            Start typing <span class="userInput">prop</span>.
+          </li>
+          <li>
+            Create the <code>public Coordinates Coordinates</code> property.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+
+    <step li="14" strikeOnDone="true">
       <text>
         <h1>Predefined live templates</h1>
         <p>
-          Really fast, isn't it? ReSharper has predefined templates for all occasions: <code>if</code> and <code>else</code>,
-          <code>for</code> and <code>foreach</code>, <code>do...while</code>, <code>try...catch</code>, <code>using</code>, and
+          Really fast, isn't it? ReSharper has predefined templates for all occasions: <code>if</code> and
+          <code>else</code>,
+          <code>for</code> and <code>foreach</code>, <code>do...while</code>, <code>try...catch</code>,
+          <code>using</code>, and
           many more. Simply start typing the construct you need, hit <span class="shortcut">Tab</span> and ReSharper will do
           the rest of the job.
         </p>
         <p>
-          You can check all available templates <a href="https://www.jetbrains.com/help/resharper/2016.1/Reference__Templates_Explorer__Live_Templates.html" target="_blank">here</a>. But now, let's proceed to other essential features
-          and take a quick look at ReSharper's refactoring capabilities.
+          You can check all available templates
+          <a href="https://www.jetbrains.com/help/resharper/Reference__Templates_Explorer__Live_Templates.html"
+             target="_blank">
+            here
+          </a>
+          .
+          But now, let's check other ReSharper's code generation capabilities.
         </p>
         <button class="nextButton" onclick="buttonClick()">Proceed</button>
       </text>
     </step>
 
-    <step li="14" strikeOnDone ="true">
+    <step li="15" strikeOnDone="true">
       <text>
-        <h1>Refactorings</h1>
+        <h1>Code generation</h1>
         <p>
-          The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>. 
-          It opens the context-dependent menu of all possible refactorings: renaming, extracting methods and classes, and so on.          
-        </p>        
+          The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_Generate</shortcut>.
+          It opens the context-dependent menu of available code generation options for the current type.
+        </p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
     </step>
 
-    <step li="15" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.MyNewClass"/>
-      <check action="ReSharper.ReSharper_RefactorThis" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step12"/>
+    <step li="16" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep16" />
+      <check action="ReSharper.ReSharper_Generate"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step16" />
       <text>
-        <h1>Move to another file</h1>
+        <h1>Generate equality members</h1>
         <p>
-          Say, now we want to move our newly created <code>MyNewClass</code> to a new file.
+          Say, to guarantee the reference equality for the <code>MyCircle</code> type, we want to implement the
+          <code>Equals()</code> and <code>GetHashCode()</code> methods based on the <code>Radius</code> and
+          <code>Coordinates</code> properties.
         </p>
         <ol>
           <li>
-            The caret must be on the <code>MyNewClass</code> declaration.
+            The caret must be inside the <code>MyCircle</code> class where you want to put the new code.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+            Hit <shortcut>ReSharper.ReSharper_Generate</shortcut>.
           </li>
           <li>
-            Select <span class="menuItem">Move To Another File</span> and move the class to <span class="userInput">MyNewClass.cs</span>.
+            Select <span class="menuItem">Equality Members</span>.
+          </li>
+          <li>
+            In the dialog, select both <code>Radius</code> and
+            <code>Coordinates</code> properties and click <span class="menuItem">Finish</span>.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="16" strikeOnDone ="true">
+    <step li="17" strikeOnDone="true">
+      <text>
+        <h1>Generate equality members</h1>
+        <p>
+          Awesome!
+        </p>
+        <p>Now, let's finish with code generation and take a look at ReSharper's refactoring features.</p>
+        <button class="nextButton" onclick="buttonClick()">Proceed</button>
+      </text>
+    </step>
+
+    <step li="18" strikeOnDone="true">
       <text>
         <h1>Refactorings</h1>
         <p>
-          Very easy, right? Here you can find info about all other types of refactorings.
+          The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+          It opens the context-dependent menu of all possible refactorings: renaming, extracting methods and classes, and so on.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+      </text>
+    </step>
+
+    <step li="19" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.MyCircle" />
+      <check action="ReSharper.ReSharper_RefactorThis"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step19" />
+      <text>
+        <h1>Move to another file</h1>
+        <p>
+          Say, now we want to move our newly created <code>MyCircle</code> class to a new file.
+        </p>
+        <ol>
+          <li>
+            The caret must be on the <code>MyCircle</code> declaration.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Move To Another File</span> and move the class to
+            <span class="userInput">MyCircle.cs</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="20" strikeOnDone="true">
+      <text>
+        <h1>Refactorings</h1>
+        <p>
+          Very easy, right?
+          <a href="https://www.jetbrains.com/help/resharper/Main_Set_of_Refactorings.html"
+             target="_blank">
+            Here
+          </a>
+          you can find info about all other types of refactorings.
         </p>
         <p>Now, let's talk a little bit about ReSharper's navigation capabilities.</p>
         <button class="nextButton" onclick="buttonClick()">Proceed</button>
       </text>
     </step>
 
-    <step li="17" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="MyNewClass.cs" type="Tutorial1_EssentialShortcuts.MyNewClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
-      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step1519" />
+    <step li="21" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="MyCircle.cs"
+                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="Coordinates" textToFindOccurrence="1" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2125" />
       <text>
         <h1>Go To Declaration</h1>
         <p>
@@ -317,44 +412,47 @@
           inheritance hierarchy, errors, etc. Let's see how it works.
         </p>
         <p>
-          For example, we want to take a look at the <code>SomeClass</code> declaration. Let's navigate to it.
+          For example, we want to take a look at the <code>Coordinates</code> class declaration. Let's navigate to it.
         </p>
         <ol>
           <li>
-            Hold <span class="shortcut">Ctrl</span> and click on the <code>SomeClass</code> type in the property declaration.
-          </li>          
+            Hold <span class="shortcut">Ctrl</span> and click on the <code>Coordinates</code> type in the property declaration.
+          </li>
         </ol>
       </text>
     </step>
 
-    <step li="18" strikeOnDone ="true">      
-      <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step16" />
+    <step li="22" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_FindUsages"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step22" />
       <text>
         <h1>Find usages</h1>
         <p>
-          For example, we're interested in this class and want to find out where else is it used.          
+          For example, we're interested in this class and want to find out where else is it used.
         </p>
         <ol>
           <li>
-            The caret must be on <code>SomeClass</code>.
+            The caret must be on <code>Coordinates</code>.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
           </li>
           <li>
-            Using the <b>Find Results</b> window, navigate to the first usage of the class in <b>Essentials.cs</b> - <code>private SomeClass _someField</code> (using double-click).
+            Using the <b>Find Results</b> window, navigate to the first usage of the class in <b>Essentials.cs</b> -
+            <code>private Coordinates _coordinates</code> (using double-click).
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="19" strikeOnDone ="true">
-      <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step17" />
+    <step li="23" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_GotoType"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step23" />
       <text>
         <h1>Go to everything</h1>
         <p>
-          Great! Now, say, we want to navigate back to <code>MyNewClass</code>. Let's do this by using
-          the superhelpful <b>Go to everything</b> (<shortcut>ReSharper.ReSharper_GotoType</shortcut>) shortcut.
+          Great! Now, say, we want to navigate back to <code>MyCircle</code>. Let's do this by using
+          the superhelpful <b>Go to everything</b> <shortcut>ReSharper.ReSharper_GotoType</shortcut> shortcut.
           It allows you to navigate to any type, symbol, file, recent edit or file, or recently viewed method.
         </p>
         <ol>
@@ -362,38 +460,41 @@
             Anywhere in the code, hit <shortcut>ReSharper.ReSharper_GotoType</shortcut>.
           </li>
           <li>
-            R# supports camelhumps, so you can simply type <span class="userInput">mnc</span> in the opened menu.
+            R# supports camelhumps, so you can simply type <span class="userInput">mc</span> in the opened menu.
           </li>
           <li>
-            Select <code>MyNewClass</code> in the list and navigate to it.
+            Select <code>MyCircle</code> in the list and navigate to it.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="20" strikeOnDone ="true">
+    <step li="24" strikeOnDone="true">
       <text>
         <h1>Navigate to</h1>
         <p>
           You're doing great! Let's learn the last important navigation shortcut and end up with this topic. Actually, this may be
-          the only navigation shortcut you may want to know - <b>Navigate To</b> (<shortcut>ReSharper.ReSharper_NavigateTo</shortcut>).
+          the only navigation shortcut you may want to know - <b>Navigate To</b>
+          <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
           It shows context dependent drop-down list with all possible navigation destinations.
         </p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
     </step>
 
-    <step li="21" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="MyNewClass.cs" type="Tutorial1_EssentialShortcuts.MyNewClass" textToFind="SomeClass" textToFindOccurrence ="1"/>
-      <check action="ReSharper.ReSharper_NavigateTo" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step1519" />
+    <step li="25" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="MyCircle.cs"
+                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="Coordinates" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_NavigateTo"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2125" />
       <text>
         <h1>Navigate to</h1>
         <p>
-          Let's navigate back to <code>SomeClass</code> declaration, but this time we'll use <b>Navigate To</b>.
+          Let's navigate back to <code>Coordinates</code> declaration, but this time we'll use <b>Navigate To</b>.
         </p>
         <ol>
           <li>
-            The caret must be on the <code>SomeClass</code> type in the property declaration.
+            The caret must be on the <code>Coordinates</code> type in the property declaration.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
@@ -405,25 +506,29 @@
       </text>
     </step>
 
-    <step li="22" strikeOnDone ="true">
+    <step li="26" strikeOnDone="true">
       <text>
         <h1>Rearranging code elements</h1>
         <p>
-          The next thing we want you to know is a quick rearrangement of code elements. 
-          Four simple shortcuts: <shortcut>ReSharper.ReSharper_MoveLeft</shortcut>, <shortcut>ReSharper.ReSharper_MoveRight</shortcut>,
+          The next thing we want you to know is a quick rearrangement of code elements.
+          Four simple shortcuts: <shortcut>ReSharper.ReSharper_MoveLeft</shortcut>,
+          <shortcut>ReSharper.ReSharper_MoveRight</shortcut>,
           <shortcut>ReSharper.ReSharper_MoveUp</shortcut>, and <shortcut>ReSharper.ReSharper_MoveDown</shortcut> allow you quickly rearrange expressions, statements, type members, and other elements in your code.
         </p>
         <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
       </text>
     </step>
 
-    <step li="23" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence ="1"/>
-      <check action="ReSharper.ReSharper_MoveRight" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step21" />
+    <step li="27" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_MoveRight"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step27" />
       <text>
         <h1>Rearranging code elements</h1>
         <p>
-          For example, we want to make <code>stringArg</code> the second argument in the <code>ReturnString</code> method.
+          For example, we want to make <code>stringArg</code> the second argument in the <code>ReturnString</code>
+          method.
         </p>
         <ol>
           <li>
@@ -431,18 +536,20 @@
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_MoveRight</shortcut>.
-          </li>          
+          </li>
         </ol>
       </text>
     </step>
 
-    <step li="24" strikeOnDone ="true">
-      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs" type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence ="1"/>
-      <check action="ReSharper.ReSharper_MoveUp"/>
+    <step li="28" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_MoveUp"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step28" />
       <text>
         <h1>Rearranging code elements</h1>
         <p>
-          Now, we want to move <code>ReturnString</code> up - above the <code>ReturnSomeClass()</code> method.
+          Now, we want to move <code>ReturnString</code> up - above the <code>ReturnCoordinates()</code> method.
         </p>
         <ol>
           <li>
@@ -455,11 +562,49 @@
       </text>
     </step>
 
-    <step li="25">
+    <step li="29" strikeOnDone="true">      
+      <text>
+        <h1>Reformatting code</h1>
+        <p>
+          The last but not the least feauture we'll take a look at is code reformatting.
+          The way you use whitespaces and blank lines to arrange code blocks is a very
+          important aspect of your code style. ReSharper allows you to automatically
+          apply your formatting rules to a code with the <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>
+          shortcut.
+        </p>
+        <p>
+          <a href="https://www.jetbrains.com/help/resharper/Enforcing_Code_Formatting_Rules.html#configure"
+             target="_blank">
+            Here
+          </a>
+          you can find out how to configure code formatting rules.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+      </text>
+    </step>
+
+    <step li="30" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="BadlyFormattedCode.cs"
+                type="Tutorial1_EssentialShortcuts.BadlyFormattedCode" />
+      <check action="ReSharper.ReSharper_ReformatCode" />
+      <text>
+        <h1>Reformatting code</h1>
+        <p>
+          To rearrange the badly formatted code, simply hit <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>
+          anywhere in the code.
+        </p>
+      </text>
+    </step>
+
+    <step li="31">
       <text>
         <h1>That's All!</h1>
         <p>
-          Thanks for passing the tutorial. Of course we just showed you only a tiny bit of ReSharper's capabilities
+          Thanks for passing the tutorial. Of course we just showed you only a tiny bit of ReSharper's capabilities.
+          More complex and deep tutorials are coming soon. Stay tuned!
+        </p>
+        <p>
+          Now, you can close the tutorial's tab and select another tutorial on the <span class="menuItem">Home</span> page.
         </p>
       </text>
     </step>
