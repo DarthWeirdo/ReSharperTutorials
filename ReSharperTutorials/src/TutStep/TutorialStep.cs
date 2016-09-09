@@ -5,7 +5,7 @@ using ReSharperTutorials.Checker;
 
 namespace ReSharperTutorials.TutStep
 {
-
+    
     public enum GoToNextStep { Auto, Manual }
 
     public delegate void StepIsDoneHandler(object sender, EventArgs e);
@@ -58,9 +58,9 @@ namespace ReSharperTutorials.TutStep
                 if (value == _isCheckDone) return;
                 _isCheckDone = value;
 
-                if (Check.Action != null && IsActionDone)                
+                if (Check.Actions != null && IsActionDone)                
                     OnStepIsDone();                
-                else if (Check.Action == null)
+                else if (Check.Actions == null)
                     OnStepIsDone();                
             }
         } 

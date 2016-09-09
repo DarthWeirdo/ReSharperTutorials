@@ -1,14 +1,16 @@
-﻿namespace ReSharperTutorials.TutStep
+﻿using System.Collections.Generic;
+
+namespace ReSharperTutorials.TutStep
 {
     public class Check
     {
-        public readonly string Action;
+        public readonly string[] Actions;
         public readonly string Method;
 
 
-        public Check(string action, string method)
+        public Check(string[] actions, string method)
         {
-            Action = action;
+            Actions = actions;
             Method = method;
         }
     }

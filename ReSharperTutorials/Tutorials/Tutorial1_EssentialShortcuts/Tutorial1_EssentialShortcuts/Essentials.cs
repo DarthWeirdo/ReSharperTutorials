@@ -6,7 +6,7 @@ namespace Tutorial1_EssentialShortcuts
 {
     public class badlyNamedClass
     {
-        private Coordinates _coordinates;
+        private CenterCoordinates _coordinates;
     }
 
     public class ContextAction
@@ -16,9 +16,9 @@ namespace Tutorial1_EssentialShortcuts
             return "Hello" + arg + "World";
         }
 
-        public Coordinates ReturnCoordinates()
+        public CenterCoordinates ReturnCoordinates()
         {
-            return new Coordinates();
+            return new CenterCoordinates();
         }
 
         public string ReturnString(string stringArg, int intArg)
@@ -32,7 +32,7 @@ namespace Tutorial1_EssentialShortcuts
     {
     }
 
-    public class Coordinates
+    public class CenterCoordinates
     {
         public int X;
         public int Y;

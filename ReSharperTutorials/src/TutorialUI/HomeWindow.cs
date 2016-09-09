@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.Interop.NativeHook;
@@ -11,11 +12,12 @@ using JetBrains.UI.CrossFramework;
 using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
 using ReSharperTutorials.Runner;
+using ReSharperTutorials.Utils;
 using MessageBox = JetBrains.Util.MessageBox;
 
 namespace ReSharperTutorials.TutorialUI
 {
-    class HomeWindow: IHtmlCommunication
+    class HomeWindow : IHtmlCommunication
     {
         private readonly TabbedToolWindowClass _toolWindowClass;
         private readonly ToolWindowInstance _toolWindowInstance;
@@ -32,7 +34,7 @@ namespace ReSharperTutorials.TutorialUI
         private readonly GlobalSettings _globalSettings;
         private readonly SolutionStateTracker _solutionStateTracker;
         public HtmlMediator HtmlMediator => _htmlMediator;
-        public HtmlViewControl HtmlViewControl => _viewControl;        
+        public HtmlViewControl HtmlViewControl => _viewControl;
 
         public string PageText
         {
@@ -47,18 +49,19 @@ namespace ReSharperTutorials.TutorialUI
         }
 
 
-        public HomeWindow(Lifetime lifetime, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings, 
-            IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager, 
-            TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager, IColorThemeManager colorThemeManager)
+        public HomeWindow(Lifetime lifetime, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
+            IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager,
+            TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager,
+            IColorThemeManager colorThemeManager)
         {
             _lifetime = lifetime;
             _solutionStateTracker = solutionStateTracker;
             _globalSettings = globalSettings;
             _actionManager = actionManager;
-            _shellLocks = shellLocks;                      
+            _shellLocks = shellLocks;
             _colorThemeManager = colorThemeManager;
             _toolWindowClass = toolWindowClass;
-            _htmlGenerator = new HtmlGenerator(lifetime, colorThemeManager);            
+            _htmlGenerator = new HtmlGenerator(lifetime, colorThemeManager);
 
             _toolWindowInstance = _toolWindowClass.RegisterInstance(
                 lifetime, null, null,
@@ -80,7 +83,7 @@ namespace ReSharperTutorials.TutorialUI
 
                     lt.AddBracket(
                         () => _viewControl = viewControl,
-                        () => _viewControl = null);                    
+                        () => _viewControl = null);
 
                     lt.AddBracket(
                         () => _containerControl.Controls.Add(_viewControl),
@@ -94,8 +97,8 @@ namespace ReSharperTutorials.TutorialUI
 
                     return new EitherControl(lt, containerControl);
                 });
-                        
-            _toolWindowInstance.Title.Value = "Home";            
+
+            _toolWindowInstance.Title.Value = "Home";
         }
 
         public void EnableButtons(bool state)
@@ -110,7 +113,7 @@ namespace ReSharperTutorials.TutorialUI
 
         private void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
         {
-            _htmlMediator?.AgreeToRunTutorial(htmlTutorialId,imgSrc);
+            _htmlMediator?.AgreeToRunTutorial(htmlTutorialId, imgSrc);
         }
 
 
@@ -140,10 +143,26 @@ namespace ReSharperTutorials.TutorialUI
         private void RefreshKeepContent(bool obj)
         {
             PageText = _pageText;
-        }        
+        }
 
         public void RunTutorial(string htmlTutorialId)
         {
+            try
+            {
+                EnvironmentChecker.RunAllChecks();
+            }
+            catch (Exception e)
+            {
+                if (e is NoShortCutsAssignedException)
+                {
+                    MessageBox.ShowError(
+                        "ReSharper shortcuts are not assigned! Please apply a keyboard scheme in " +
+                        "ReSharper | Options... | Environment | Keyboard & Menus before running the tutorial.",
+                        "ReSharper Tutorials");
+                    return;
+                }
+            }
+
             var result =
                 MessageBox.ShowYesNo(
                     "This will close your current solution and open the tutorial solution. Run the tutorial?",
@@ -158,12 +177,12 @@ namespace ReSharperTutorials.TutorialUI
                 AgreeToRunTutorial(htmlTutorialId, loadingImgPath);
             });
 
-            _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());                        
-            
+            _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
+
             // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
             switch (htmlTutorialId)
             {
-                case "1":                    
+                case "1":
                     _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
                         () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
                     break;

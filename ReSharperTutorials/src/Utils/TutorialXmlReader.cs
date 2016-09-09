@@ -103,8 +103,15 @@ namespace ReSharperTutorials.Utils
                             case "check":
                                 var action = reader.GetAttribute("action");
                                 var method = reader.GetAttribute("method");
+                                string[] actions = null;
+                                
                                 if (action != null || method != null)
-                                    check = new Check(action, method);
+                                {
+                                    if (action != null)                                   
+                                        actions = Regex.Split(action, ";");                                        
+                                    
+                                    check = new Check(actions, method);                                                                                                            
+                                }
                                 break;
 
                             case "text":
@@ -122,6 +129,6 @@ namespace ReSharperTutorials.Utils
                 }
             }
             return result;
-        }
+        }        
     }        
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
@@ -47,7 +48,7 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.Coordinates", null, 0, null, 0);            
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.CenterCoordinates", null, 0, null, 0);            
             var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.LastChild;
             var range = node.GetDocumentRange();
@@ -81,8 +82,8 @@ namespace ReSharperTutorials.CodeNavigator
             textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
         }
 
-        public void NavigateStep13()
-        {
+        public void NavigateStep17()
+        {         
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
             var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
@@ -101,7 +102,7 @@ namespace ReSharperTutorials.CodeNavigator
         }
 
 
-        public void NavigateStep16()
+        public void NavigateStep23()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");

@@ -27,8 +27,8 @@ namespace ReSharperTutorials.Utils
             }
             catch (Exception)
             {
-                MessageBox.ShowError($"No shortcut is assigned to {actionName}. Please assign the" +
-                                     $"shortcut in 'Tools | Options... | Keyboard' and restart the tutuorial!");
+//                MessageBox.ShowError($"No shortcut is assigned to {actionName}. Please assign the" +
+//                                     $"shortcut in 'Tools | Options... | Keyboard' and restart the tutuorial!");
                 return "Undefined";
             }
         }

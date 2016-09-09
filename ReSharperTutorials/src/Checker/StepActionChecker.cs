@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using EnvDTE;
 using EnvDTE80;
 using JetBrains.ActionManagement;
@@ -22,7 +23,7 @@ namespace ReSharperTutorials.Checker
         private static CommandEvents _commandEvents;
         private readonly IShellLocks _shellLocks;
         private readonly IPsiFiles _psiFiles;
-        public string StepActionName;
+        public string[] StepActionNames;
         public ISignal<bool> AfterActionApplied { get; private set; }        
         public Func<bool> Check = null;
 
@@ -50,17 +51,20 @@ namespace ReSharperTutorials.Checker
 
             var command = _vsInstance.Commands.Item(guid, id1);
 
-//            string logLine = $"Name:{command.Name} | GUID:{command.Guid} | ID:{command.ID}";
-//            Log(logLine);
+            string logLine = $"Name:{command.Name} | GUID:{command.Guid} | ID:{command.ID}";
+            Log(logLine);
 
-            if (command.Name != StepActionName) return;
-            if (Check == null)
-                AfterActionApplied.Fire(true);
-            else
+            foreach (var actionName in StepActionNames)
             {
-                _shellLocks.QueueReadLock("StepActionChecker.CheckOnAfterAction",
-                  () => _psiFiles.CommitAllDocumentsAsync(CheckCode));                
-            }
+                if (command.Name != actionName) continue;
+                if (Check == null)
+                    AfterActionApplied.Fire(true);
+                else
+                {
+                    _shellLocks.QueueReadLock("StepActionChecker.CheckOnAfterAction",
+                        () => _psiFiles.CommitAllDocumentsAsync(CheckCode));
+                }
+            }            
         }
 
         private void CheckCode()

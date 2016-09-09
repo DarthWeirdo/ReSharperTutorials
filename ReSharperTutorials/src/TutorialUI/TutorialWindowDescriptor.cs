@@ -24,5 +24,5 @@ namespace ReSharperTutorials.TutorialUI
         public class ShowToolWindow : ActivateToolWindowActionHandler<TutorialWindowDescriptor>
         {
         }
-    }
+    }    
 }

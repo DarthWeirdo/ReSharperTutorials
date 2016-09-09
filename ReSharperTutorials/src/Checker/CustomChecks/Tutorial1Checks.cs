@@ -83,40 +83,89 @@ namespace ReSharperTutorials.Checker
         public bool CheckTutorial1Step12()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public TYPE Type");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step13() 
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public int Type");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step14()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public int I");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step15() 
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public int Radius");
+        }
+
+        [RunCheck(OnEvent.CaretMove)]
+        public bool CheckTutorial1Step16()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
                 "public int Radius");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step13()
+        public bool CheckTutorial1Step17()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
-                "public Coordinates Coordinates");
+                "public TYPE Type");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step16()
+        public bool CheckTutorial1Step18()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public CenterCoordinates Type");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step19()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public CenterCoordinates CenterCoordinates");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step20()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+                "public CenterCoordinates Center");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckTutorial1Step23()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
                             "protected bool Equals(MyCircle");            
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step19()
+        public bool CheckTutorial1Step26()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "MyCircle.cs",
                 "class MyCircle");
         }
 
         [RunCheck(OnEvent.CaretMove)]
-        public bool CheckTutorial1Step2125()
+        public bool CheckTutorial1Step2832()
         {
             var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
             var parentNode = node?.Parent as ITypeDeclaration;
-            return parentNode != null && parentNode.DeclaredName == "Coordinates";
+            return parentNode != null && parentNode.DeclaredName == "CenterCoordinates";
         }
 
         [RunCheck(OnEvent.CaretMove)]
-        public bool CheckTutorial1Step22()
+        public bool CheckTutorial1Step29()
         {
             var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
             var parentNode = node?.Parent as IMultipleFieldDeclaration;
@@ -125,7 +174,7 @@ namespace ReSharperTutorials.Checker
         }
 
         [RunCheck(OnEvent.CaretMove)]
-        public bool CheckTutorial1Step23()
+        public bool CheckTutorial1Step30()
         {
             var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
             var parentNode = node?.Parent as ITypeDeclaration;
@@ -133,14 +182,14 @@ namespace ReSharperTutorials.Checker
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step27()
+        public bool CheckTutorial1Step34()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
                 "ReturnString(int intArg");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step28()
+        public bool CheckTutorial1Step35()
         {
             var nodes = PsiNavigationHelper.GetTypeElementsByClrName(Solution,
                 "Tutorial1_EssentialShortcuts.ContextAction");

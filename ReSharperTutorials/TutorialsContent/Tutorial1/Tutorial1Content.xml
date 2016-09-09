@@ -33,7 +33,7 @@
             </li>
           </ul>
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let's Start!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
@@ -45,7 +45,7 @@
         <p>
           This is by far the <b>most important shortcut</b> in ReSharper. It's used to apply quick fixes to inspections, or apply context specific actions, depending on location of text caret. Also it allows searching and applying all ReSharper commands direct from the menu.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Got it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
@@ -72,7 +72,7 @@
             </li>
           </ul>
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
@@ -90,7 +90,7 @@
             The caret must be on <code>badlyNamedClass</code>. Note the lightbulb in the margin on the left.
           </li>
           <li>
-            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
           <li>
             Select <b>Rename to 'BadlyNamedClass'</b> to apply the fix.
@@ -108,10 +108,10 @@
         <h1>Apply context action</h1>
         <ol>
           <li>
-            The text caret must be behind <code>arg</code>. Note the hammer action - a context action is available.
+            The text caret must be behind <code>arg</code>. Note the hammer action - a context actions is available.
           </li>
           <li>
-            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
           <li>
             Select <b>To string.Format invocation</b>.
@@ -135,7 +135,7 @@
             The caret must be on <code>FindAction</code> class name.
           </li>
           <li>
-            Hit <shortcut>ReSharper_AltEnter</shortcut>. Note the magnifying glass.
+            Press <shortcut>ReSharper_AltEnter</shortcut>. Note the magnifying glass.
           </li>
           <li>
             Start typing <span class="userInput">rename</span>.
@@ -155,7 +155,7 @@
           But enough for today with <shortcut>ReSharper_AltEnter</shortcut>!
           Let's proceed to the other cool ReSharper's features. Please welcome <b>Predefined live templates</b>.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Proceed</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
@@ -167,7 +167,7 @@
           The code of the template can be a short expression, a complete construct, or even an entire class or method.
         </p>
         <p>To insert a template, you should write a short string of characters right in the place where you want to insert a code.</p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
@@ -187,22 +187,25 @@
             Start typing <span class="userInput">class</span>.
           </li>
           <li>
-            In the context menu, select <b>class</b> or simply push <span class="shortcut">Tab</span>.
+            After the list focuses on <span class="menuItem">class</span>, press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.
           </li>
           <li>
-            Rename the class to <code>MyCircle</code>.
+            Type <code>MyCircle</code> as a class name.
           </li>
         </ol>
       </text>
     </step>
 
     <step li="10" strikeOnDone="true">
-      <check Action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step10" />
+      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step10" />
       <text>
         <h1>Create a class</h1>
+        <p>
+          Note the red frame around <code class="frame">MyCircle</code>. It indicates the active template parameter.
+        </p>
         <ol start="5">
           <li>
-            Hit <span class="shortcut">Tab</span> to finish class creation.
+            Press <span class="shortcut">Tab</span> to finish class creation.
           </li>
         </ol>
       </text>
@@ -213,7 +216,7 @@
       <text>
         <h1>Create a constructor</h1>
         <p>
-          Our class lacks a constructor. Let's add it with a live template.
+          Our class lacks a constructor. Let's add it with a live template as well.
         </p>
         <ol>
           <li>
@@ -223,7 +226,7 @@
             Start typing <span class="userInput">ctor</span>.
           </li>
           <li>
-            In the context menu, select <b>ctor</b> or push <span class="shortcut">Tab</span>.
+            After the list focuses on <span class="menuItem">ctor</span>, press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.            
           </li>
         </ol>
       </text>
@@ -235,7 +238,8 @@
       <text>
         <h1>Create a property</h1>
         <p>
-          In the same way we can add a property.
+          In the same way we can add a property. As this is a class that represents a circle, it
+          should have some <code>Radius</code> property of the <code>int</code> type.
         </p>
         <ol>
           <li>
@@ -245,19 +249,84 @@
             Start typing <span class="userInput">prop</span>.
           </li>
           <li>
-            Create the <code>public int Radius</code> property.
-          </li>
+            After the list focuses on <span class="menuItem">prop</span>, press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.            
+          </li>          
         </ol>
       </text>
     </step>
 
-    <step li="13" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep13" />
-      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step13" />
+    <step li="13" strikeOnDone="true">      
+      <check action="Edit.InsertTab;Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step13" />
       <text>
         <h1>Create a property</h1>
         <p>
-          Let's add one more property for circle's center coordinates.
+          Note that the <span class="menuItem">prop</span> template has two editable parameters: property's type and name.
+          The one that is active for input is highlighted with a red frame - <code class="frame">TYPE</code>. Our <code>Radius</code>
+          property will be of the <code>int</code> type:
+        </p>
+        <ol>          
+          <li>
+            Start typing <span class="userInput">int</span>.
+          </li>
+          <li>
+            After the list focuses on <span class="menuItem">int</span>, press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.            
+          </li>          
+        </ol>
+      </text>
+    </step>
+
+    <step li="14" strikeOnDone="true">
+      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step14" />
+      <text>
+        <h1>Create a property</h1>
+        <p>
+          Move the input to the next parameter:
+        </p>
+        <ol start="3">
+          <li>
+            Press <span class="shortcut">Tab</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="15" strikeOnDone="true">      
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step15" />
+      <text>
+        <h1>Create a property</h1>
+        <p>
+          Now, we should specify the property name:
+        </p>
+        <ol start="4">
+          <li>
+            Type <span class="userInput">Radius</span>.
+          </li>          
+        </ol>
+      </text>
+    </step>
+
+    <step li="16" strikeOnDone="true">
+      <check action="Edit.InsertTab;Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step16"/>
+      <text>
+        <h1>Create a property</h1>
+        <p>
+          Finish creating the property:
+        </p>
+        <ol start="5">
+          <li>
+            Press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+    
+    <step li="17" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep17" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step17" />
+      <text>
+        <h1>Create a property</h1>
+        <p>
+          Now, let's add another property of the <code>CenterCoordinates</code> type for circle's center coordinates.
         </p>
         <ol>
           <li>
@@ -267,14 +336,59 @@
             Start typing <span class="userInput">prop</span>.
           </li>
           <li>
-            Create the <code>public Coordinates Coordinates</code> property.
+            After the list focuses on <span class="menuItem">prop</span>, press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.            
           </li>
         </ol>
       </text>
     </step>
 
+    <step li="18" strikeOnDone="true">      
+      <check action="Edit.InsertTab;Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step18" />
+      <text>
+        <h1>Create a property</h1>        
+        <ol start="4">
+          <li>
+            ReSharper supports camelhumps. So, simply type <span class="userInput">ccoo</span>.
+          </li>
+          <li>            
+            Select <span class="menuItem">CenterCoordinates</span> in the list and press <span class="shortcut">Enter</span> or <span class="shortcut">Tab</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
 
-    <step li="14" strikeOnDone="true">
+    <step li="19" strikeOnDone="true">
+      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step19" />
+      <text>
+        <h1>Create a property</h1>
+        <p>
+          Move the input to the next parameter:
+        </p>
+        <ol start="3">
+          <li>
+            Press <span class="shortcut">Tab</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="20" strikeOnDone="true">      
+      <check action="Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step20" />
+      <text>
+        <h1>Create a property</h1>
+        <ol>
+          <li>
+            Type <span class="userInput">Center</span> for the property name.
+          </li>
+          <li>
+             Press <span class="shortcut">Enter</span> to finish creating the property. Note
+             that <span class="shortcut">Tab</span> selects the name suggested by ReSharper.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="21" strikeOnDone="true">
       <text>
         <h1>Predefined live templates</h1>
         <p>
@@ -282,7 +396,7 @@
           <code>else</code>,
           <code>for</code> and <code>foreach</code>, <code>do...while</code>, <code>try...catch</code>,
           <code>using</code>, and
-          many more. Simply start typing the construct you need, hit <span class="shortcut">Tab</span> and ReSharper will do
+          many more. Simply start typing the construct you need, press <span class="shortcut">Tab</span> and ReSharper will do
           the rest of the job.
         </p>
         <p>
@@ -294,77 +408,77 @@
           .
           But now, let's check other ReSharper's code generation capabilities.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Proceed</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="15" strikeOnDone="true">
+    <step li="22" strikeOnDone="true">
       <text>
         <h1>Code generation</h1>
         <p>
           The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_Generate</shortcut>.
           It opens the context-dependent menu of available code generation options for the current type.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="16" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep16" />
+    <step li="23" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep23" />
       <check action="ReSharper.ReSharper_Generate"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step16" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step23" />
       <text>
         <h1>Generate equality members</h1>
         <p>
-          Say, to guarantee the reference equality for the <code>MyCircle</code> type, we want to implement the
+          Say, to guarantee the value equality for the <code>MyCircle</code> type, we want to implement the
           <code>Equals()</code> and <code>GetHashCode()</code> methods based on the <code>Radius</code> and
-          <code>Coordinates</code> properties.
+          <code>Center</code> properties.
         </p>
         <ol>
           <li>
             The caret must be inside the <code>MyCircle</code> class where you want to put the new code.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_Generate</shortcut>.
+            Press <shortcut>ReSharper.ReSharper_Generate</shortcut>.
           </li>
           <li>
             Select <span class="menuItem">Equality Members</span>.
           </li>
           <li>
             In the dialog, select both <code>Radius</code> and
-            <code>Coordinates</code> properties and click <span class="menuItem">Finish</span>.
+            <code>Center</code> properties and click <span class="menuItem">Finish</span>.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="17" strikeOnDone="true">
+    <step li="24" strikeOnDone="true">
       <text>
         <h1>Generate equality members</h1>
         <p>
           Awesome!
         </p>
         <p>Now, let's finish with code generation and take a look at ReSharper's refactoring features.</p>
-        <button class="nextButton" onclick="buttonClick()">Proceed</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="18" strikeOnDone="true">
+    <step li="25" strikeOnDone="true">
       <text>
         <h1>Refactorings</h1>
         <p>
           The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
           It opens the context-dependent menu of all possible refactorings: renaming, extracting methods and classes, and so on.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="19" strikeOnDone="true">
+    <step li="26" strikeOnDone="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
                 type="Tutorial1_EssentialShortcuts.MyCircle" />
       <check action="ReSharper.ReSharper_RefactorThis"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step19" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step26" />
       <text>
         <h1>Move to another file</h1>
         <p>
@@ -375,7 +489,7 @@
             The caret must be on the <code>MyCircle</code> declaration.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+            Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
           </li>
           <li>
             Select <span class="menuItem">Move To Another File</span> and move the class to
@@ -385,7 +499,7 @@
       </text>
     </step>
 
-    <step li="20" strikeOnDone="true">
+    <step li="27" strikeOnDone="true">
       <text>
         <h1>Refactorings</h1>
         <p>
@@ -397,14 +511,14 @@
           you can find info about all other types of refactorings.
         </p>
         <p>Now, let's talk a little bit about ReSharper's navigation capabilities.</p>
-        <button class="nextButton" onclick="buttonClick()">Proceed</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="21" strikeOnDone="true">
+    <step li="28" strikeOnDone="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="MyCircle.cs"
-                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="Coordinates" textToFindOccurrence="1" />
-      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2125" />
+                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="CenterCoordinates" textToFindOccurrence="1" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2832" />
       <text>
         <h1>Go To Declaration</h1>
         <p>
@@ -412,19 +526,19 @@
           inheritance hierarchy, errors, etc. Let's see how it works.
         </p>
         <p>
-          For example, we want to take a look at the <code>Coordinates</code> class declaration. Let's navigate to it.
+          For example, we want to take a look at the <code>CenterCoordinates</code> class declaration. Let's navigate to it.
         </p>
         <ol>
           <li>
-            Hold <span class="shortcut">Ctrl</span> and click on the <code>Coordinates</code> type in the property declaration.
+            Hold <span class="shortcut">Ctrl</span> and click on the <code>CenterCoordinates</code> type in the property declaration.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="22" strikeOnDone="true">
+    <step li="29" strikeOnDone="true">
       <check action="ReSharper.ReSharper_FindUsages"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step22" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step29" />
       <text>
         <h1>Find usages</h1>
         <p>
@@ -432,22 +546,22 @@
         </p>
         <ol>
           <li>
-            The caret must be on <code>Coordinates</code>.
+            The caret must be on <code>CenterCoordinates</code>.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
+            Press <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
           </li>
           <li>
             Using the <b>Find Results</b> window, navigate to the first usage of the class in <b>Essentials.cs</b> -
-            <code>private Coordinates _coordinates</code> (using double-click).
+            <code>private CenterCoordinates _coordinates</code> (using double-click).
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="23" strikeOnDone="true">
+    <step li="30" strikeOnDone="true">
       <check action="ReSharper.ReSharper_GotoType"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step23" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step30" />
       <text>
         <h1>Go to everything</h1>
         <p>
@@ -457,10 +571,10 @@
         </p>
         <ol>
           <li>
-            Anywhere in the code, hit <shortcut>ReSharper.ReSharper_GotoType</shortcut>.
+            Anywhere in the code, press <shortcut>ReSharper.ReSharper_GotoType</shortcut>.
           </li>
           <li>
-            R# supports camelhumps, so you can simply type <span class="userInput">mc</span> in the opened menu.
+            Type <span class="userInput">mc</span> in the opened menu.
           </li>
           <li>
             Select <code>MyCircle</code> in the list and navigate to it.
@@ -469,7 +583,7 @@
       </text>
     </step>
 
-    <step li="24" strikeOnDone="true">
+    <step li="31" strikeOnDone="true">
       <text>
         <h1>Navigate to</h1>
         <p>
@@ -478,26 +592,26 @@
           <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
           It shows context dependent drop-down list with all possible navigation destinations.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="25" strikeOnDone="true">
+    <step li="32" strikeOnDone="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="MyCircle.cs"
-                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="Coordinates" textToFindOccurrence="1" />
+                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="CenterCoordinates" textToFindOccurrence="1" />
       <check action="ReSharper.ReSharper_NavigateTo"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2125" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2832" />
       <text>
         <h1>Navigate to</h1>
         <p>
-          Let's navigate back to <code>Coordinates</code> declaration, but this time we'll use <b>Navigate To</b>.
+          Let's navigate back to <code>CenterCoordinates</code> declaration, but this time we'll use <b>Navigate To</b>.
         </p>
         <ol>
           <li>
-            The caret must be on the <code>Coordinates</code> type in the property declaration.
+            The caret must be on the <code>CenterCoordinates</code> type in the property declaration.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
+            Press <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
           </li>
           <li>
             Select <span class="menuItem">Declaration</span> in the list to navigate to the type declaration.
@@ -506,7 +620,7 @@
       </text>
     </step>
 
-    <step li="26" strikeOnDone="true">
+    <step li="33" strikeOnDone="true">
       <text>
         <h1>Rearranging code elements</h1>
         <p>
@@ -515,15 +629,15 @@
           <shortcut>ReSharper.ReSharper_MoveRight</shortcut>,
           <shortcut>ReSharper.ReSharper_MoveUp</shortcut>, and <shortcut>ReSharper.ReSharper_MoveDown</shortcut> allow you quickly rearrange expressions, statements, type members, and other elements in your code.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="27" strikeOnDone="true">
+    <step li="34" strikeOnDone="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
                 type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence="1" />
       <check action="ReSharper.ReSharper_MoveRight"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step27" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step34" />
       <text>
         <h1>Rearranging code elements</h1>
         <p>
@@ -535,17 +649,17 @@
             Place caret on the <code>stringArg</code>.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_MoveRight</shortcut>.
+            Press <shortcut>ReSharper.ReSharper_MoveRight</shortcut>.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="28" strikeOnDone="true">
+    <step li="35" strikeOnDone="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
                 type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence="1" />
       <check action="ReSharper.ReSharper_MoveUp"
-             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step28" />
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step35" />
       <text>
         <h1>Rearranging code elements</h1>
         <p>
@@ -556,17 +670,17 @@
             The caret can be anywhere in the <code>ReturnString</code> method declaration.
           </li>
           <li>
-            Hit <shortcut>ReSharper.ReSharper_MoveUp</shortcut>.
+            Press <shortcut>ReSharper.ReSharper_MoveUp</shortcut>.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="29" strikeOnDone="true">      
+    <step li="36" strikeOnDone="true">      
       <text>
         <h1>Reformatting code</h1>
         <p>
-          The last but not the least feauture we'll take a look at is code reformatting.
+          The last but not the least feature we'll take a look at is code reformatting.
           The way you use whitespaces and blank lines to arrange code blocks is a very
           important aspect of your code style. ReSharper allows you to automatically
           apply your formatting rules to a code with the <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>
@@ -579,24 +693,31 @@
           </a>
           you can find out how to configure code formatting rules.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Let me try it!</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="30" strikeOnDone="true">
+    <step li="37" strikeOnDone="true">
       <navigate project="Tutorial1_EssentialShortcuts" file="BadlyFormattedCode.cs"
                 type="Tutorial1_EssentialShortcuts.BadlyFormattedCode" />
       <check action="ReSharper.ReSharper_ReformatCode" />
       <text>
         <h1>Reformatting code</h1>
         <p>
-          To rearrange the badly formatted code, simply hit <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>
-          anywhere in the code.
+          To rearrange the badly formatted code:
+        </p>
+        <ol>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_ReformatCode</shortcut> anywhere in the code.
+          </li>
+        </ol>
+        <p>
+          NOTE: If you want to reformat only a part of the code, select the desired code block before applying the shortcut. 
         </p>
       </text>
     </step>
 
-    <step li="31">
+    <step li="38">
       <text>
         <h1>That's All!</h1>
         <p>

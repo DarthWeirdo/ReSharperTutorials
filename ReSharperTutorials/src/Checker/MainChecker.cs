@@ -46,11 +46,11 @@ namespace ReSharperTutorials.Checker
         private readonly StepNavigationChecker _stepNavigationChecker;
 
         private readonly TutStep.TutorialStep _currentStep;
-                
 
-        public MainChecker(Lifetime lifetime, TutStep.TutorialStep step, ISolution solution, IPsiFiles psiFiles, 
+
+        public MainChecker(Lifetime lifetime, TutStep.TutorialStep step, ISolution solution, IPsiFiles psiFiles,
             ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks,
-            IEditorManager editorManager, DocumentManager documentManager, IActionManager actionManager,  
+            IEditorManager editorManager, DocumentManager documentManager, IActionManager actionManager,
             IUIApplication environment)
         {
             _lifetime = lifetime;
@@ -64,10 +64,15 @@ namespace ReSharperTutorials.Checker
             _editorManager = editorManager;
             _actionManager = actionManager;
 
-            _stepActionChecker = new StepActionChecker(lifetime, shellLocks, psiFiles, actionManager);
-            _stepPsiChecker = new StepPsiChecker(lifetime, solution, psiFiles, changeManager, textControlManager, shellLocks, editorManager, 
+            if (step.Check.Actions != null)
+                _stepActionChecker = new StepActionChecker(lifetime, shellLocks, psiFiles, actionManager);
+
+            if (step.Check.Method == null) return;
+            _stepPsiChecker = new StepPsiChecker(lifetime, solution, psiFiles, changeManager, textControlManager,
+                shellLocks, editorManager,
                 documentManager, environment);
-            _stepNavigationChecker = new StepNavigationChecker(lifetime, solution, psiFiles, textControlManager, shellLocks, editorManager, documentManager, environment);
+            _stepNavigationChecker = new StepNavigationChecker(lifetime, solution, psiFiles, textControlManager,
+                shellLocks, editorManager, documentManager, environment);
         }
 
 
@@ -104,7 +109,7 @@ namespace ReSharperTutorials.Checker
                                 () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.AfterAction:
-                            _stepActionChecker.StepActionName = _currentStep.Check.Action;
+                            _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
                             _stepActionChecker.Check = checkMethod;
                             _stepActionChecker.AfterActionApplied.Advise(_lifetime,
                                 () =>
@@ -125,8 +130,8 @@ namespace ReSharperTutorials.Checker
                     throw new ApplicationException($"Unable to find the checker method {_currentStep.Check}. Please reinstall the plugin.");
             }
 
-            if (_currentStep.Check.Action == null || attr.OnEvent == OnEvent.AfterAction) return;
-            _stepActionChecker.StepActionName = _currentStep.Check.Action;
+            if (_currentStep.Check.Actions == null || attr.OnEvent == OnEvent.AfterAction) return;
+            _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
             _stepActionChecker.AfterActionApplied.Advise(_lifetime,
                 () => { _currentStep.IsActionDone = true; });            
         }                
