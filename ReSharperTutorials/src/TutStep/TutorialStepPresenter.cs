@@ -84,7 +84,12 @@ namespace ReSharperTutorials.TutStep
         public void Close(object sender, RoutedEventArgs args)
         {
             VsIntegration.CloseVsSolution(true);         
-        }        
+        }
+
+        public void RunStepNavigation()
+        {
+            _codeNavigator.Navigate(CurrentStep);
+        }
 
         private void GoNext(object sender, EventArgs args)
         {
@@ -115,7 +120,7 @@ namespace ReSharperTutorials.TutStep
 
 
         private void ShowText(TutorialStep step)
-        {
+        {            
             var result = $"<div id =\"currentStep\" class =\"currentStep\">{step.Text}</div>";
 
             if (step.Id > 1)

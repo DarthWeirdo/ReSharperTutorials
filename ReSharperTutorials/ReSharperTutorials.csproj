@@ -332,6 +332,7 @@
     <EmbeddedResource Include="src\TutorialUI\Scripts.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TutorialsContent\Tutorial2\Tutorial2Content.xml" />
     <EmbeddedResource Include="src\TutorialUI\Styles.css" />
     <EmbeddedResource Include="src\TutorialUI\HomePage.html" />
     <Content Include="TutorialsContent\img\loading20x20.gif" />

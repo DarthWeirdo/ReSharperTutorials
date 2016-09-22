@@ -1,0 +1,772 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<tutorial>
+  <currentStep>1</currentStep>
+  <title>What's New in ReSharper 2016.2 (C#)</title>
+
+  <steps>
+    <step li="1">
+      <text>
+        <h1>
+          Welcome!
+        </h1>
+        <p>
+          Please read the notes below before running the tutorial.
+        </p>
+        <p>
+          <b>IMPORTANT NOTES:</b>
+          <ul>
+            <li>
+              The tutorial uses its own sample solution and doesn't affect your Visual Studio instance in any way.
+            </li>
+            <li>
+              The tutorial is interactive:
+              <ul>
+                <li>It consists from a number of steps.</li>
+                <li>Each step is a set of actions you should perform.</li>
+                <li>Your progress is checked automatically.</li>
+              </ul>
+            </li>
+            <li>
+              <b>Please follow the instructions precisely and do not take any actions other than those suggested in a step.</b>
+            </li>
+          </ul>
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Start</button>
+      </text>
+    </step>
+
+    <step li="2" strikeOnDone="true">
+      <text>
+        <h1>
+          What's New in ReSharper 2016.2
+        </h1>
+        <p>
+          ReSharper  2016.2 brings numerous fixes and new awesome features. This tutorial will acquaint you with the most important ones. 
+          Please note that this tutorial is dedicated only to ReSharper's C# features, while other languages have received their share of 
+          attention in 2016.2 as well. For more details on these features, please follow this 
+          <a href="https://blog.jetbrains.com/dotnet/2016/08/18/resharper-ultimate-2016-2-is-here/">link</a>.
+        </p>
+        <p>But, enough words! Let's start!</p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="3" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="GoToText.cs"
+                type="ReSharper20162.GoToText" />
+      <check action="ReSharper.ReSharper_GotoText" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step3" />
+      <text>
+        <h1>
+          Go to text
+        </h1>
+        <p>
+          The first feature is very simple yet very useful. It's called <b>Go To Text</b> and
+          allows you to navigate to any text in the code. 
+          E.g., we remember that the string we're interested in contains the words <i>'Visual Studio'</i>:
+          <ol>
+            <li>
+              The caret can be anywhere in the code.
+            </li>
+            <li>
+              Press <shortcut>ReSharper.ReSharper_GotoText</shortcut>.
+            </li>
+            <li>
+              In <span class="menuItem">Find text</span>, start typing <span class="userInput">visual</span>.             
+            </li>
+            <li>Navigate to <code>...a sample string that says Visual Studio</code>.
+            </li>
+          </ol>
+        </p>        
+      </text>
+    </step>
+
+    <step li="4" strikeOnDone="true">      
+      <text>
+        <h1>Structural navigation</h1>
+        <p>
+          The next feature is the one we informally call "Make Tab Great Again". 
+          You can now use <span class="shortcut">Tab</span> and <span class="shortcut">Shift+Tab</span> keys to quickly 
+          move the text selection to the next or previous code element without having to use the cursor keys, 
+          letting you quickly navigate to the next important piece of code you need to edit.
+        </p>        
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>      
+    </step>
+
+    <step li="5" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial2Navigation.NavigateStep5"/>
+      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step5" />
+      <text>
+        <h1>Structural navigation</h1>
+        <p>
+          For example, if the caret is not at indenting (before the first non-whitespace character),
+          <span class="shortcut">Tab</span> and <span class="shortcut">Shift+Tab</span> work as usual:
+        </p>
+        <ol>
+          <li>
+            The text caret must stay before <code>DoSomething</code>. 
+          </li>
+          <li>
+            Press <shortcut>Edit.InsertTab</shortcut>.
+          </li>          
+        </ol>
+      </text>
+    </step>
+
+    <step li="6" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial2Navigation.NavigateStep6"/>
+      <check method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step6" />
+      <text>
+        <h1>Structural navigation</h1>
+        <p>
+          As usual, right? But, if the caret stays on a method call, structural navigation is enabled. 
+          For example, here we can use it to navigate through method parameters.
+        </p>
+        <ol>
+          <li>
+            The caret must be on <code>DoSomething</code> method call.
+          </li>
+          <li>
+            Press <shortcut>Edit.InsertTab</shortcut> until you get to the last
+            <code>"Isaacs"</code> parameter.
+          </li>          
+        </ol>
+      </text>
+    </step>
+
+    <step li="7" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial2Navigation.NavigateStep7"/>
+      <check method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step7" />
+      <text>
+        <h1>Structural navigation</h1>
+        <p>
+          Awesome!
+        </p>
+        <p>Now, let's take a look how structural navigation behaves in a <code>for</code> loop:
+      </p>
+        <ol>
+          <li>
+            The caret must be on <code>for</code>.
+          </li>
+          <li>
+            Hit <shortcut>Edit.InsertTab</shortcut> to cycle through the initializer statement, 
+            the condition and the iterator until you get to the loop body.            
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="8" strikeOnDone="true">
+      <text>
+        <h1>Typing assistance</h1>
+        <p>
+          Typing assistance has also got a number of cool features, such as autoreplacing the dot (.) and semicolon (;) symbols.
+          But it's always better to see for yourself!
+        </p>        
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="9" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="TypingAssistance.cs"
+                type="ReSharper20162.TypingAssistance" textToFind="AppendLine(" textToFindOccurrence="1" />
+      <check method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step9" />
+      <text>
+        <h1>Typing assistance</h1>
+        <p>
+          For example, we've just typed <code>myStringBuilder.AppendLine()</code> and the caret stays
+          inside the parentheses.
+        </p>
+        <ol>
+          <li>
+            The caret should be inside the parentheses <code>()</code>.
+          </li>
+          <li>
+            Hit <span class="shortcut">.</span>.
+          </li>          
+        </ol>
+      </text>
+    </step>
+
+    <step li="10" strikeOnDone="true">
+      <check method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step10" />
+      <text>
+        <h1>Typing assistance</h1>
+        <p>
+          As you can see, the dot <code>.</code> has been moved out of parentheses. Let's continue the line:
+        </p>
+        <ol start="3">
+          <li>
+            Start typing <span class="userInput">tostring</span> and select <span class="menuItem">ToString</span>
+            from the list by hitting <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.            
+          </li>
+          <li>Note that the caret is inside the parentheses.</li>
+          <li>Hit <span class="shrotcut">;</span>.</li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="11" strikeOnDone="true">
+      <check method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step11"/>
+      <text>
+        <h1>Typing assistance</h1>
+        <p>
+          As you can see, the semicolon <code>;</code> has been moved out of parentheses. Now, we want this method to return this string:
+        </p>
+        <ol start="7">
+          <li>
+            Hit <span class="shortcut">.</span>.
+          </li>
+          <li>Note that the dot appeared <i>before</i> the semicolon.</li>
+          <li>
+            Start typing <span class="userInput">return</span> and select <span class="menuItem">return</span>
+            from the list by hitting <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="12" strikeOnDone="true">      
+      <text>        
+        <h1>Typing assistance</h1>
+        <p>
+          That's it! <code>return</code> has been moved to the beginning of the line.
+        </p>
+        <p>
+          In addition to this feature, there's another one that we won't cover in this tutorial - now, ReSharper automatically
+          corrects mistyped <code>@$</code> prefixes for verbatim string interpolations.          
+        </p>
+        <p>Let's move to the next feature - improved surround templates!</p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+    
+    <step li="13" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial2Navigation.NavigateStep13"/>
+      <check action="Edit.InsertTab;Edit.BreakLine"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step13" />
+      <text>
+        <h1>Surround templates</h1>
+        <p>
+          In 2016.2, surround templates get one serious improvement:
+          If you need to surround a piece of code with a template, just select the code, and type in the name 
+          of a template you need. No extra shortcuts required! 
+        </p>
+        <p>
+          For example, let's surround the line with the <code>if</code> block.
+        </p>
+        <ol>
+          <li>
+            The line you want to surround must be selected.
+          </li>
+          <li>
+            Start typing <span class="userInput">if</span> and select <span class="menuItem">if</span>
+            from the list by hitting <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="14" strikeOnDone="true">      
+      <text>
+        <h1>Surround templates</h1>
+        <p>
+          That's it! All other live templates now work in the same way.
+        </p>
+        <p>The next new feature we'll take a look at is new refactoring for partial classes.</p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="15" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="ExtractMembersToPartialRefactoring.cs"
+                type="ReSharper20162.PartialClass" textToFind="IntegerProperty" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_RefactorThis"
+        method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step15" />
+      <text>
+        <h1>'Extract members to partial' refactoring</h1>
+        <p>
+          Here we have a partial class <code>PartialClass</code>. For example, we want to move 
+          <code>IntegerProperty</code> from one part to another.
+        </p>
+        <ol>
+          <li>
+            The caret must be on <code>IntegerProperty</code>. 
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Extract Members to Partial</span>.
+          </li>
+          <li>
+            In the opened window, choose <span class="menuItem">Select existing part</span> and
+            click <span class="menuItem">Next</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="16" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_RefactorThis"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step16" />
+      <text>
+        <h1>'Extract members to partial' refactoring</h1>
+        <p>Great!</p>
+        <p>
+          In the same way we can move members to a new part. For example, we want
+          to move both properties in <code>MyRegion</code>:
+        </p>
+        <ol>
+          <li>
+            The caret must be on <code>MyRegion</code>.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Extract Members to Partial</span>.
+          </li>
+          <li>
+            In the opened window, choose <span class="menuItem">Select file for a new part</span> (don't change the file name) and
+            click <span class="menuItem">Next</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="17" strikeOnDone="true">      
+      <text>
+        <h1>'Extract members to partial' refactoring</h1>
+        <p>
+          Awesome!
+        </p>
+        <p>
+          The next helpful refactoring is related with nested classes.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="18" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_RefactorThis"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step18" />
+      <text>
+        <h1>New refactoring for nested classes</h1>
+        <p>
+          Now, ReSharper allows you to move a nested class to another file:
+        </p>
+        <ol>
+          <li>
+            The caret must be on the <code>Nested</code> class name.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Move to Another Class</span> and click <span class="menuItem">Next</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="19" strikeOnDone="true">      
+      <text>
+        <h1>Context actions and quick fixes</h1>
+        <p>
+          You're doing great!
+        </p>
+        <p>
+          Note that the <code>MoveNestedToFileRefacrtoring</code> class has become <code>partial</code> and the nested 
+          class is now located in the <code>MoveNestedToFileRefacrtoring.Nested.cs</code> file.
+        </p>
+        <p>Now, let's talk about new quick fixes and context actions.</p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="20" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="GuardArguments.cs"
+                type="ReSharper20162.GuardArguments" method="NullGuardForAllArguments" textToFind="intValue"
+                textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step20" />
+      <text>
+        <h1>Check parameters for null</h1>
+        <p>
+          Let's start with context actions. The first one in our list is the new ability to add checking for null for all 
+          method parameters at once. For example, we have a method with three parameters and want to check all of them for null:
+        </p>
+        <ol>
+          <li>The caret must be on any method's parameter.</li>          
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            In the list, expand <span class="menuItem">Check parameter for null</span> and select
+            <span class="menuItem">Check all parameters for null</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="21" strikeOnDone="true">
+      <text>
+        <h1>Context Actions</h1>
+        <p>
+          Great!                    
+        </p>
+        <p>
+          The next context action is the ability to uncomment and delete comments.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="22" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="DeleteComments.cs"
+          type="ReSharper20162.DeleteComment" method="Uncomment" textToFind="world"
+          textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step23" />
+      <text>
+        <h1>Uncomment comments</h1>
+        <p>
+          Now, you can uncomment a comment with a context action:
+        </p>
+        <ol>
+          <li>
+            The caret must be anywhere inside the comment.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Uncomment</span>.
+          </li>          
+        </ol>
+        
+      </text>
+    </step>
+
+    <step li="23" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="DeleteComments.cs"
+          type="ReSharper20162.DeleteComment" method="DeleteComment" textToFind="underworld"
+          textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step23" />
+      <text>
+        <h1>Delete comments</h1>
+        <p>
+          Awesome!          
+        </p>
+        <p>In the same way, you can delete a comment:</p>
+        <ol>
+          <li>
+            The caret must be anywhere inside the comment.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Delete comment</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="24" strikeOnDone="true">
+      <text>
+        <h1>Context actions</h1>
+        <p>
+          Keep going!
+        </p>
+        <p>
+          The next new context action is auto-computing a constant value instead of the <code>nameof</code> expression.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="25" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="ComputeConstantOnNameof.cs"
+          type="ReSharper20162.ComputeConstantOnNameof" method="GetName" textToFind="nameof"
+          textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step25" />
+      <text>
+        <h1>Compute constant value</h1>
+        <p>
+          Thus, you can replace the <code>nameof</code> expression with a string:
+        </p>
+        <ol>
+          <li>
+            The caret must be on the <code>nameof</code> expression.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Compute constant value</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="26" strikeOnDone="true">      
+      <text>
+        <h1>Quick fixes</h1>
+        <p>
+          Well done!
+        </p>
+        <p>
+          Now, the time has come for new quick fixes.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="27" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="LocaliseInterpolatedStrings.cs"
+          type="ReSharper20162.LocaliseInterpolatedStrings" method="Say" textToFind="message"
+          textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step25" />
+      <text>
+        <h1>Move to Resource</h1>
+        <p>
+          Now, you can easily move a non-localized interpolated string to a resource file. ReSharper
+          highlights such strings with a warning (if there are no resource files in the solution, there
+          will be no warning):
+        </p>
+        <ol>
+          <li>
+            The caret must be anywhere on the highlighted string.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Move to resource</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="28" strikeOnDone="true">      
+      <text>
+        <h1>Move to Resource</h1>
+        <p>
+          That's it!
+        </p>
+        <p>
+          If you now take a look at the resource file <code>Resource.resx</code>, you'll find their the string.
+        </p>
+        <p>The next quick fix will help you with escaping characters in strings.</p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="29" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="FixInvalidEscapeChars.cs"
+          type="ReSharper20162.FixInvalidEscapeChars" method="InvalidEscapeChars" textToFind="C:\i"
+          textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step29" />
+      <text>
+        <h1>Fix escape characters with verbatim string</h1>
+        <p>
+          There are two lines with invalid escape characters. Let's fix the first string 
+          by converting it to a verbatim string.
+        </p>
+        <ol>
+          <li>
+            The caret must be on the error.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">It is verbatim string</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="30" strikeOnDone="true">
+      <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="FixInvalidEscapeChars.cs"
+          type="ReSharper20162.FixInvalidEscapeChars" method="InvalidEscapeChars" textToFind="C:\m"
+          textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step30" />
+      <text>
+        <h1>Fix escape characters with proper escaping</h1>
+        <p>As easy as that!</p>
+        <p>
+          Now, let's fix the second string by applying the proper escaping.
+        </p>
+        <ol>
+          <li>
+            The caret must be on the error.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Escape all characters</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="31" strikeOnDone="true">
+      <text>
+        <h1>HTML and regex analysis in strings</h1>
+        <p>
+          Well done!          
+        </p>
+        <p>
+          The next feature is analysis of HTML and regex inside string literals in <i>.cs</i>, <i>.js</i>, and <i>.ts</i> files.          
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+----- Stopped here------
+    <step li="32" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="MyCircle.cs"
+                type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="CenterCoordinates" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_NavigateTo"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2832" />
+      <text>
+        <h1>HTML and regex analysis in strings</h1>
+        <p>
+          The HTML and regex analysis in strings can be enabled with the context action or with a comment 
+          <code>//language=html</code> ahead of a string literal.
+        </p>
+        <ol>
+          <li>
+            The caret must be on the <code>CenterCoordinates</code> type in the property declaration.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Declaration</span> in the list to navigate to the type declaration.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="33" strikeOnDone="true">
+      <text>
+        <h1>Rearranging code elements</h1>
+        <p>
+          The next thing we want you to know is a quick rearrangement of code elements.
+          Four simple shortcuts: <shortcut>ReSharper.ReSharper_MoveLeft</shortcut>,
+          <shortcut>ReSharper.ReSharper_MoveRight</shortcut>,
+          <shortcut>ReSharper.ReSharper_MoveUp</shortcut>, and <shortcut>ReSharper.ReSharper_MoveDown</shortcut> allow you quickly rearrange expressions, statements, type members, and other elements in your code.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="34" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_MoveRight"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step34" />
+      <text>
+        <h1>Rearranging code elements</h1>
+        <p>
+          For example, we want to make <code>stringArg</code> the second argument in the <code>ReturnString</code>
+          method.
+        </p>
+        <ol>
+          <li>
+            Place caret on the <code>stringArg</code>.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_MoveRight</shortcut>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="35" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.ContextAction" textToFind="stringArg" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_MoveUp"
+             method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step35" />
+      <text>
+        <h1>Rearranging code elements</h1>
+        <p>
+          Now, we want to move <code>ReturnString</code> up - above the <code>ReturnCoordinates()</code> method.
+        </p>
+        <ol>
+          <li>
+            The caret can be anywhere in the <code>ReturnString</code> method declaration.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_MoveUp</shortcut>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="36" strikeOnDone="true">
+      <text>
+        <h1>Reformatting code</h1>
+        <p>
+          The last but not the least feature we'll take a look at is code reformatting.
+          The way you use whitespaces and blank lines to arrange code blocks is a very
+          important aspect of your code style. ReSharper allows you to automatically
+          apply your formatting rules to a code with the <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>
+          shortcut.
+        </p>
+        <p>
+          <a href="https://www.jetbrains.com/help/resharper/Enforcing_Code_Formatting_Rules.html#configure"
+             target="_blank">
+            Here
+          </a>
+          you can find out how to configure code formatting rules.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="37" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="BadlyFormattedCode.cs"
+                type="Tutorial1_EssentialShortcuts.BadlyFormattedCode" />
+      <check action="ReSharper.ReSharper_ReformatCode" />
+      <text>
+        <h1>Reformatting code</h1>
+        <p>
+          To rearrange the badly formatted code:
+        </p>
+        <ol>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_ReformatCode</shortcut> anywhere in the code.
+          </li>
+        </ol>
+        <p>
+          NOTE: If you want to reformat only a part of the code, select the desired code block before applying the shortcut.
+        </p>
+      </text>
+    </step>
+
+    <step li="38">
+      <text>
+        <h1>That's All!</h1>
+        <p>
+          Thanks for passing the tutorial. Of course we just showed you only a tiny bit of ReSharper's capabilities.
+          More complex and deep tutorials are coming soon. Stay tuned!
+        </p>
+        <p>
+          Now, you can close the tutorial's tab and select another tutorial on the <span class="menuItem">Home</span>
+          page.
+        </p>
+      </text>
+    </step>
+  </steps>
+
+</tutorial>

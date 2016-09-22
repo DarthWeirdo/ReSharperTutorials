@@ -14,6 +14,7 @@ namespace ReSharperTutorials.TutorialUI
     {
         public ISignal<bool> AllAnimationsDone { get; }
         public ISignal<bool> OnButtonClick { get; }
+        public ISignal<bool> OnRunStepNavigationLinkClick { get; }
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
         private IHtmlCommunication _window;
@@ -42,6 +43,7 @@ namespace ReSharperTutorials.TutorialUI
             _window = window;       
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
             OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
+            OnRunStepNavigationLinkClick = new Signal<bool>(lifetime, "HtmlMediator.OnRunStepNavigationLinkClick");
             _viewControl = window.HtmlViewControl;
             _viewControl.ObjectForScripting = this;
         }
@@ -83,6 +85,16 @@ namespace ReSharperTutorials.TutorialUI
         public void RunTutorial(object id)
         {            
             _window.RunTutorial(id.ToString());
+        }
+
+        public void RunStepNavigation()
+        {
+            OnRunStepNavigationLinkClick.Fire(true);            
+        }
+
+        public void ExecuteAction(string action)
+        {
+            
         }
     }
 }

@@ -64,11 +64,11 @@
             <li>
               Icon displayed in gutter margin on left, e.g.:
               <ul>
-                <li>Yellow lightbulb to fix warning</li>
-                <li>Red light bulb to fix error</li>
-                <li>Hammer to context action</li>
-                <li>and others...</li>
-              </ul>
+              <li>Yellow lightbulb to fix warning</li>
+              <li>Red light bulb to fix error</li>
+              <li>Hammer to context action</li>
+              <li>and others...</li>
+            </ul>
             </li>
           </ul>
         </p>
@@ -87,7 +87,8 @@
         </p>
         <ol>
           <li>
-            The caret must be on <code>badlyNamedClass</code>. Note the lightbulb in the margin on the left.
+            The caret must be on <code>
+              <a href="www.jetbrains.com" class="navigate">badlyNamedClass</a></code>. Note the lightbulb in the margin on the left.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.
@@ -108,7 +109,9 @@
         <h1>Apply context action</h1>
         <ol>
           <li>
-            The text caret must be behind <code>arg</code>. Note the hammer action - a context actions is available.
+            The text caret must be behind <code>
+              <a href="www.jetbrains.com" class="navigate">arg</a>
+            </code>. Note the hammer action - a context actions is available.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.
@@ -132,7 +135,8 @@
         </p>
         <ol>
           <li>
-            The caret must be on <code>FindAction</code> class name.
+            The caret must be on <code>
+              <a href="www.jetbrains.com" class="navigate">FindAction</a></code> class name.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>. Note the magnifying glass.
@@ -181,7 +185,7 @@
         </p>
         <ol>
           <li>
-            The caret should be on some free place where a new class can be created.
+            The caret should be on <a href="www.jetbrains.com" class="navigate">some free place</a> where a new class can be created.
           </li>
           <li>
             Start typing <span class="userInput">class</span>.
@@ -220,7 +224,7 @@
         </p>
         <ol>
           <li>
-            The caret must be on a new line inside the class.
+            The caret must be on a <a href="www.jetbrains.com" class="navigate">new line inside the class</a>.
           </li>
           <li>
             Start typing <span class="userInput">ctor</span>.
@@ -243,7 +247,7 @@
         </p>
         <ol>
           <li>
-            The caret must be on a new line inside the class.
+            The caret must be on a <a href="www.jetbrains.com" class="navigate">new line inside the class</a>.
           </li>
           <li>
             Start typing <span class="userInput">prop</span>.
@@ -330,7 +334,7 @@
         </p>
         <ol>
           <li>
-            The caret must be on a new line inside the class.
+            The caret must be on a <a href="www.jetbrains.com" class="navigate">new line inside the class</a>.
           </li>
           <li>
             Start typing <span class="userInput">prop</span>.
@@ -436,7 +440,8 @@
         </p>
         <ol>
           <li>
-            The caret must be inside the <code>MyCircle</code> class where you want to put the new code.
+            The caret must be inside the <code>
+              <a href="www.jetbrains.com" class="navigate">MyCircle</a></code> class where you want to put the new code.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_Generate</shortcut>.
@@ -486,7 +491,8 @@
         </p>
         <ol>
           <li>
-            The caret must be on the <code>MyCircle</code> declaration.
+            The caret must be on the <code>
+              <a href="www.jetbrains.com" class="navigate">MyCircle</a></code> declaration.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
@@ -530,13 +536,16 @@
         </p>
         <ol>
           <li>
-            Hold <span class="shortcut">Ctrl</span> and click on the <code>CenterCoordinates</code> type in the property declaration.
+            Hold <span class="shortcut">Ctrl</span> and click on the <code>
+              <a href="www.jetbrains.com" class="navigate">CenterCoordinates</a></code> type in the property declaration.
           </li>
         </ol>
       </text>
     </step>
 
     <step li="29" strikeOnDone="true">
+      <navigate project="Tutorial1_EssentialShortcuts" file="Essentials.cs"
+                type="Tutorial1_EssentialShortcuts.CenterCoordinates"/>
       <check action="ReSharper.ReSharper_FindUsages"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step29" />
       <text>
@@ -546,7 +555,8 @@
         </p>
         <ol>
           <li>
-            The caret must be on <code>CenterCoordinates</code>.
+            The caret must be on <code>
+              <a href="www.jetbrains.com" class="navigate">CenterCoordinates</a></code>.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
@@ -608,7 +618,8 @@
         </p>
         <ol>
           <li>
-            The caret must be on the <code>CenterCoordinates</code> type in the property declaration.
+            The caret must be on the <code>
+              <a href="www.jetbrains.com" class="navigate">CenterCoordinates</a></code> type in the property declaration.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
@@ -646,7 +657,9 @@
         </p>
         <ol>
           <li>
-            Place caret on the <code>stringArg</code>.
+            Place caret on the <code>
+              <a href="www.jetbrains.com" class="navigate">stringArg</a>
+            </code>.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_MoveRight</shortcut>.
@@ -667,7 +680,8 @@
         </p>
         <ol>
           <li>
-            The caret can be anywhere in the <code>ReturnString</code> method declaration.
+            The caret can be anywhere in the <code>
+              <a href="www.jetbrains.com" class="navigate">ReturnString</a></code> method declaration.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_MoveUp</shortcut>.

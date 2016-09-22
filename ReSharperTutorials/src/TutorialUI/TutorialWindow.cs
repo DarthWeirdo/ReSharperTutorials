@@ -104,7 +104,7 @@ namespace ReSharperTutorials.TutorialUI
             _psiServices = psiServices;
             _shortcutManager = shortcutManager;
             _colorThemeManager = colorThemeManager;
-            _toolWindowClass = toolWindowClass;
+            _toolWindowClass = toolWindowClass;            
 
             if (solution.GetComponent<ISolutionOwner>().IsRealSolutionOwner)
             {
@@ -150,12 +150,13 @@ namespace ReSharperTutorials.TutorialUI
 
                         _htmlMediator = new HtmlMediator(tutorialLifetime, this);
                         _htmlMediator.OnButtonClick.Advise(tutorialLifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
+                        _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
 
                         return new EitherControl(lt, containerControl);
-                    });                
+                    });
 
                 _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles, changeManager,
-                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);
+                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);                
 
                 _toolWindowInstance.Title.Value = _stepPresenter.Title;
             }
@@ -180,6 +181,11 @@ namespace ReSharperTutorials.TutorialUI
         {
             _toolWindowInstance.QueryClose.Value = false;
             _toolWindowInstance.Close();
+        }
+
+        private void NavigateToCodeByLink()
+        {
+            _stepPresenter.RunStepNavigation();
         }
 
 

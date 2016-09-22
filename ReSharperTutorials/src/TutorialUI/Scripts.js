@@ -24,11 +24,58 @@ function stepLoad() {
     cElem.style.top = pHeight + "px";
 
     var buttons = document.querySelectorAll("div.prevStep button");
-    for (var i = 0; i < buttons.length; i++) {
+    var i;
+    for (i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true;        
         buttons[i].style.textDecoration = "line-through";
     }
 
+    var navLinks = document.getElementsByClassName("navigate");
+
+    for (i = 0; i < navLinks.length; i++) {
+        if (checkParentsClassName(navLinks[i], "prevStep") === true) {            
+            navLinks[i].className = "noNavigate";
+            navLinks[i].onclick = window.doNothing;
+        }
+        if (checkParentsClassName(navLinks[i], "currentStep") === true) {
+            navLinks[i].onclick = runStepNavigation;           
+        }
+    }
+
+    window.scroll(0, findPos(cElem));
+}
+
+function checkParentsClassName(obj, className) {
+    var parent = obj.parentNode;
+    if (parent.className === className) {        
+        return true;
+    }
+    if (parent.parentElement != null) {
+        return checkParentsClassName(parent, className);        
+    }
+    return false;
+}
+
+function showLog(array) {
+    var result = "";
+    for (var i = 0; i < array.length; i++) {
+        result.concat(array[i]);
+        result.concat(" | ");        
+    }
+    alert(result);
+}
+
+function doNothing() {}
+
+function findPos(obj) {
+    var curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj === obj.offsetParent);
+        return [curtop];
+    }
+    return [curtop];
 }
 
 function moveOutPrevStep() {
@@ -76,6 +123,11 @@ function buttonClick() {
 
 function runTutorial(id) {    
     window.external.RunTutorial(id);
+}
+
+function runStepNavigation() {
+    window.external.RunStepNavigation();
+    return false;
 }
 
 function showLoadingImg(id, visible) {
