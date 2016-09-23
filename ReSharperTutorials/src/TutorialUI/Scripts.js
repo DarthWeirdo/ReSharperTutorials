@@ -154,3 +154,7 @@ function createImage(id, src, alt, title) {
     if (title != null) img.title = title;
     return img;
 }
+
+function closeSolution() {
+    window.external.CloseSolution();
+}

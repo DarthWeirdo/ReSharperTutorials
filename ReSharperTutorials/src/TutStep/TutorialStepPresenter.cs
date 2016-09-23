@@ -38,6 +38,7 @@ namespace ReSharperTutorials.TutStep
         public readonly IActionManager ActionManager;
         public readonly string Title;
         public TutorialStep CurrentStep { get; set; }
+        public bool IsLastStep => _currentStepId == _steps.Count;
 
 
         public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,

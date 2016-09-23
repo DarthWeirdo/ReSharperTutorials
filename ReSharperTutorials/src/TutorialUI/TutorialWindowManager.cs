@@ -61,10 +61,13 @@ namespace ReSharperTutorials.TutorialUI
             _toolWindowClass.QueryCloseInstances.Advise(shellLifetime, args =>
             {
                 if (_runningTutorial == TutorialId.None) return;
-                args.Cancel = !MessageBox.ShowYesNo(
-                    "This will close the tutorial solution as well. Tutorial progress will be lost. Close the tutorial?",
-                    "ReSharper Tutorials");
-                if (args.Cancel) return;
+                if (!_tutorialWindow.IsLastStep)
+                {
+                    args.Cancel = !MessageBox.ShowYesNo(
+                        "This will close the tutorial solution as well. Tutorial progress will be lost. Close the tutorial?",
+                        "ReSharper Tutorials");
+                    if (args.Cancel) return;
+                }
                 VsIntegration.CloseVsSolution(true);
             });
         }

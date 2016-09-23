@@ -138,7 +138,7 @@ namespace ReSharperTutorials.CodeNavigator
             //                               select treeNode).AsArray();
 
             if (methodOccurrence > 0) methodOccurrence = methodOccurrence - 1;
-            return resultList.Length > 0 ? resultList[methodOccurrence] : null;
+            return (resultList.Length > 0) && (methodOccurrence <= resultList.Length - 1) ? resultList[methodOccurrence] : null;
         }
 
 
@@ -182,9 +182,9 @@ namespace ReSharperTutorials.CodeNavigator
 
             var result = (from treeNode in treeNodeList
                          where treeNode.GetText() == navText
-                         select treeNode).AsArray();
+                         select treeNode).AsArray();            
 
-            return result.Length > 0 ? result[tOccIndex] : null;
+            return (result.Length > 0) && (tOccIndex <= result.Length - 1) ? result[tOccIndex] : null;
             
         }
 

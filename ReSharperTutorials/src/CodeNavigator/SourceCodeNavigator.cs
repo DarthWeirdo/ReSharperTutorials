@@ -7,8 +7,10 @@ using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.ReSharper.Psi.Tree;
+using JetBrains.Rider.Model.Refactorings;
 using JetBrains.TextControl;
 using JetBrains.UI.Application;
+using JetBrains.Util;
 
 namespace ReSharperTutorials.CodeNavigator
 {
@@ -63,7 +65,15 @@ namespace ReSharperTutorials.CodeNavigator
                     var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName, step.NavNode.MethodName,
                         step.NavNode.MethodNameOccurrence, step.NavNode.TextToFind, step.NavNode.TextToFindOccurrence);
 
-                    PsiNavigationHelper.NavigateToNode(_documentManager, _editorManager, node, true);
+                    if (node == null)
+                    {
+                        MessageBox.ShowExclamation("OOPS! Someone has changed the code in an unexpected way. " +
+                                                   "That wasn't you, right?;) Anyway, now it would be better to restart tutorial.");
+                    }
+                    else
+                    {
+                        PsiNavigationHelper.NavigateToNode(_documentManager, _editorManager, node, true);
+                    }
                 });                                
             });
         }

@@ -53,10 +53,14 @@ namespace ReSharperTutorials.TutorialUI
         private readonly HtmlGenerator _htmlGenerator;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;
+        public bool IsLastStep => _stepPresenter.IsLastStep;
 
         public int StepCount
-        {            
-            set { _progressBar.Maximum = value; }
+        {
+            set
+            {                
+                _progressBar.Maximum = value;
+            }
         }
 
         public event EventHandler NextStep;

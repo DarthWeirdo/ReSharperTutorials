@@ -3,6 +3,7 @@ using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
 using JetBrains.Threading;
 using ReSharperTutorials.Runner;
+using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.TutorialUI
 {
@@ -92,9 +93,9 @@ namespace ReSharperTutorials.TutorialUI
             OnRunStepNavigationLinkClick.Fire(true);            
         }
 
-        public void ExecuteAction(string action)
+        public void CloseSolution()
         {
-            
+            VsIntegration.CloseVsSolution(true);
         }
     }
 }

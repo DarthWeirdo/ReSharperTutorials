@@ -739,8 +739,13 @@
           More complex and deep tutorials are coming soon. Stay tuned!
         </p>
         <p>
-          Now, you can close the tutorial's tab and select another tutorial on the <span class="menuItem">Home</span> page.
+          Now, you can:
         </p>
+        <ul>
+          <li>
+            <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>
+          </li>
+        </ul>
       </text>
     </step>
   </steps>
