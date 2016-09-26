@@ -135,11 +135,11 @@ namespace ReSharperTutorials.Checker
                 "public CenterCoordinates CenterCoordinates");
         }
 
-        [RunCheck(OnEvent.PsiChange)]
+        [RunCheck(OnEvent.CaretMove)]
         public bool CheckTutorial1Step20()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
-                "public CenterCoordinates Center");
+                "public CenterCoordinates CenterCoordinates");
         }
 
         [RunCheck(OnEvent.PsiChange)]
@@ -176,9 +176,14 @@ namespace ReSharperTutorials.Checker
         [RunCheck(OnEvent.CaretMove)]
         public bool CheckTutorial1Step30()
         {
-            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
-            var parentNode = node?.Parent as ITypeDeclaration;
-            return parentNode != null && parentNode.DeclaredName == "MyCircle";
+            var textControl = TextControlManager.CurrentFrameTextControl.Value;
+            var range = textControl.Document.DocumentRange;            
+            var text = textControl.Document.GetText(range);
+            return text.Contains("class MyCircle");
+
+            // var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
+            // var parentNode = node?.Parent as ITypeDeclaration;
+            //  return parentNode != null && parentNode.DeclaredName == "MyCircle";
         }
 
         [RunCheck(OnEvent.PsiChange)]

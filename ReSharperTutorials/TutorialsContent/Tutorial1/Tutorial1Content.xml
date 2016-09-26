@@ -362,7 +362,7 @@
     </step>
 
     <step li="19" strikeOnDone="true">
-      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step19" />
+      <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step19" />
       <text>
         <h1>Create a property</h1>
         <p>
@@ -376,17 +376,15 @@
       </text>
     </step>
 
-    <step li="20" strikeOnDone="true">      
-      <check action="Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step20" />
+    <step action="Edit.InsertTab;Edit.BreakLine" li="20" strikeOnDone="true">      
+      <check  method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step20" />
       <text>
         <h1>Create a property</h1>
-        <ol>
+        <p>Let's leave the suggested <code>CenterCoordinates</code> name:
+      </p>
+        <ol start="4">          
           <li>
-            Type <span class="userInput">Center</span> for the property name.
-          </li>
-          <li>
-             Press <span class="shortcut">Enter</span> to finish creating the property. Note
-             that <span class="shortcut">Tab</span> selects the name suggested by ReSharper.
+             Press <span class="shortcut">Enter</span> or <span class="shortcut">Tab</span> to finish creating the property. 
           </li>
         </ol>
       </text>
@@ -436,7 +434,7 @@
         <p>
           Say, to guarantee the value equality for the <code>MyCircle</code> type, we want to implement the
           <code>Equals()</code> and <code>GetHashCode()</code> methods based on the <code>Radius</code> and
-          <code>Center</code> properties.
+          <code>CenterCoordinates</code> properties.
         </p>
         <ol>
           <li>
@@ -451,7 +449,7 @@
           </li>
           <li>
             In the dialog, select both <code>Radius</code> and
-            <code>Center</code> properties and click <span class="menuItem">Finish</span>.
+            <code>CenterCoordinates</code> properties and click <span class="menuItem">Finish</span>.
           </li>
         </ol>
       </text>
