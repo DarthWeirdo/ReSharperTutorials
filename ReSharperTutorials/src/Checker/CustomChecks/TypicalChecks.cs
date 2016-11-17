@@ -17,11 +17,41 @@ namespace ReSharperTutorials.Checker
     static class TypicalChecks
     {
         /// <summary>
-        /// Converts the entire IFile to string and checks whether it contains $text$        
+        /// Converts the entire CSharp IFile to string and checks whether it contains $text$        
         /// </summary>     
         public static bool StringExists(ISolution solution, string projectName, string fileName, string text)
         {            
             return ConvertFileToString(solution, projectName, fileName).Contains(text);
+        }
+
+
+        /// <summary>
+        /// Converts the entire CSS IFile to string and checks whether it contains $text$        
+        /// </summary>     
+        public static bool StringExistsInCssFile(ISolution solution, string projectName, string fileName, int fileNumber, string text)
+        {
+            return ConvertCssFileToString(solution, projectName, fileName, fileNumber).Contains(text);
+        }
+
+        private static string ConvertCssFileToString(ISolution solution, string projectName, string fileName, int fileNumber)
+        {
+            var result = new StringBuilder();
+
+            solution.Locks.TryExecuteWithReadLock(() =>
+            {
+                var project = PsiNavigationHelper.GetProjectByName(solution, projectName);
+                var file = PsiNavigationHelper.GetCssFile(project, fileName, fileNumber);
+
+                if (file == null) return;
+                var treeNodeList = file.EnumerateTo(file.LastChild);
+
+                foreach (var node in treeNodeList)
+                {
+                    result.AppendSlice(node.GetText());
+                }
+            });
+
+            return result.ToString();
         }
 
         private static string ConvertFileToString(ISolution solution, string projectName, string fileName)

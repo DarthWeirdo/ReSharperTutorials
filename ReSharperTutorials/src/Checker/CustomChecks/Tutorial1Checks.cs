@@ -13,7 +13,7 @@ namespace ReSharperTutorials.Checker
 {
     /// <summary>
     /// Custom Step Checks. Must contain 'public bool' methods that return true if the check passes. 
-    /// The method MUST be marked with RunCheckAttribute. This attribute defines HOW a check will be TRIGGERED: 
+    /// Each method MUST be marked with RunCheckAttribute. This attribute defines HOW a check will be TRIGGERED: 
     /// OnEvent.AfterAction if it should be triggered by the action specified in the step (NOT WORKING CURRENTLY); 
     /// OnEvent.PsiChange if it should be triggered by any Psi tree change; 
     /// OnEvent.CaretMove if it should be triggered by any caret position change.

@@ -37,7 +37,8 @@ namespace ReSharperTutorials.Runner
 
             AvailableTutorials = new Dictionary<TutorialId, string>
             {
-                {TutorialId.Tutorial1, GetPath(TutorialId.Tutorial1, PathType.WorkCopySolutionFile)}
+                {TutorialId.Tutorial1, GetPath(TutorialId.Tutorial1, PathType.WorkCopySolutionFile)},
+                {TutorialId.Tutorial3, GetPath(TutorialId.Tutorial3, PathType.WorkCopySolutionFile)}
             };
 
         }
@@ -80,7 +81,27 @@ namespace ReSharperTutorials.Runner
                 case TutorialId.Tutorial2:
                     break;
                 case TutorialId.Tutorial3:
-                    break;
+                    switch (pType)
+                    {
+                        case PathType.BaseSolutionFolder:
+                            return _commonTutorialPath + "\\Tutorial3_WhatsNewReSharper2016.3";
+                        case PathType.BaseContentFolder:
+                            return _commonTutorialPath + "\\Content\\Tutorial3";
+                        case PathType.BaseSolutionFile:
+                            return _commonTutorialPath + "\\Tutorial3_WhatsNewReSharper2016.3\\Tutorial3_WhatsNewReSharper2016.3.sln";
+                        case PathType.BaseContentFile:
+                            return _commonTutorialPath + "\\Content\\Tutorial3\\Tutorial3Content.xml";
+                        case PathType.WorkCopySolutionFolder:
+                            return _commonWorkCopyPath + "\\Tutorial3_WhatsNewReSharper2016.3";
+                        case PathType.WorkCopyContentFolder:
+                            return _commonWorkCopyPath + "\\Content\\Tutorial3";
+                        case PathType.WorkCopySolutionFile:
+                            return _commonWorkCopyPath + "\\Tutorial3_WhatsNewReSharper2016.3\\Tutorial3_WhatsNewReSharper2016.3.sln";
+                        case PathType.WorkCopyContentFile:
+                            return _commonWorkCopyPath + "\\Content\\Tutorial3\\Tutorial3Content.xml";
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
+                    }
                 case TutorialId.Tutorial4:
                     break;
                 case TutorialId.Tutorial5:

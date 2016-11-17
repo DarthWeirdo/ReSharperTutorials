@@ -50,7 +50,7 @@ namespace ReSharperTutorials.Runner
     }
 
 
-    [Action("ActionOpenTutorial1", "Start Tutorial 1 - Essential Shortcuts", Id = 100)]
+    [Action("ActionOpenTutorial1", "Start Tutorial 1 - Essential Shortcuts", Id = 87654321)]
     public class ActionOpenTutorial1 : ActionOpenTutorial
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
@@ -59,7 +59,16 @@ namespace ReSharperTutorials.Runner
         }
     }
 
-    [Action("ActionShowMainTutorialWindow", "Tutorials...", Id = 121)]
+    [Action("ActionOpenTutorial3", "Start Tutorial 3 - What's New in ReSharper 2016.3", Id = 87654322)]
+    public class ActionOpenTutorial3 : ActionOpenTutorial
+    {
+        protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
+        {
+            OpenOrRestart(context, TutorialId.Tutorial3);
+        }
+    }
+
+    [Action("ActionShowMainTutorialWindow", "Tutorials...", Id = 87654323)]
     public class ActionShowMainTutorialWindow : ActionOpenTutorial, IInsertLast<MainMenuFeaturesGroup>
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)

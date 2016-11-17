@@ -75,7 +75,7 @@ namespace ReSharperTutorials.Checker
 
         private void Log(string line)
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Log\log.txt", true))
+            using (var file = new System.IO.StreamWriter(@"C:\Log\log.txt", true))
             {
                 file.WriteLine(Stopwatch.GetTimestamp() + ": " + line);
             }

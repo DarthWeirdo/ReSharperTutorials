@@ -20,7 +20,7 @@ namespace ReSharperTutorials.TutorialUI
         {
         }
 
-        [Action("Tutorial Window", Id = 101)]
+        [Action("Tutorial Window", Id = 87654324)]
         public class ShowToolWindow : ActivateToolWindowActionHandler<TutorialWindowDescriptor>
         {
         }

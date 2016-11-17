@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<tutorial>
+  <currentStep>1</currentStep>
+  <title>What's New in ReSharper 2016.3 (C#)</title>
+
+  <steps>
+    <step li="1">
+      <text>
+        <h1>
+          Welcome!
+        </h1>
+        <p>
+          Please read the notes below before running the tutorial.
+        </p>
+        <p>
+          <b>IMPORTANT NOTES:</b>
+          <ul>
+            <li>
+              The tutorial uses its own sample solution and doesn't affect your Visual Studio instance in any way.
+            </li>
+            <li>
+              The tutorial is interactive:
+              <ul>
+                <li>It consists from a number of steps.</li>
+                <li>Each step is a set of actions you should perform.</li>
+                <li>Your progress is checked automatically.</li>
+              </ul>
+            </li>
+            <li>
+              <b>Please follow the instructions precisely and do not take any actions other than those suggested in a step.</b>
+            </li>
+          </ul>
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Start</button>
+      </text>
+    </step>
+
+    <step li="2" strikeOnDone="true">
+      <text>
+        <h1>
+          What's New in ReSharper 2016.3
+        </h1>
+        <p>
+          ReSharper 2016.3 brings numerous fixes and multiple new features. This tutorial will acquaint you with the most important ones.
+          Please note that this tutorial is dedicated only to <b>ReSharper's C# features</b>, while other languages have received their share of
+          attention in 2016.3 as well. For more details on these features, please follow this
+          <a href="https://blog.jetbrains.com/dotnet/2016/08/18/resharper-ultimate-2016-2-is-here/">link</a>.
+        </p>
+        <p>But, enough words! Let's start!</p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="3" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CodeGenerationIDisposable.cs"
+                type="ReSharper20163.CodeGenerationIDisposable+HandleWrapper" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep3" />
+      <text>
+        <h1>Dispose pattern generator</h1>
+        <p>Let's begin with code generation features.</p>
+        <p>
+          Now, you can quickly generate the <code>IDisposable</code> interface implementation for a class. Let's do this for
+          <code>HandleWrapper</code>:
+        </p>
+        <ol>
+          <li>
+            The caret must be anywhere on the <code>HandleWrapper</code>
+            <a href="www.jetbrains.com" class="navigate">class declaration</a>.
+            Note that the class already has <code>IDisposable</code> in the declaration but doesn't yet provide interface implementation.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut> and select
+            <span class="menuItem">Generate dispose pattern</span>.
+          </li>
+          <li>
+            Check <span class="menuItem">I have unmanaged resources</span> (maybe we'll decide to add more unmanaged resources later).
+            Note that the <code>_handle</code> field is already specified as a resource that must be disposed.
+          </li>
+          <li>
+            Click <span class="menuItem">Finish</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="4" strikeOnDone="true">
+      <text>
+        <h1>Dispose pattern generator</h1>
+        <p>
+          Great! Note that as we specified <span class="menuItem">I have unmanaged resources</span>, R# has created a
+          corresponding <code>TODO</code> item.
+        </p>
+        <p>
+          Now, let's take a look at the next code generation feature.
+        </p>        
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="5" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep5" />
+      <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep5" />
+      <text>
+        <h1>
+          Generate relational members
+        </h1>        
+        <p>
+          This feature allows you to quickly implement <code>IComparable</code> or <code>IComparable&lt;T&gt;</code>
+          for
+          a class using selected fields and properties. For example, we want to be able to sort objects of the
+          <code>ShoeSize</code>
+          type by the <code>_sizeCm</code> field:
+          <ol>
+            <li>
+              The caret should be on a <a href="www.jetbrains.com" class="navigate">new line</a> inside the class.
+            </li>
+            <li>
+              Press <shortcut>ReSharper.ReSharper_Generate</shortcut>.
+            </li>
+            <li>
+              In the list, select <span class="menuItem">Relational members</span>.
+            </li>
+            <li>
+              In the opened window, select <code>_SizeCm</code> field and click <span class="menuItem">Finish</span>.
+            </li>
+          </ol>
+        </p>
+      </text>
+    </step>
+
+    <step li="6" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep6_7" />
+      <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep6" />
+      <text>
+        <h1>Generate relational members</h1>
+        <p>That was great!</p>
+        <p>
+          Note that if a field is of <code>string</code> type, you can choose from several string comparison
+          algorithms as well as perform nullability check.
+          Let's try this on the <code>Account</code> class which we want to be able to sort, say, by
+          <code>_name</code>:
+          <ol>
+            <li>
+              The caret should be on a <a href="www.jetbrains.com" class="navigate">new line</a> inside the class.
+            </li>
+            <li>
+              Press <shortcut>ReSharper.ReSharper_Generate</shortcut>.
+            </li>
+            <li>
+              In the list, select <span class="menuItem">Relational members</span>.
+            </li>
+            <li>
+              In the opened window, select <code>_name</code> field and specify any algorithm you want in
+              <span class="menuItem">String comparison</span>.
+            </li>
+            <li>Click <span class="menuItem">Finish</span>.</li>
+          </ol>
+        </p>
+      </text>
+    </step>
+
+    <step li="7" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep6_7" />
+      <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep7" />
+      <text>
+        <h1>Relational comparer</h1>
+        <p>Awesome!</p>
+        <p>
+          With ReSharper 2016.3, you can also quickly generate a relational comparer (a base class for
+          providing custom implementations of <code>IComparer&lt;T&gt;</code>).
+          Let's create a custom implementation that will allow comparing <code>Account</code> objects by
+          <code>_email</code>:
+        </p>
+        <ol>
+          <li>
+            The caret should be on a <a href="www.jetbrains.com" class="navigate">new line</a> inside the class.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_Generate</shortcut>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">Relational comparer</span>.
+          </li>
+          <li>
+            In the opened window, select <code>_email</code> field.
+          </li>
+          <li>
+            If you want, you can specify any prefix (say, <code>email</code>) in <code>Comparer name prefix</code>.
+          </li>
+          <li>Click <span class="menuItem">Finish</span>.</li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="8" strikeOnDone="true">
+      <text>
+        <h1>Relational comparer</h1>
+        <p>
+          You're doing great!
+        </p>
+        <p>
+          Now, let's proceed to other R# 2016.3 features.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>        
+
+    <step li="9" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep9" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep9" />
+      <text>
+        <h1>Language injections</h1>
+        <p>
+          The next one on the list is improvements in language injections.
+        </p>
+        <p>
+          ReSharper 2016.3 introduces support for CSS, JSON, and JavaScript. This means that R# parses
+          the contents of a string literal and enables syntax highlighting, code completion, inspections, and
+          so on.
+        </p>
+        <p>
+          Let's try this in action and mark the <code>Style</code> string as a CSS code:
+        </p>
+        <ol>
+          <li>
+            The caret should be <a href="www.jetbrains.com" class="navigate">anywhere inside the string</a>.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut> and select
+            <span class="menuItem">Mark as | Mark as CSS</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="10" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep10" />      
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep10" />
+      <text>
+        <h1>Language injections</h1>
+        <p>
+          Now you can treat this string as a CSS code. For example, we can use another color format:
+        </p>
+        <ol>
+          <li>
+            The caret should be <a href="www.jetbrains.com" class="navigate">on <code>red</code> color value</a>.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut> and select
+            <span class="menuItem">Convert color to rgb()</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="11" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep11" />
+      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep11" />
+      <text>
+        <h1>Language injections</h1>
+        <p>
+          Great!
+        </p>
+        <p>
+          Note that using the <span class="menuItem">Mark as</span> submenu, creates the marker that is local to
+          your machine. If you want to share the language injection, you should mark a string with
+          the <code>language=</code> comment. Let's try this on a JavaScript injection:
+        </p>
+        <ol>
+          <li>
+            The caret should be <a href="www.jetbrains.com" class="navigate">after <code>// language=</code></a>.
+          </li>
+          <li>
+            Type <code>javascript</code>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="12" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep12" />
+      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep12" />
+      <text>
+        <h1>Language injections</h1>
+        <p>
+          That's it!
+        </p>
+        <p>
+          The next handy feature concerning injections is the ability to virtually add a prefix and postfix
+          to a string content, so that ReSharper could resolve the content as a language injection.
+        </p>
+        <p>
+          For example, we store a toolbar color in the <code>toolBarColor</code> string. If we want ReSharper
+          to treat it like a CSS code, we must make it a finished CSS expression. We can make it using
+          the <code>prefix</code> and <code>postfix</code> parameters in the <code>// language</code> comment.
+          These parameters will be virtually added to the string.
+        </p>
+        <ol>
+          <li>
+            The caret should be <a href="www.jetbrains.com" class="navigate">after <code>// language=css</code></a>.
+          </li>
+          <li>
+            Type <code>prefix=.myClass{color: postfix=;}</code>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="13" strikeOnDone="true">
+      <text>
+        <h1>Language injections</h1>
+        <p>
+          You're doing great!
+        </p>
+        <p>
+          Now let's take a look at less significant yet useful new ReSharper features.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="14" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CSharp7.cs"
+                type="ReSharper20163.CSharp7" textToFind="1000000000" textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep14" />
+      <text>
+        <h1>Convert to binary (C# 7)</h1>
+        <p>
+          Now, if you develop C# 7 project, you can use binary literals. Note that if you have Visual Studio 2015 or earlier,
+          you will get a compiler error on this literal. Nevertheless, this won't
+          prevent us from testing the feauture:
+        </p>
+        <ol>
+          <li>
+            The caret must be <a href="www.jetbrains.com" class="navigate">on the value</a> we want to convert.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Convert to binary</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="15" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CSharp7.cs"
+                type="ReSharper20163.CSharp7" textToFind="0b111011100110101100101000000000" textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep15" />
+      <text>
+        <h1>Digit separators (C# 7)</h1>
+        <p>Awesome!</p>
+        <p>
+          The next C# 7 feature ReSharper supports is digit separators.
+        </p>
+        <ol>
+          <li>
+            The caret must be <a href="www.jetbrains.com" class="navigate">on the value</a>.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select <span class="menuItem">Separate bytes</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="16" strikeOnDone="true">
+      <text>
+        <h1>Digit separators (C# 7)</h1>
+        <p>
+          You're doing great!
+        </p>
+        <p>
+          ReSharper has corresponding actions for other types as well. E.g.,
+          <span class="menuItem">Separate 16-bit words</span> for hex representation
+          or <span class="menuItem">Separate thousands</span> for decimal representation.
+        </p>
+        <p>
+          Note that there are more
+          <a href="https://www.jetbrains.com" target="_blank">C# 7 features ReSharper supports</a>.
+          They are out of scope of this tutorial as on the moment of the ReSharper 2016.3 release, Visual Studio 15 was still
+          in the preview state.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="17" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep17" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep17" />
+      <text>
+        <h1>'Search with Pattern' improvement</h1>
+        <p>
+          A minor update gets the 'Search with Pattern' feature. Now, it matches integer constants, regardless
+          of how they're encoded:
+        </p>
+        <ol>
+          <li>
+            The <a href="www.jetbrains.com" class="navigate"><code>42 * Second</code> expression</a> must be selected.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Start typing <span class="userInput">search</span>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">Search with Pattern</span>.
+          </li>
+          <li>
+            In the window, click <span class="menuItem">Find</span>.
+          </li>
+          <li>
+            Navigate to the <code>Third</code> property.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="18" strikeOnDone="true">
+      <text>
+        <h1>'Search with Pattern' improvement</h1>
+        <p>
+          That's it!
+        </p>
+        <p>
+          Now, let's take a look at other minor ReSharper 2016.3 improvements.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="19" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="InterpolatedStringsImprovement.cs"
+                type="ReSharper20163.InterpolatedStringsImprovement" textToFind="interpolatedString ="
+                textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
+      <text>
+        <h1>Interpolated strings improvement</h1>
+        <p>
+          The next minor yet handy improvement concerns interpolated strings. Once you type the <code>$</code>
+          character,
+          ReSharper will automatically put parentheses and place the curor inside them:
+        </p>
+        <ol>
+          <li>
+            The caret must be after
+            <a href="www.jetbrains.com" class="navigate">
+              <code>interpolatedString =</code>
+            </a>
+            .
+          </li>
+          <li>
+            Type <code>$</code>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="20" strikeOnDone="true">
+      <text>
+        <h1>Interpolated strings improvement</h1>
+        <p>
+          Awesome!
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="21" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep21" />
+      <check action="ReSharper_AltEnter"
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep21" />
+      <text>
+        <h1>Join lines</h1>
+        <p>
+          Sometimes, it may be needed to join two lines of code into one:
+        </p>
+        <ol>
+          <li>
+            <a href="www.jetbrains.com" class="navigate">Both lines</a> in the <code>JoinTwoLines()</code> method must be selected.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Start typing <span class="userInput">join</span>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">Join Lines</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="22">
+      <text>
+        <h1>That's All!</h1>
+        <p>
+          Thanks for passing the tutorial. Note that we've acquainted only with the ReSharper features related to C#.
+          To learn about other ReSharper 2016.3 improvements, please follow this link.
+        </p>
+        <p>
+          Now, you can:
+        </p>
+        <ul>
+          <li>
+            <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>
+          </li>
+        </ul>
+      </text>
+    </step>
+  </steps>
+
+</tutorial>

@@ -5,10 +5,12 @@ using JetBrains.Annotations;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Feature.Services.Navigation;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using PlatformID = JetBrains.Application.platforms.PlatformID;
 
 namespace ReSharperTutorials.CodeNavigator
 {
+
     public static class TypeElementExtensions
     {
         [CanBeNull]

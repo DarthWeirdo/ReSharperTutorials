@@ -86,16 +86,21 @@ namespace ReSharperTutorials.CodeNavigator
             var customType = Type.GetType(typeName);
             if (customType == null)
                 throw new ApplicationException("Unknown custom navigation class. Try reinstalling the plugin.");                        
-            var checkMethod = customType.GetMethod(methodName);
-            if (checkMethod == null)
+            var navMethod = customType.GetMethod(methodName);
+            if (navMethod == null)
                 throw new ApplicationException("Unknown custom navigation method. Try reinstalling the plugin."); 
             var parameterArray = new object[] { _solution, _editorManager, _documentManager };
             var customInst = Activator.CreateInstance(customType, parameterArray);
 
             _shellLocks.ExecuteOrQueueReadLock(_lifetime, "Navigate", () =>
             {
-                _psiFiles.CommitAllDocumentsAsync(() => { checkMethod.Invoke(customInst, null);});
-            });            
+                _psiFiles.CommitAllDocumentsAsync(() => { navMethod.Invoke(customInst, null); });
+            });
+
+            //_shellLocks.ExecuteWithWriteLockWhenAvailable(_lifetime, "Navigate", () =>
+            //{                                
+            //    _psiFiles.CommitAllDocumentsAsync(() => { navMethod.Invoke(customInst, null); });                
+            //});
         }
     }
 }

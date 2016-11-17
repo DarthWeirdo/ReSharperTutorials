@@ -55,7 +55,7 @@
     <step li="3" strikeOnDone="true">
       <navigate project="Tutorial2_WhatsNewReSharper2016.2" file="GoToText.cs"
                 type="ReSharper20162.GoToText" />
-      <check action="ReSharper.ReSharper_GotoText" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step3" />
+      <check action="ReSharper.ReSharper_GotoText" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial2Step3" />
       <text>
         <h1>
           Go to text
@@ -96,7 +96,7 @@
 
     <step li="5" strikeOnDone="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial2Navigation.NavigateStep5"/>
-      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial1Step5" />
+      <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial2Checks.CheckTutorial2Step5" />
       <text>
         <h1>Structural navigation</h1>
         <p>
