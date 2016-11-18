@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using JetBrains.Application;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
@@ -10,7 +12,7 @@ using JetBrains.TextControl.Coords;
 
 namespace ReSharperTutorials.CodeNavigator
 {
-    class Tutorial3Navigation: ICustomNavigation
+    class Tutorial3Navigation : ICustomNavigation
     {
         public ISolution Solution { get; set; }
         public IEditorManager EditorManager { get; set; }
@@ -29,8 +31,9 @@ namespace ReSharperTutorials.CodeNavigator
 
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGenerationIComparable.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+ShoeSize", null, 0, null, 0);
-            var classDecl = (IClassDeclaration)node?.Parent;
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+ShoeSize",
+                null, 0, null, 0);
+            var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.LastChild?.PrevSibling?.PrevSibling?.PrevSibling;
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
@@ -50,8 +53,9 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGenerationIComparable.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+Account", null, 0, null, 0);
-            var classDecl = (IClassDeclaration)node?.Parent;
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+Account",
+                null, 0, null, 0);
+            var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.LastChild?.PrevSibling?.PrevSibling?.PrevSibling;
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
@@ -69,10 +73,11 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCSharpFile(project, "LanguageInjections.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.LanguageInjections", null, 0, "Style", 1);            
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.LanguageInjections", null, 0,
+                "Style", 1);
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
-            var document = range.Document;            
+            var document = range.Document;
             var projectFile = DocumentManager.TryGetProjectFile(document);
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
@@ -84,7 +89,7 @@ namespace ReSharperTutorials.CodeNavigator
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCssFile(project, "LanguageInjections.cs", 1);
             var node = PsiNavigationHelper.GetAnyTreeNodeForStep(file, "red", 1);
-            
+
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
             var document = range.Document;
@@ -98,7 +103,8 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCSharpFile(project, "LanguageInjections.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.LanguageInjections", null, 0, "private", 4);
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.LanguageInjections", null, 0,
+                "private", 4);
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
             var document = range.Document;
@@ -112,7 +118,8 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCSharpFile(project, "LanguageInjections.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.LanguageInjections", null, 0, "private", 6);
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.LanguageInjections", null, 0,
+                "private", 6);
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
             var document = range.Document;
@@ -126,19 +133,81 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
             var file = PsiNavigationHelper.GetCSharpFile(project, "MatchSimilarConstructs.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.MatchSimilarConstructs", null, 0, "Second", 1);
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.MatchSimilarConstructs", null, 0,
+                "Second", 1);
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
             var document = range.Document;
             var projectFile = DocumentManager.TryGetProjectFile(document);
             if (projectFile == null) return;
-            
+
             var startPos = range.TextRange.StartOffset - 5;
             var endPos = range.TextRange.EndOffset;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
             if (textControl == null) return;
             textControl.Caret.MoveTo(range.TextRange.StartOffset - 5, CaretVisualPlacement.DontScrollIfVisible);
-            var selection = new [] { new TextControlPosRange(textControl.Coords.FromDocOffset(startPos), textControl.Coords.FromDocOffset(endPos))};
+            var selection = new[]
+            {
+                new TextControlPosRange(textControl.Coords.FromDocOffset(startPos),
+                    textControl.Coords.FromDocOffset(endPos))
+            };
+            textControl.Selection.SetRanges(selection);
+        }
+
+        public void NavigateStep19()
+        {
+            var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "InterpolatedStringsImprovement.cs");
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.InterpolatedStringsImprovement",
+                null, 0, "=", 1);
+            var range = node.GetDocumentRange();
+            if (!range.IsValid()) return;
+            var document = range.Document;
+            var projectFile = DocumentManager.TryGetProjectFile(document);
+            if (projectFile == null) return;
+            var textControl = EditorManager.OpenProjectFile(projectFile, true);
+            textControl?.Caret.MoveTo(range.TextRange.EndOffset + 1, CaretVisualPlacement.DontScrollIfVisible);
+        }
+
+        public void NavigateStep21()
+        {
+            var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "JoinLines.cs");
+
+            Debug.Assert(file != null, "file != null");
+            var namespaceDecl =
+                file.NamespaceDeclarations.FirstOrDefault(
+                    namespaceDeclaration => namespaceDeclaration.ShortName == "ReSharper20163");
+
+            Debug.Assert(namespaceDecl != null, "namespaceDecl != null");
+            var typeDecl =
+                namespaceDecl.TypeDeclarations.FirstOrDefault(
+                    declaration => declaration.CLRName == "ReSharper20163.JoinLines");
+
+            var range = typeDecl.GetDocumentRange();
+            if (!range.IsValid()) return;
+            var document = range.Document;
+            var projectFile = DocumentManager.TryGetProjectFile(document);
+            if (projectFile == null) return;
+
+            Debug.Assert(typeDecl != null, "typeDecl != null");
+            var methodDecl = (IPropertyDeclaration) typeDecl.MemberDeclarations.FirstOrDefault(memberDeclaration =>
+                    memberDeclaration.DeclaredName == "MyProperty");
+
+            Debug.Assert(methodDecl != null, "methodDecl != null");
+            Debug.Assert(methodDecl.FirstChild != null, "methodDecl.FirstChild != null");
+            var startPos = methodDecl.FirstChild.GetNavigationRange().StartOffset.Offset;
+            Debug.Assert(methodDecl.LastChild != null, "methodDecl.LastChild != null");
+            var endPos = methodDecl.LastChild.GetNavigationRange().EndOffset.Offset;
+
+            var textControl = EditorManager.OpenProjectFile(projectFile, true);
+            if (textControl == null) return;
+            textControl.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
+            var selection = new[]
+            {
+                new TextControlPosRange(textControl.Coords.FromDocOffset(startPos),
+                    textControl.Coords.FromDocOffset(endPos))
+            };
             textControl.Selection.SetRanges(selection);
         }
     }

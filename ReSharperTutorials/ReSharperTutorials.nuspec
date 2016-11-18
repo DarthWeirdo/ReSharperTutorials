@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>JetBrains.ReSharperTutorials</id>
-		<version>0.0.106</version>
+		<version>0.0.110</version>
 		<authors>JetBrains</authors>
 		<owners>JetBrains</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>

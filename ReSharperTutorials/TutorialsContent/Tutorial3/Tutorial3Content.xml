@@ -416,7 +416,8 @@
             In the list, select <span class="menuItem">Search with Pattern</span>.
           </li>
           <li>
-            In the window, click <span class="menuItem">Find</span>.
+            In the window, click <span class="menuItem">Find</span>. Note that the <span class="menuItem">Match similar constructs</span>
+            option is selected.
           </li>
           <li>
             Navigate to the <code>Third</code> property.
@@ -439,11 +440,9 @@
     </step>
 
     <step li="19" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="InterpolatedStringsImprovement.cs"
-                type="ReSharper20163.InterpolatedStringsImprovement" textToFind="interpolatedString ="
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep19"/>
                 textToFindOccurrence="1" />
-      <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
+      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
       <text>
         <h1>Interpolated strings improvement</h1>
         <p>
@@ -455,9 +454,7 @@
           <li>
             The caret must be after
             <a href="www.jetbrains.com" class="navigate">
-              <code>interpolatedString =</code>
-            </a>
-            .
+              <code>interpolatedString =</code></a>.
           </li>
           <li>
             Type <code>$</code>.
@@ -478,16 +475,16 @@
 
     <step li="21" strikeOnDone="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep21" />
-      <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep21" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep21" />
       <text>
         <h1>Join lines</h1>
         <p>
-          Sometimes, it may be needed to join two lines of code into one:
+          Sometimes, it may be needed to join multiple lines into one. For example, we want
+          <code>MyProperty</code> to fit into one line:
         </p>
         <ol>
           <li>
-            <a href="www.jetbrains.com" class="navigate">Both lines</a> in the <code>JoinTwoLines()</code> method must be selected.
+            <a href="www.jetbrains.com" class="navigate">All lines we want to join</a> must be selected.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.

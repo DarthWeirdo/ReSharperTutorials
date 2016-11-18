@@ -312,5 +312,22 @@ namespace ReSharperTutorials.CodeNavigator
 //            textControl.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
 //            textControl.Selection.SetRange(range.TextRange);
         }
+
+        [NotNull]
+        public static IEnumerable<ITreeNode> ChildrenInSubtrees([NotNull] this ITreeNode node)
+        {
+            Assertion.Assert(node != null, "node != null");
+
+            if (node.FirstChild == null) yield break;
+            for (var child = node.FirstChild; child != null; child = child.NextSibling)
+            {
+                yield return child;
+
+                foreach (var children in child.ChildrenInSubtrees())
+                {
+                    yield return children;
+                }                
+            }
+        }
     }
 }

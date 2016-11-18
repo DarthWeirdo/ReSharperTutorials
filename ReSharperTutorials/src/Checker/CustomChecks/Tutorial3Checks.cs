@@ -1,8 +1,13 @@
-﻿using JetBrains.DocumentManagers;
+﻿using System.Diagnostics;
+using System.Linq;
+using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
+using JetBrains.TextControl.Coords;
+using ReSharperTutorials.CodeNavigator;
 
 namespace ReSharperTutorials.Checker
 {
@@ -96,6 +101,29 @@ namespace ReSharperTutorials.Checker
             var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
             var parentNode = node?.Parent?.Parent as IPropertyDeclaration;            
             return parentNode != null && parentNode.DeclaredName == "Third";
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep19()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "InterpolatedStringsImprovement.cs",
+                "$\"\"");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep21()
+        {
+            var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "JoinLines.cs");            
+            var namespaceDecl = file?.NamespaceDeclarations.FirstOrDefault(
+                    namespaceDeclaration => namespaceDeclaration.ShortName == "ReSharper20163");            
+            var typeDecl = namespaceDecl?.TypeDeclarations.FirstOrDefault(declaration => declaration.CLRName == "ReSharper20163.JoinLines");
+            var methodDecl = (IPropertyDeclaration)typeDecl?.MemberDeclarations.FirstOrDefault(memberDeclaration =>
+                   memberDeclaration.DeclaredName == "MyProperty");
+
+            // var newLines = typeDecl?.Children().Where(node => node.GetText() == "\r\n").ToList(); 
+            var newLines = methodDecl?.ChildrenInSubtrees().Where(node => node.GetText() == "\r\n").ToList();            
+            return newLines?.Count == 0;
         }
     }
 }

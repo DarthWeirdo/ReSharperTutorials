@@ -2,6 +2,6 @@
 {
     class InterpolatedStringsImprovement
     {
-        private string interpolatedString = $""
+        private string interpolatedString = 
     }    
 }
