@@ -27,6 +27,7 @@ namespace ReSharperTutorials.TutorialUI
 {
     public class TutorialWindow : IStepView, IHtmlCommunication
     {
+        private readonly TutorialWindowManager _windowManager;
         private readonly IPsiServices _psiServices;
         private readonly IActionShortcuts _shortcutManager;
         private readonly ISettingsStore _settingsStore;
@@ -95,11 +96,12 @@ namespace ReSharperTutorials.TutorialUI
         }        
 
         
-        public TutorialWindow(string contentPath, Lifetime tutorialLifetime, ISolution solution, IPsiFiles psiFiles,
+        public TutorialWindow(string contentPath, Lifetime tutorialLifetime, TutorialWindowManager windowManager, ISolution solution, IPsiFiles psiFiles,
             ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
             DocumentManager documentManager, IUIApplication environment, IActionManager actionManager, TabbedToolWindowClass toolWindowClass, 
             WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager)
         {
+            _windowManager = windowManager;
             _htmlGenerator = new HtmlGenerator(tutorialLifetime, colorThemeManager);
             _tutorialLifetime = tutorialLifetime;
             _solution = solution;
@@ -216,7 +218,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public void RunTutorial(string htmlTutorialId)
         {
-            throw new NotImplementedException();
+            _windowManager.RunTutorial(htmlTutorialId);            
         }
     }
 }

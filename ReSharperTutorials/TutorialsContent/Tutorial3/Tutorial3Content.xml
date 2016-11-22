@@ -53,7 +53,7 @@
     </step>
 
     <step li="3" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CodeGenerationIDisposable.cs"
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CodeGeneration.cs"
                 type="ReSharper20163.CodeGenerationIDisposable+HandleWrapper" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep3" />
       <text>
@@ -92,7 +92,7 @@
           corresponding <code>TODO</code> item.
         </p>
         <p>
-          Now, let's take a look at the next code generation feature.
+          Now, let's take a look at the other code generation features.
         </p>        
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
@@ -244,7 +244,7 @@
         </p>
         <ol>
           <li>
-            The caret should be <a href="www.jetbrains.com" class="navigate">on <code>red</code> color value</a>.
+            The caret should be on the <code><a href="www.jetbrains.com" class="navigate">red</a></code> color value.
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut> and select
@@ -269,7 +269,7 @@
         </p>
         <ol>
           <li>
-            The caret should be <a href="www.jetbrains.com" class="navigate">after <code>// language=</code></a>.
+            The caret must be after the statement <code><a href="www.jetbrains.com" class="navigate">// language=</a></code>.
           </li>
           <li>
             Type <code>javascript</code>.
@@ -298,7 +298,7 @@
         </p>
         <ol>
           <li>
-            The caret should be <a href="www.jetbrains.com" class="navigate">after <code>// language=css</code></a>.
+            The caret must be after the statement <code><a href="www.jetbrains.com" class="navigate">// language=css</a></code>.
           </li>
           <li>
             Type <code>prefix=.myClass{color: postfix=;}</code>.
@@ -404,7 +404,7 @@
         </p>
         <ol>
           <li>
-            The <a href="www.jetbrains.com" class="navigate"><code>42 * Second</code> expression</a> must be selected.
+            The <code><a href="www.jetbrains.com" class="navigate">42 * Second</a></code> expression must be selected.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.
@@ -452,9 +452,7 @@
         </p>
         <ol>
           <li>
-            The caret must be after
-            <a href="www.jetbrains.com" class="navigate">
-              <code>interpolatedString =</code></a>.
+            The caret must be after <code><a href="www.jetbrains.com" class="navigate">interpolatedString =</a></code>.
           </li>
           <li>
             Type <code>$</code>.

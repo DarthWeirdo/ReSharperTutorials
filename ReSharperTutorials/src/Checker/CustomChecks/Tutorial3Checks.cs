@@ -30,28 +30,28 @@ namespace ReSharperTutorials.Checker
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep3()
         {
-            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGenerationIDisposable.cs",
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGeneration.cs",
                 "Dispose(true)");
         }
 
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep5()
         {
-            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGenerationIComparable.cs",
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGeneration.cs",
                 "other._sizeCm");
         }
 
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep6()
         {
-            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGenerationIComparable.cs",
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGeneration.cs",
                 "other._name");
         }
 
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep7()
         {
-            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGenerationIComparable.cs",
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGeneration.cs",
                 "RelationalComparer();");
         }
 
@@ -120,8 +120,7 @@ namespace ReSharperTutorials.Checker
             var typeDecl = namespaceDecl?.TypeDeclarations.FirstOrDefault(declaration => declaration.CLRName == "ReSharper20163.JoinLines");
             var methodDecl = (IPropertyDeclaration)typeDecl?.MemberDeclarations.FirstOrDefault(memberDeclaration =>
                    memberDeclaration.DeclaredName == "MyProperty");
-
-            // var newLines = typeDecl?.Children().Where(node => node.GetText() == "\r\n").ToList(); 
+            
             var newLines = methodDecl?.ChildrenInSubtrees().Where(node => node.GetText() == "\r\n").ToList();            
             return newLines?.Count == 0;
         }

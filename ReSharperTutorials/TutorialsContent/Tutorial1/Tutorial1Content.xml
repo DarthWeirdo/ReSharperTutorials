@@ -6,7 +6,7 @@
 
   <steps>
     <step li="1">
-      <text>
+      <text>        
         <h1>
           Welcome!
         </h1>
@@ -29,7 +29,7 @@
               </ul>
             </li>
             <li>
-              Please follow the instructions precisely and do not take any actions other than those suggested in a step.
+              <b>Please follow the instructions precisely and do not take any actions other than those suggested in a step.</b>
             </li>
           </ul>
         </p>
@@ -741,7 +741,10 @@
         </p>
         <ul>
           <li>
-            <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>
+            <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>            
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(3); return false;">Run <b>What's New in ReSharper 2016.3</b> tutorial</a>
           </li>
         </ul>
       </text>

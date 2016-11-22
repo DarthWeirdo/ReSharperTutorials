@@ -41,8 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGenerationIComparable.cs" />
-    <Compile Include="CodeGenerationIDisposable.cs" />
+    <Compile Include="CodeGeneration.cs" />
     <Compile Include="CSharp7.cs" />
     <Compile Include="InterpolatedStringsImprovement.cs" />
     <Compile Include="JoinLines.cs" />

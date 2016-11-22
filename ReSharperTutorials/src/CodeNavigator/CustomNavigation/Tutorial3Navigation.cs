@@ -5,10 +5,15 @@ using JetBrains.Application;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
+using JetBrains.ReSharper.I18n.Services;
+using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using JetBrains.TextControl.Coords;
+using JetBrains.TreeModels;
+using JetBrains.Util;
+using NUnit.Framework;
 
 namespace ReSharperTutorials.CodeNavigator
 {
@@ -30,10 +35,10 @@ namespace ReSharperTutorials.CodeNavigator
             //var shellLocks = Solution.Locks;            
 
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
-            var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGenerationIComparable.cs");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGeneration.cs");
             var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+ShoeSize",
                 null, 0, null, 0);
-            var classDecl = (IClassDeclaration) node?.Parent;
+            var classDecl = (IClassDeclaration)node?.Parent;
             node = classDecl?.Body.LastChild?.PrevSibling?.PrevSibling?.PrevSibling;
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
@@ -46,13 +51,39 @@ namespace ReSharperTutorials.CodeNavigator
             var projectFile = DocumentManager.TryGetProjectFile(document);
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
-            textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
+            textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.Generic);
         }
+
+        //public void NavigateStep5()
+        //{
+        //    var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
+        //    var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGenerationIComparable.cs");
+        //    var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+ShoeSize",
+        //        null, 0, null, 0);
+        //    var classDecl = (IClassDeclaration) node?.Parent;
+        //    node = classDecl?.Body.LastChild?.PrevSibling?.PrevSibling?.PrevSibling;
+        //    var range = node.GetDocumentRange();
+        //    if (!range.IsValid()) return;
+        //    var document = range.Document;
+        //    var text = $"{Environment.NewLine}\t\t\t";
+
+        //    var factory = CSharpElementFactory.GetInstance(classDecl.GetPsiModule());
+        //    var nodeBlock = node as IBlock;            
+
+        //    //var st = factory.CreateStatement(text, EmptyArray<object>.Instance);
+        //    var st = factory.CreateStatement("HUEMOE");
+        //    nodeBlock.AddStatementAfter(st, null);
+
+        //    var projectFile = DocumentManager.TryGetProjectFile(document);
+        //    if (projectFile == null) return;
+        //    var textControl = EditorManager.OpenProjectFile(projectFile, true);
+        //    textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);            
+        //}
 
         public void NavigateStep6_7()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
-            var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGenerationIComparable.cs");
+            var file = PsiNavigationHelper.GetCSharpFile(project, "CodeGeneration.cs");
             var node = PsiNavigationHelper.GetTreeNodeForStep(file, "ReSharper20163.CodeGenerationIComparable+Account",
                 null, 0, null, 0);
             var classDecl = (IClassDeclaration) node?.Parent;
@@ -66,7 +97,7 @@ namespace ReSharperTutorials.CodeNavigator
             var projectFile = DocumentManager.TryGetProjectFile(document);
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
-            textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
+            textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.Generic);
         }
 
         public void NavigateStep9()

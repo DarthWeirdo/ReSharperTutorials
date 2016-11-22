@@ -90,7 +90,7 @@ namespace ReSharperTutorials.TutorialUI
 
             threading.ExecuteOrQueue("RunTutorialWindow", () =>
             {                
-                _tutorialWindow = new TutorialWindow(contentPath, lifetime, solution, psiFiles, changeManager, textControlManager,
+                _tutorialWindow = new TutorialWindow(contentPath, lifetime, this, solution, psiFiles, changeManager, textControlManager,
                     shellLocks, editorManager, documentManager, environment, actionManager, _toolWindowClass,
                     windowsHookManager, psiServices, shortcutManager, colorThemeManager);
 
@@ -121,7 +121,7 @@ namespace ReSharperTutorials.TutorialUI
 
             _threading.ExecuteOrQueue("RunMainWindow", () =>
             {
-                _homeWindow = new HomeWindow(_shellLifetime, _solutionStateTracker, _globalSettings, _shellLocks, _environment, 
+                _homeWindow = new HomeWindow(_shellLifetime, this, _solutionStateTracker, _globalSettings, _shellLocks, _environment, 
                     _actionManager, _toolWindowClass, _windowsHookManager, _colorThemeManager)
                 {
                     PageText = HtmlGenerator.GetResource("HomePage.html")
@@ -129,6 +129,54 @@ namespace ReSharperTutorials.TutorialUI
 
                 _homeWindow.Show();
             });
+        }
+
+        public void RunTutorial(string htmlTutorialId)
+        {
+            try
+            {
+                EnvironmentChecker.RunAllChecks();
+            }
+            catch (Exception e)
+            {
+                if (e is NoShortCutsAssignedException)
+                {
+                    MessageBox.ShowError(
+                        "ReSharper shortcuts are not assigned! Please apply a keyboard scheme in " +
+                        "ReSharper | Options... | Environment | Keyboard & Menus before running the tutorial.",
+                        "ReSharper Tutorials");
+                    return;
+                }
+            }
+
+            var result =
+                MessageBox.ShowYesNo(
+                    "This will close your current solution and open the tutorial solution. Run the tutorial?",
+                    "ReSharper Tutorials");
+            if (!result) return;
+
+            var loadingLifetime = Lifetimes.Define();
+            _solutionStateTracker.AgreeToRunTutorial.Advise(loadingLifetime.Lifetime, () =>
+            {
+                var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
+                _homeWindow.EnableButtons(false);
+                _homeWindow.AgreeToRunTutorial(htmlTutorialId, loadingImgPath);
+            });
+
+            _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
+
+            // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
+            switch (htmlTutorialId)
+            {
+                case "1":
+                    _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
+                        () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
+                    break;
+                case "3":
+                    _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
+                        () => _actionManager.ExecuteAction<ActionOpenTutorial3>());
+                    break;
+            }
         }
     }
 }

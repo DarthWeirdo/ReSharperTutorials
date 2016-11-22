@@ -1,26 +1,18 @@
 ﻿using System;
 using JetBrains.Annotations;
 using JetBrains.Application;
+using JetBrains.Application.BuildScript.Application.Zones;
 using JetBrains.DataFlow;
+using JetBrains.DocumentModel;
 using JetBrains.ProjectModel;
 using JetBrains.ProjectModel.Tasks;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Resources.Shell;
+using JetBrains.TextControl;
 using JetBrains.Threading;
 
 namespace ReSharperTutorials.Runner
 {
-    public interface ISolutionStateTracker
-    {
-        [CanBeNull]
-        ISolution Solution { get; }
-
-        ISignal<ISolution> AfterSolutionContainerCreated { get; }
-        ISignal<ISolution> AfterSolutionOpened { get; }
-        ISignal<ISolution> BeforeSolutionClosed { get; }
-        ISignal<ISolution> AfterPsiLoaded { get; }      
-        ISignal<bool> AgreeToRunTutorial { get; }      
-    }
-
     [ShellComponent]
     public class SolutionStateTracker : ISolutionStateTracker
     {

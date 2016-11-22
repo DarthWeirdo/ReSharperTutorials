@@ -19,6 +19,7 @@ namespace ReSharperTutorials.TutorialUI
 {
     class HomeWindow : IHtmlCommunication
     {
+        private readonly TutorialWindowManager _windowManager;
         private readonly TabbedToolWindowClass _toolWindowClass;
         private readonly ToolWindowInstance _toolWindowInstance;
         private readonly IActionManager _actionManager;
@@ -35,7 +36,7 @@ namespace ReSharperTutorials.TutorialUI
         private readonly SolutionStateTracker _solutionStateTracker;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;
-
+        public Lifetime WindowLifetime => _lifetime;
         public string PageText
         {
             set
@@ -49,11 +50,12 @@ namespace ReSharperTutorials.TutorialUI
         }
 
 
-        public HomeWindow(Lifetime lifetime, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
+        public HomeWindow(Lifetime lifetime, TutorialWindowManager windowManager, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
             IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager,
             TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager,
             IColorThemeManager colorThemeManager)
         {
+            _windowManager = windowManager;
             _lifetime = lifetime;
             _solutionStateTracker = solutionStateTracker;
             _globalSettings = globalSettings;
@@ -111,7 +113,7 @@ namespace ReSharperTutorials.TutorialUI
             _htmlMediator?.HideImages();
         }
 
-        private void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
+        public void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
         {
             _htmlMediator?.AgreeToRunTutorial(htmlTutorialId, imgSrc);
         }
@@ -147,50 +149,55 @@ namespace ReSharperTutorials.TutorialUI
 
         public void RunTutorial(string htmlTutorialId)
         {
-            try
-            {
-                EnvironmentChecker.RunAllChecks();
-            }
-            catch (Exception e)
-            {
-                if (e is NoShortCutsAssignedException)
-                {
-                    MessageBox.ShowError(
-                        "ReSharper shortcuts are not assigned! Please apply a keyboard scheme in " +
-                        "ReSharper | Options... | Environment | Keyboard & Menus before running the tutorial.",
-                        "ReSharper Tutorials");
-                    return;
-                }
-            }
-
-            var result =
-                MessageBox.ShowYesNo(
-                    "This will close your current solution and open the tutorial solution. Run the tutorial?",
-                    "ReSharper Tutorials");
-            if (!result) return;
-
-            var loadingLifetime = Lifetimes.Define();
-            _solutionStateTracker.AgreeToRunTutorial.Advise(loadingLifetime.Lifetime, () =>
-            {
-                var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
-                EnableButtons(false);
-                AgreeToRunTutorial(htmlTutorialId, loadingImgPath);
-            });
-
-            _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
-
-            // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
-            switch (htmlTutorialId)
-            {
-                case "1":
-                    _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
-                        () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
-                    break;
-                case "3":
-                    _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
-                        () => _actionManager.ExecuteAction<ActionOpenTutorial3>());
-                    break;
-            }
+            _windowManager.RunTutorial(htmlTutorialId);            
         }
+
+        //public void RunTutorial(string htmlTutorialId)
+        //{
+        //    try
+        //    {
+        //        EnvironmentChecker.RunAllChecks();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        if (e is NoShortCutsAssignedException)
+        //        {
+        //            MessageBox.ShowError(
+        //                "ReSharper shortcuts are not assigned! Please apply a keyboard scheme in " +
+        //                "ReSharper | Options... | Environment | Keyboard & Menus before running the tutorial.",
+        //                "ReSharper Tutorials");
+        //            return;
+        //        }
+        //    }
+
+        //    var result =
+        //        MessageBox.ShowYesNo(
+        //            "This will close your current solution and open the tutorial solution. Run the tutorial?",
+        //            "ReSharper Tutorials");
+        //    if (!result) return;
+
+        //    var loadingLifetime = Lifetimes.Define();
+        //    _solutionStateTracker.AgreeToRunTutorial.Advise(loadingLifetime.Lifetime, () =>
+        //    {
+        //        var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
+        //        EnableButtons(false);
+        //        AgreeToRunTutorial(htmlTutorialId, loadingImgPath);
+        //    });
+
+        //    _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
+
+        //    // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
+        //    switch (htmlTutorialId)
+        //    {
+        //        case "1":
+        //            _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
+        //                () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
+        //            break;
+        //        case "3":
+        //            _shellLocks.ExecuteOrQueue(_lifetime, "RunTutorial",
+        //                () => _actionManager.ExecuteAction<ActionOpenTutorial3>());
+        //            break;
+        //    }
+        //}
     }
 }
