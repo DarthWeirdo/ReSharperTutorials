@@ -82,6 +82,11 @@ namespace ReSharperTutorials.TutorialUI
             _window.RunTutorial(id.ToString());
         }
 
+        public void OpenLink(object link)
+        {
+            System.Diagnostics.Process.Start(link.ToString());
+        }
+
         public void RunStepNavigation()
         {
             OnRunStepNavigationLinkClick.Fire(true);

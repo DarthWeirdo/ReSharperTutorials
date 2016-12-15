@@ -18,20 +18,29 @@ function agreeToRunTutorial() {
 }
 
 function stepLoad() {
+    var i;
+
+    var extLinks = document.getElementsByClassName("externalLink");
+    for (i = 0; i < extLinks.length; i++) {        
+        var index = i;
+        extLinks[i].onclick = function() {
+            window.openLink(extLinks[index].href);
+        };
+    }
+
     var pElem = document.getElementById("prevStep");
     var pHeight = pElem.clientHeight;
     var cElem = document.getElementById("currentStep");
     cElem.style.top = pHeight + "px";
 
     var buttons = document.querySelectorAll("div.prevStep button");
-    var i;
+
     for (i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true;
         buttons[i].style.textDecoration = "line-through";
     }
 
     var navLinks = document.getElementsByClassName("navigate");
-
     for (i = 0; i < navLinks.length; i++) {
         if (checkParentsClassName(navLinks[i], "prevStep") === true) {
             navLinks[i].className = "noNavigate";
@@ -40,7 +49,7 @@ function stepLoad() {
         if (checkParentsClassName(navLinks[i], "currentStep") === true) {
             navLinks[i].onclick = runStepNavigation;
         }
-    }
+    }    
 
     window.scroll(0, findPos(cElem));
 }
@@ -123,6 +132,11 @@ function buttonClick() {
 
 function runTutorial(id) {
     window.external.RunTutorial(id);
+}
+
+function openLink(s) {    
+    window.external.OpenLink(s);
+    return false;
 }
 
 function runStepNavigation() {

@@ -45,7 +45,7 @@
           ReSharper 2016.3 brings numerous fixes and multiple new features. This tutorial will acquaint you with the most important ones.
           Please note that this tutorial is dedicated only to <b>ReSharper's C# features</b>, while other languages have received their share of
           attention in 2016.3 as well. For more details on these features, read
-          <a href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.
+          <a class="externalLink" href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.          
         </p>
         <p>But, enough words! Let's start!</p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
@@ -403,7 +403,7 @@
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut> and select
-            <span class="menuItem">Mark as injected language Mark as CSS</span>.
+            <span class="menuItem">Mark as injected language</span>.
           </li>
           <li>
             Then <span class="menuItem">Mark as CSS</span>.

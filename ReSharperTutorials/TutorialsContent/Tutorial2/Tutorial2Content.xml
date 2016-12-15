@@ -45,7 +45,7 @@
           ReSharper  2016.2 brings numerous fixes and new awesome features. This tutorial will acquaint you with the most important ones. 
           Please note that this tutorial is dedicated only to ReSharper's C# features, while other languages have received their share of 
           attention in 2016.2 as well. For more details on these features, please follow this 
-          <a href="https://blog.jetbrains.com/dotnet/2016/08/18/resharper-ultimate-2016-2-is-here/">link</a>.
+          <a class="externalLink" href="https://blog.jetbrains.com/dotnet/2016/08/18/resharper-ultimate-2016-2-is-here/">link</a>.
         </p>
         <p>But, enough words! Let's start!</p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
@@ -724,8 +724,7 @@
           shortcut.
         </p>
         <p>
-          <a href="https://www.jetbrains.com/help/resharper/Enforcing_Code_Formatting_Rules.html#configure"
-             target="_blank">
+          <a class="externalLink" href="https://www.jetbrains.com/help/resharper/Enforcing_Code_Formatting_Rules.html#configure">
             Here
           </a>
           you can find out how to configure code formatting rules.

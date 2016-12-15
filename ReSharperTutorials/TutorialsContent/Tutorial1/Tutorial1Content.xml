@@ -403,8 +403,7 @@
         </p>
         <p>
           You can check all available templates
-          <a href="https://www.jetbrains.com/help/resharper/Reference__Templates_Explorer__Live_Templates.html"
-             target="_blank">
+          <a class="externalLink" href="https://www.jetbrains.com/help/resharper/Reference__Templates_Explorer__Live_Templates.html">
             here
           </a>
           .
@@ -508,8 +507,7 @@
         <h1>Refactorings</h1>
         <p>
           Very easy, right?
-          <a href="https://www.jetbrains.com/help/resharper/Main_Set_of_Refactorings.html"
-             target="_blank">
+          <a class="externalLink" href="https://www.jetbrains.com/help/resharper/Main_Set_of_Refactorings.html">
             Here
           </a>
           you can find info about all other types of refactorings.
@@ -699,8 +697,7 @@
           shortcut.
         </p>
         <p>
-          <a href="https://www.jetbrains.com/help/resharper/Enforcing_Code_Formatting_Rules.html#configure"
-             target="_blank">
+          <a class="externalLink" href="https://www.jetbrains.com/help/resharper/Enforcing_Code_Formatting_Rules.html#configure">
             Here
           </a>
           you can find out how to configure code formatting rules.
