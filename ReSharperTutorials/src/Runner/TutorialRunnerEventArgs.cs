@@ -2,7 +2,7 @@
 
 namespace ReSharperTutorials.Runner
 {
-    internal class TutorialRunnerEventArgs: RoutedEventArgs
+    internal class TutorialRunnerEventArgs : RoutedEventArgs
     {
         public readonly bool SolutionSaved;
 

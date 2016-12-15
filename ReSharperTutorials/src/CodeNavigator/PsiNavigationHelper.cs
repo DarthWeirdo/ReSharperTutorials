@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using JetBrains.Application;
 using JetBrains.Application.platforms;
-using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Feature.Services.Navigation;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Caches;
 using JetBrains.ReSharper.Psi.Css;
@@ -23,7 +20,6 @@ using JetBrains.ReSharper.Psi.Paths;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using JetBrains.Util;
-using ReSharperTutorials.Utils;
 using IClassDeclaration = JetBrains.ReSharper.Psi.CSharp.Tree.IClassDeclaration;
 using PlatformID = JetBrains.Application.platforms.PlatformID;
 
@@ -53,13 +49,13 @@ namespace ReSharperTutorials.CodeNavigator
 
         public static IEnumerable<ITypeElement> GetTypeElementsByClrName(ISolution solution, string clrName)
         {
-            IPsiServices psiServices = solution.GetComponent<IPsiServices>();
+            var psiServices = solution.GetComponent<IPsiServices>();
             psiServices.Files.CommitAllDocuments();
 
-            ISymbolCache symbolCache = psiServices.Symbols;
-            ISymbolScope symbolScope = symbolCache.GetSymbolScope(LibrarySymbolScope.FULL, true);
+            var symbolCache = psiServices.Symbols;
+            var symbolScope = symbolCache.GetSymbolScope(LibrarySymbolScope.FULL, true);
 
-            IEnumerable<ITypeElement> validTypeElements = symbolScope.GetTypeElementsByCLRName(clrName)
+            var validTypeElements = symbolScope.GetTypeElementsByCLRName(clrName)
                 .Where(element => element.IsValid());
 
             return SkipDefaultProfileIfRuntimeExist(validTypeElements);
@@ -188,14 +184,6 @@ namespace ReSharperTutorials.CodeNavigator
                 where decl.DeclaredName == methodName
                 select decl).AsArray();
 
-            //            var treeNodeList = typeNode.EnumerateTo(typeNode.NextSibling);
-            //
-            //            var resultList = (from treeNode in treeNodeList
-            //                               where treeNode is IMethodDeclaration
-            //                               let method = (IMethodDeclaration)treeNode
-            //                               where method.DeclaredName == methodName
-            //                               select treeNode).AsArray();
-
             if (methodOccurrence > 0) methodOccurrence = methodOccurrence - 1;
             return (resultList.Length > 0) && (methodOccurrence <= resultList.Length - 1)
                 ? resultList[methodOccurrence]
@@ -208,8 +196,8 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var tOccIndex = 0;
             var navText = text;
-            if (textOccurrence > 0) tOccIndex = textOccurrence - 1;            
-            var treeNodeList = file.EnumerateTo(file.LastChild);            
+            if (textOccurrence > 0) tOccIndex = textOccurrence - 1;
+            var treeNodeList = file.EnumerateTo(file.LastChild);
 
             var result = (from treeNode in treeNodeList
                 where treeNode.GetText() == navText
@@ -308,9 +296,6 @@ namespace ReSharperTutorials.CodeNavigator
             var textControl = editorManager.OpenProjectFile(projectFile, activate);
 
             textControl?.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
-
-//            textControl.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
-//            textControl.Selection.SetRange(range.TextRange);
         }
     }
 }

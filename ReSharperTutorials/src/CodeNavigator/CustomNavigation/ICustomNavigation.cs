@@ -4,7 +4,7 @@ using JetBrains.ProjectModel;
 
 namespace ReSharperTutorials.CodeNavigator
 {
-    interface ICustomNavigation
+    internal interface ICustomNavigation
     {
         ISolution Solution { get; set; }
         IEditorManager EditorManager { get; set; }

@@ -37,6 +37,13 @@ namespace ReSharper20163
             public string Name => _name;
             public string EMail => _email;            
         }        
+    }
 
+
+    public class GenerateConstructorCheckForNull
+    {
+        private string _stuff;
+        private string _stuff2;
+        private string _stuff3;
     }
 }

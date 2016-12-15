@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Feature.Services.CSharp.Generate;
-using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 
@@ -17,7 +12,7 @@ namespace ReSharperTutorials.CodeNavigator
     /// Custom navigation class MUST be ICustomNavigation and have ISolution, IEditorManager, 
     /// DocumentManager in constructor. 
     /// </summary>
-    class Tutorial1Navigation: ICustomNavigation
+    class Tutorial1Navigation : ICustomNavigation
     {
         public ISolution Solution { get; set; }
         public IEditorManager EditorManager { get; set; }
@@ -41,14 +36,15 @@ namespace ReSharperTutorials.CodeNavigator
             var projectFile = DocumentManager.TryGetProjectFile(document);
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
-            textControl?.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);            
+            textControl?.Caret.MoveTo(range.TextRange.StartOffset, CaretVisualPlacement.DontScrollIfVisible);
         }
 
         public void NavigateStep9()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.CenterCoordinates", null, 0, null, 0);            
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.CenterCoordinates",
+                null, 0, null, 0);
             var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.LastChild;
             var range = node.GetDocumentRange();
@@ -56,7 +52,7 @@ namespace ReSharperTutorials.CodeNavigator
             var document = range.Document;
             var text = $"{Environment.NewLine}\t{Environment.NewLine}\t";
             document.InsertText(range.TextRange.EndOffset, text);
-            
+
             var projectFile = DocumentManager.TryGetProjectFile(document);
             if (projectFile == null) return;
             var textControl = EditorManager.OpenProjectFile(projectFile, true);
@@ -67,8 +63,9 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
-            var classDecl = (IClassDeclaration)node?.Parent;
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0,
+                null, 0);
+            var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.FirstChild;
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
@@ -83,11 +80,12 @@ namespace ReSharperTutorials.CodeNavigator
         }
 
         public void NavigateStep17()
-        {         
+        {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
-            var classDecl = (IClassDeclaration)node?.Parent;
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0,
+                null, 0);
+            var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.FirstChild;
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
@@ -106,8 +104,9 @@ namespace ReSharperTutorials.CodeNavigator
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial1_EssentialShortcuts");
             var file = PsiNavigationHelper.GetCSharpFile(project, "Essentials.cs");
-            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0, null, 0);
-            var classDecl = (IClassDeclaration)node?.Parent;
+            var node = PsiNavigationHelper.GetTreeNodeForStep(file, "Tutorial1_EssentialShortcuts.MyCircle", null, 0,
+                null, 0);
+            var classDecl = (IClassDeclaration) node?.Parent;
             node = classDecl?.Body.Constructors[0]?.LastChild;
             var range = node.GetDocumentRange();
             if (!range.IsValid()) return;
@@ -121,8 +120,8 @@ namespace ReSharperTutorials.CodeNavigator
             textControl?.Caret.MoveTo(range.TextRange.EndOffset + text.Length, CaretVisualPlacement.DontScrollIfVisible);
         }
 
-
         #region Don't forget
+
         //            var module = GetPsiModuleByName(Solution, project, "Tutorial1_EssentialShortcuts");
         //
         //            var factory = CSharpElementFactory.GetInstance(module);
@@ -140,6 +139,7 @@ namespace ReSharperTutorials.CodeNavigator
         //            if (projectFile == null) return;
         //            var textControl = EditorManager.OpenProjectFile(projectFile, true);
         //            textControl?.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
-        #endregion        
+
+        #endregion
     }
 }

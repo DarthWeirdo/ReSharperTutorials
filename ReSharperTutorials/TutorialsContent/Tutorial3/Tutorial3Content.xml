@@ -44,8 +44,8 @@
         <p>
           ReSharper 2016.3 brings numerous fixes and multiple new features. This tutorial will acquaint you with the most important ones.
           Please note that this tutorial is dedicated only to <b>ReSharper's C# features</b>, while other languages have received their share of
-          attention in 2016.3 as well. For more details on these features, please follow this
-          <a href="https://blog.jetbrains.com/dotnet/2016/08/18/resharper-ultimate-2016-2-is-here/">link</a>.
+          attention in 2016.3 as well. For more details on these features, read
+          <a href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.
         </p>
         <p>But, enough words! Let's start!</p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
@@ -192,10 +192,185 @@
         </ol>
       </text>
     </step>
-
+    
     <step li="8" strikeOnDone="true">
       <text>
         <h1>Relational comparer</h1>
+        <p>
+          You're doing great!
+        </p>
+        <p>
+          Let's take a look at one more code generation feature.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+    
+    <step li="9" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep9" />
+      <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep9" />
+      <text>
+        <h1>Check for null in the constructor</h1>
+        <p>
+          The <span class="menuItem">Generate constructor</span> action gets a small update with an option to check parameters for 
+          <code>null</code>. If checked, it will generate guard code that throws <code>ArgumentNullException</code> in the constructor.
+          Let's try this:
+        </p>
+        <ol>
+          <li>
+            The caret should be on a <a href="www.jetbrains.com" class="navigate">new line</a> inside the class.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_Generate</shortcut>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">Constructor</span>.
+          </li>
+          <li>
+            In the opened window, select all fields and turn on <span class="menuItem">Check parameters for null</span>.
+          </li>
+          <li>
+            Click <span class="menuItem">Finish</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="10" strikeOnDone="true">
+      <text>
+        <h1>Check for null in the constructor</h1>
+        <p>
+          Done!
+        </p>
+        <p>
+          Now, let's proceed to a new quick fix.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="11" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="IntroduceFromUnusedParameters.cs"
+                type="ReSharper20163.IntroduceFromUnusedParameters" textToFind="unused1" textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep11" />
+      <text>
+        <h1>Fields or auto-properties from unused parameters</h1>
+        <p>
+          A new quick-fix allows introducing fields and auto properties from all unused parameters.
+          For example, we need to quickly create auto-properties for all params in the constructor:
+        </p>
+        <ol>
+          <li>
+            The caret should be on <a href="www.jetbrains.com" class="navigate">one of the unused parameters</a>.
+          </li>
+          
+            <li>
+              Hit <shortcut>ReSharper_AltEnter</shortcut>.              
+            </li>
+          
+          <li>
+            In the list, select 
+            <span class="menuItem">Introduce get-only auto-property 'Unused1'</span>.
+          </li>
+          <li>
+            Then <span class="menuItem">For all unused parameters</span>.
+        </li>
+          <li>
+            Then <span class="menuItem">For all with private setter</span>.
+        </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="12" strikeOnDone="true">
+      <text>
+        <h1>Fields or auto-properties from unused parameters</h1>
+        <p>
+          Cool!
+        </p>
+        <p>
+          Next in line is a new context action...
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="13" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="IntroducePropertyForLazilyInitialisedField.cs"
+                type="ReSharper20163.IntroducePropertyForLazilyInitialisedField" textToFind="_foo" textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep13" />
+      <text>
+        <h1>Properties from lazily initialized fields</h1>
+        <p>
+          A new context action allows creating properties from the fields of type <code>Lazy&lt;T&gt;</code>.
+          Why? Because using a property is easier than calling <code>_foo.Value</code>.          
+        </p>
+        <p>
+          Let's try the action on the <code>_foo</code> field:
+        </p>
+        <ol>
+          <li>
+            The caret should be on the <code>_foo</code> <a href="www.jetbrains.com" class="navigate">field</a>.
+          </li>          
+            <li>
+              Hit <shortcut>ReSharper_AltEnter</shortcut>.
+            </li>
+          
+          <li>
+            In the list, select
+            <span class="menuItem">Introduce property for lazily initialized value</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="14" strikeOnDone="true">
+      <text>
+        <h1>Properties from lazily initialized fields</h1>
+        <p>
+          That's it!
+        </p>
+        <p>
+          The next one is a new refactoring...
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="15" strikeOnDone="true">
+      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="TransformParameters.cs"
+                type="ReSharper20163.TransformParameters" textToFind="DoSomething" textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_RefactorThis" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep15" />
+      <text>
+        <h1>Transform parameters</h1>
+        <p>
+          This new refactoring allows you to quickly transform all incoming parameters to a new class or a tuple.          
+        </p>
+        <p>For example, we want to create a new class from all four params of the <code>DoSomething</code> method:</p>
+        <ol>
+          <li>
+            The caret should be on the <code>DoSomething</code> <a href="www.jetbrains.com" class="navigate">method declaration</a>.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">Transform Parameters</span>.
+          </li>
+          <li>
+            In the opened window, let's leave everything intact. Note that here you can specify which of the parameters will be transformed, 
+            new class name, and so on.
+          </li>
+          <li>
+            Click <span class="menuItem">Next</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="16" strikeOnDone="true">
+      <text>
+        <h1>Transform parameters</h1>
         <p>
           You're doing great!
         </p>
@@ -206,9 +381,9 @@
       </text>
     </step>        
 
-    <step li="9" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep9" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep9" />
+    <step li="17" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep17" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep17" />
       <text>
         <h1>Language injections</h1>
         <p>
@@ -228,15 +403,18 @@
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut> and select
-            <span class="menuItem">Mark as | Mark as CSS</span>.
+            <span class="menuItem">Mark as injected language Mark as CSS</span>.
+          </li>
+          <li>
+            Then <span class="menuItem">Mark as CSS</span>.
           </li>
         </ol>
       </text>
     </step>
 
-    <step li="10" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep10" />      
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep10" />
+    <step li="18" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep18" />      
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep18" />
       <text>
         <h1>Language injections</h1>
         <p>
@@ -254,9 +432,9 @@
       </text>
     </step>
 
-    <step li="11" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep11" />
-      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep11" />
+    <step li="19" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep19" />
+      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
       <text>
         <h1>Language injections</h1>
         <p>
@@ -278,9 +456,9 @@
       </text>
     </step>
 
-    <step li="12" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep12" />
-      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep12" />
+    <step li="20" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep20" />
+      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep20" />
       <text>
         <h1>Language injections</h1>
         <p>
@@ -307,7 +485,7 @@
       </text>
     </step>
 
-    <step li="13" strikeOnDone="true">
+    <step li="21" strikeOnDone="true">
       <text>
         <h1>Language injections</h1>
         <p>
@@ -320,11 +498,11 @@
       </text>
     </step>
 
-    <step li="14" strikeOnDone="true">
+    <step li="22" strikeOnDone="true">
       <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CSharp7.cs"
                 type="ReSharper20163.CSharp7" textToFind="1000000000" textToFindOccurrence="1" />
       <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep14" />
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep22" />
       <text>
         <h1>Convert to binary (C# 7)</h1>
         <p>
@@ -346,11 +524,11 @@
       </text>
     </step>
 
-    <step li="15" strikeOnDone="true">
+    <step li="23" strikeOnDone="true">
       <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CSharp7.cs"
                 type="ReSharper20163.CSharp7" textToFind="0b111011100110101100101000000000" textToFindOccurrence="1" />
       <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep15" />
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep23" />
       <text>
         <h1>Digit separators (C# 7)</h1>
         <p>Awesome!</p>
@@ -371,7 +549,7 @@
       </text>
     </step>
 
-    <step li="16" strikeOnDone="true">
+    <step li="24" strikeOnDone="true">
       <text>
         <h1>Digit separators (C# 7)</h1>
         <p>
@@ -383,8 +561,7 @@
           or <span class="menuItem">Separate thousands</span> for decimal representation.
         </p>
         <p>
-          Note that there are more
-          <a href="https://www.jetbrains.com" target="_blank">C# 7 features ReSharper supports</a>.
+          Note that there are more C# 7 features ReSharper supports.
           They are out of scope of this tutorial as on the moment of the ReSharper 2016.3 release, Visual Studio 15 was still
           in the preview state.
         </p>
@@ -392,10 +569,10 @@
       </text>
     </step>
 
-    <step li="17" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep17" />
+    <step li="25" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep25" />
       <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep17" />
+             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep25" />
       <text>
         <h1>'Search with Pattern' improvement</h1>
         <p>
@@ -426,7 +603,7 @@
       </text>
     </step>
 
-    <step li="18" strikeOnDone="true">
+    <step li="26" strikeOnDone="true">
       <text>
         <h1>'Search with Pattern' improvement</h1>
         <p>
@@ -439,10 +616,10 @@
       </text>
     </step>
 
-    <step li="19" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep19"/>
+    <step li="27" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep27"/>
                 textToFindOccurrence="1" />
-      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
+      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep27" />
       <text>
         <h1>Interpolated strings improvement</h1>
         <p>
@@ -461,7 +638,7 @@
       </text>
     </step>
 
-    <step li="20" strikeOnDone="true">
+    <step li="28" strikeOnDone="true">
       <text>
         <h1>Interpolated strings improvement</h1>
         <p>
@@ -471,9 +648,9 @@
       </text>
     </step>
 
-    <step li="21" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep21" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep21" />
+    <step li="29" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep29" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep29" />
       <text>
         <h1>Join lines</h1>
         <p>
@@ -497,7 +674,7 @@
       </text>
     </step>
 
-    <step li="22">
+    <step li="30">
       <text>
         <h1>That's All!</h1>
         <p>

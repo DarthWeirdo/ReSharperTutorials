@@ -7,7 +7,6 @@ using ReSharperTutorials.CodeNavigator;
 using JetBrains.Annotations;
 using JetBrains.DocumentManagers;
 using JetBrains.DocumentManagers.Transactions;
-using JetBrains.IDE;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;
@@ -20,7 +19,7 @@ namespace ReSharperTutorials.Checker
         /// Converts the entire CSharp IFile to string and checks whether it contains $text$        
         /// </summary>     
         public static bool StringExists(ISolution solution, string projectName, string fileName, string text)
-        {            
+        {
             return ConvertFileToString(solution, projectName, fileName).Contains(text);
         }
 
@@ -28,12 +27,14 @@ namespace ReSharperTutorials.Checker
         /// <summary>
         /// Converts the entire CSS IFile to string and checks whether it contains $text$        
         /// </summary>     
-        public static bool StringExistsInCssFile(ISolution solution, string projectName, string fileName, int fileNumber, string text)
+        public static bool StringExistsInCssFile(ISolution solution, string projectName, string fileName, int fileNumber,
+            string text)
         {
             return ConvertCssFileToString(solution, projectName, fileName, fileNumber).Contains(text);
         }
 
-        private static string ConvertCssFileToString(ISolution solution, string projectName, string fileName, int fileNumber)
+        private static string ConvertCssFileToString(ISolution solution, string projectName, string fileName,
+            int fileNumber)
         {
             var result = new StringBuilder();
 
@@ -58,11 +59,11 @@ namespace ReSharperTutorials.Checker
         {
             var result = new StringBuilder();
 
-            solution.Locks.TryExecuteWithReadLock(() =>            
+            solution.Locks.TryExecuteWithReadLock(() =>
             {
                 var project = PsiNavigationHelper.GetProjectByName(solution, projectName);
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
-                
+
                 if (file == null) return;
                 var treeNodeList = file.EnumerateTo(file.LastChild);
 
@@ -79,13 +80,14 @@ namespace ReSharperTutorials.Checker
         /// Finds type declaration in scope specified in the current step
         /// </summary>
         /// <returns>Returns true if $typeName$ is found</returns>
-        public static bool TypeDeclarationExists(ISolution solution, string projectName, string fileName, string typeName)
+        public static bool TypeDeclarationExists(ISolution solution, string projectName, string fileName,
+            string typeName)
         {
             ITreeNode node = null;
 
             solution.Locks.TryExecuteWithReadLock(() =>
             {
-                var project = PsiNavigationHelper.GetProjectByName(solution, projectName);                
+                var project = PsiNavigationHelper.GetProjectByName(solution, projectName);
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
                 node = PsiNavigationHelper.GetTypeNodeByFullClrName(file, typeName);
             });
@@ -112,7 +114,8 @@ namespace ReSharperTutorials.Checker
         /// Finds method declaration in scope specified in the current step
         /// </summary>
         /// <returns>Returns true if $typeName$ is found</returns>
-        public static bool MethodDeclarationExists(ISolution solution, string projectName, string fileName, string typeName, string methodName, int methodOccurrence)
+        public static bool MethodDeclarationExists(ISolution solution, string projectName, string fileName,
+            string typeName, string methodName, int methodOccurrence)
         {
             ITreeNode node = null;
 
@@ -138,7 +141,8 @@ namespace ReSharperTutorials.Checker
         /// <param name="methodOccurrence">Method occurence (for overloads)</param>
         /// <returns></returns>
         [CanBeNull]
-        public static ITreeNode GetMethodNode(ISolution solution, string projectName, string fileName, string typeName, string methodName, int methodOccurrence)
+        public static ITreeNode GetMethodNode(ISolution solution, string projectName, string fileName, string typeName,
+            string methodName, int methodOccurrence)
         {
             ITreeNode node = null;
 
@@ -156,7 +160,8 @@ namespace ReSharperTutorials.Checker
         /// Finds text of a tree node in scope specified in the current step
         /// </summary>        
         /// <returns>Returns true if specific $occurrence$ of $text$ is found</returns>        
-        public static bool TreeNodeWithTextExists(ISolution solution, string projectName, string fileName, string typeName, string methodName, int methodOccurrence, string text, int occurrence)
+        public static bool TreeNodeWithTextExists(ISolution solution, string projectName, string fileName,
+            string typeName, string methodName, int methodOccurrence, string text, int occurrence)
         {
             ITreeNode node = null;
 
@@ -164,7 +169,8 @@ namespace ReSharperTutorials.Checker
             {
                 var project = PsiNavigationHelper.GetProjectByName(solution, projectName);
                 var file = PsiNavigationHelper.GetCSharpFile(project, fileName);
-                node = PsiNavigationHelper.GetTreeNodeForStep(file, typeName, methodName, methodOccurrence, text, occurrence);
+                node = PsiNavigationHelper.GetTreeNodeForStep(file, typeName, methodName, methodOccurrence, text,
+                    occurrence);
             });
 
             return node != null;
@@ -172,19 +178,16 @@ namespace ReSharperTutorials.Checker
 
 
         [CanBeNull]
-        public static ITreeNode GetTreeNodeUnderCaret(DocumentManager documentManager, ITextControlManager textControlManager)
-        {            
+        public static ITreeNode GetTreeNodeUnderCaret(DocumentManager documentManager,
+            ITextControlManager textControlManager)
+        {
             var textControl = textControlManager.LastFocusedTextControl.Value;
             if (textControl == null)
                 return null;
 
             var projectFile = documentManager.TryGetProjectFile(textControl.Document);
             if (projectFile == null)
-                return null;            
-
-//            var range = textControl.Selection.HasSelection()
-//                ? textControl.Selection.OneDocRangeWithCaret()
-//                : new TextRange(textControl.Caret.Offset());
+                return null;
 
             var range = new TextRange(textControl.Caret.Offset());
 
@@ -195,6 +198,6 @@ namespace ReSharperTutorials.Checker
 
             var element = file?.FindNodeAt(documentRange);
             return element;
-        }        
+        }
     }
 }

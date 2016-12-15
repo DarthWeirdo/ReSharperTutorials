@@ -17,8 +17,8 @@ namespace ReSharperTutorials.Utils
         public static string GetActionShortcut(string actionName)
         {
             var vsInstance = GetCurrentVsInstance();
-            Properties props = vsInstance?.Properties["Environment", "Keyboard"];
-            Command cmd = vsInstance?.Commands.Item(actionName);
+            var props = vsInstance?.Properties["Environment", "Keyboard"];
+            var cmd = vsInstance?.Commands.Item(actionName);
             try
             {
                 var sc = cmd?.Bindings[0].ToString();
@@ -83,8 +83,6 @@ namespace ReSharperTutorials.Utils
             var vsInstance = GetCurrentVsInstance();
             var solution = vsInstance?.Solution;
             solution?.Open(path);
-
-//            vsInstance.ExecuteCommand("File.OpenProject", path);            
         }
 
         public static void SaveVsSolution()
@@ -96,21 +94,19 @@ namespace ReSharperTutorials.Utils
             if (!solution.Saved)
                 solution.SaveAs(solution.FullName);
 
-            for (int i = 1; i <= solution.Projects.Count; i++)
+            for (var i = 1; i <= solution.Projects.Count; i++)
             {
                 var project = solution.Projects.Item(i);
                 if (!project.Saved)
                     project.Save();
 
-                for (int j = 1; j <= project.ProjectItems.Count; j++)
+                for (var j = 1; j <= project.ProjectItems.Count; j++)
                 {
                     var item = project.ProjectItems.Item(j);
                     if (!item.Saved)
                         item.Save();
                 }
             }
-
-//            vsInstance.ExecuteCommand("File.SaveAll");
         }
 
         public static void CloseVsSolution(bool saveFirst)
@@ -118,12 +114,10 @@ namespace ReSharperTutorials.Utils
             var vsInstance = GetCurrentVsInstance();
             var solution = vsInstance?.Solution;
 
-//                        solution?.Close(saveFirst);
             if (solution == null) return;
             if (saveFirst)
                 SaveVsSolution();
             
-//            solution.Close();
             vsInstance.ExecuteCommand("File.CloseSolution");
         }
 
@@ -132,7 +126,6 @@ namespace ReSharperTutorials.Utils
             var vsInstance = GetCurrentVsInstance();
             var solution = vsInstance?.Solution;
             if (solution?.FileName == "") return;
-//            solution?.Close();
             vsInstance?.ExecuteCommand("File.CloseSolution");
         }
 
@@ -148,7 +141,7 @@ namespace ReSharperTutorials.Utils
         private static IEnumerable<DTE> EnumVsInstances()
         {            
             IRunningObjectTable rot;
-            int retVal = GetRunningObjectTable(0, out rot);
+            var retVal = GetRunningObjectTable(0, out rot);
             if (retVal != 0) yield break;
             IEnumMoniker enumMoniker;
             rot.EnumRunning(out enumMoniker);

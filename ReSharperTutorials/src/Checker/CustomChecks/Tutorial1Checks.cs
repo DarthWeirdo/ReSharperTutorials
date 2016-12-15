@@ -2,7 +2,6 @@
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
@@ -87,7 +86,7 @@ namespace ReSharperTutorials.Checker
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step13() 
+        public bool CheckTutorial1Step13()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
                 "public int Type");
@@ -101,7 +100,7 @@ namespace ReSharperTutorials.Checker
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckTutorial1Step15() 
+        public bool CheckTutorial1Step15()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
                 "public int Radius");
@@ -146,7 +145,7 @@ namespace ReSharperTutorials.Checker
         public bool CheckTutorial1Step23()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
-                            "protected bool Equals(MyCircle");            
+                "protected bool Equals(MyCircle");
         }
 
         [RunCheck(OnEvent.PsiChange)]
@@ -177,13 +176,9 @@ namespace ReSharperTutorials.Checker
         public bool CheckTutorial1Step30()
         {
             var textControl = TextControlManager.CurrentFrameTextControl.Value;
-            var range = textControl.Document.DocumentRange;            
+            var range = textControl.Document.DocumentRange;
             var text = textControl.Document.GetText(range);
             return text.Contains("class MyCircle");
-
-            // var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
-            // var parentNode = node?.Parent as ITypeDeclaration;
-            //  return parentNode != null && parentNode.DeclaredName == "MyCircle";
         }
 
         [RunCheck(OnEvent.PsiChange)]
@@ -200,10 +195,9 @@ namespace ReSharperTutorials.Checker
                 "Tutorial1_EssentialShortcuts.ContextAction");
 
             var node = (from element in nodes
-                select element).FirstOrDefault();                    
+                select element).FirstOrDefault();
 
             return node?.Methods.AsArray()[2].ShortName == "ReturnCoordinates";
-           
         }
     }
 }

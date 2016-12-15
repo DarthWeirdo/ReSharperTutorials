@@ -12,7 +12,8 @@
         public readonly string RunMethod;
 
 
-        public NavNode(string projectName, string fileName, string typeName, string methodName, int methodNameOccurrence, string textToFind, int textToFindOccurrence, string runMethod)
+        public NavNode(string projectName, string fileName, string typeName, string methodName, int methodNameOccurrence,
+            string textToFind, int textToFindOccurrence, string runMethod)
         {
             ProjectName = projectName;
             FileName = fileName;
@@ -22,7 +23,6 @@
             TextToFind = textToFind;
             TextToFindOccurrence = textToFindOccurrence;
             RunMethod = runMethod;
-        }        
-
+        }
     }
 }

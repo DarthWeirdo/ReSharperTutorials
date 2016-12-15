@@ -37,9 +37,10 @@ namespace ReSharperTutorials.TutorialUI
         private readonly GlobalSettings _globalSettings;
         private SolutionStateTracker _solutionStateTracker;
 
-        public TutorialWindowManager(Lifetime shellLifetime, SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
-            IShellLocks shellLocks, ToolWindowManager toolWindowManager, TutorialWindowDescriptor toolWindowDescriptor, 
-            IUIApplication environment, IActionManager actionManager, IWindowsHookManager windowsHookManager, 
+        public TutorialWindowManager(Lifetime shellLifetime, SolutionStateTracker solutionStateTracker,
+            GlobalSettings globalSettings,
+            IShellLocks shellLocks, ToolWindowManager toolWindowManager, TutorialWindowDescriptor toolWindowDescriptor,
+            IUIApplication environment, IActionManager actionManager, IWindowsHookManager windowsHookManager,
             IColorThemeManager colorThemeManager, IThreading threading)
         {
             _shellLifetime = shellLifetime;
@@ -76,21 +77,23 @@ namespace ReSharperTutorials.TutorialUI
         public bool WindowsExist()
         {
             return _toolWindowClass.Instances.Length > 0;
-        }        
+        }
 
 
         public void ShowTutorialWindow(TutorialId tutorialId, Lifetime lifetime,
-            ISolution solution, IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager, 
-            IShellLocks shellLocks, IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
+            ISolution solution, IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager,
+            IShellLocks shellLocks, IEditorManager editorManager, DocumentManager documentManager,
+            IUIApplication environment,
             IActionManager actionManager, WindowsHookManager windowsHookManager, IPsiServices psiServices,
             IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager, IThreading threading)
         {
-            var contentPath = _globalSettings.GetPath(tutorialId, PathType.WorkCopyContentFile);            
-            _runningTutorial = tutorialId;                       
+            var contentPath = _globalSettings.GetPath(tutorialId, PathType.WorkCopyContentFile);
+            _runningTutorial = tutorialId;
 
             threading.ExecuteOrQueue("RunTutorialWindow", () =>
-            {                
-                _tutorialWindow = new TutorialWindow(contentPath, lifetime, this, solution, psiFiles, changeManager, textControlManager,
+            {
+                _tutorialWindow = new TutorialWindow(contentPath, lifetime, this, solution, psiFiles, changeManager,
+                    textControlManager,
                     shellLocks, editorManager, documentManager, environment, actionManager, _toolWindowClass,
                     windowsHookManager, psiServices, shortcutManager, colorThemeManager);
 
@@ -103,7 +106,7 @@ namespace ReSharperTutorials.TutorialUI
                     () =>
                     {
                         _tutorialWindow.Close();
-                        _tutorialWindow = null;  
+                        _tutorialWindow = null;
                         _runningTutorial = TutorialId.None;
                         _homeWindow.EnableButtons(true);
                     });
@@ -121,7 +124,8 @@ namespace ReSharperTutorials.TutorialUI
 
             _threading.ExecuteOrQueue("RunMainWindow", () =>
             {
-                _homeWindow = new HomeWindow(_shellLifetime, this, _solutionStateTracker, _globalSettings, _shellLocks, _environment, 
+                _homeWindow = new HomeWindow(_shellLifetime, this, _solutionStateTracker, _globalSettings, _shellLocks,
+                    _environment,
                     _actionManager, _toolWindowClass, _windowsHookManager, _colorThemeManager)
                 {
                     PageText = HtmlGenerator.GetResource("HomePage.html")

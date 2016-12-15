@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using EnvDTE;
 using EnvDTE80;
 using JetBrains.ActionManagement;
@@ -11,8 +10,7 @@ using ReSharperTutorials.Utils;
 
 
 namespace ReSharperTutorials.Checker
-{    
-
+{
     /// <summary>
     /// Used to check whether a user performed an action required by the step.
     /// Action is specified as an argument in XML
@@ -24,11 +22,12 @@ namespace ReSharperTutorials.Checker
         private readonly IShellLocks _shellLocks;
         private readonly IPsiFiles _psiFiles;
         public string[] StepActionNames;
-        public ISignal<bool> AfterActionApplied { get; private set; }        
+        public ISignal<bool> AfterActionApplied { get; private set; }
         public Func<bool> Check = null;
 
 
-        public StepActionChecker(Lifetime lifetime, IShellLocks shellLocks, IPsiFiles psiFiles, IActionManager actionManager)
+        public StepActionChecker(Lifetime lifetime, IShellLocks shellLocks, IPsiFiles psiFiles,
+            IActionManager actionManager)
         {
             _shellLocks = shellLocks;
             _psiFiles = psiFiles;
@@ -36,17 +35,17 @@ namespace ReSharperTutorials.Checker
             var events2 = _vsInstance?.Events as Events2;
             if (events2 == null) return;
 
-            _commandEvents = events2.CommandEvents;            
+            _commandEvents = events2.CommandEvents;
 
             lifetime.AddBracket(
-                () => _commandEvents.AfterExecute += CommandEventsOnAfterExecute, 
+                () => _commandEvents.AfterExecute += CommandEventsOnAfterExecute,
                 () => _commandEvents.AfterExecute -= CommandEventsOnAfterExecute);
 
             AfterActionApplied = new Signal<bool>(lifetime, "StepActionChecker.AfterActionApplied");
-        }        
+        }
 
         private void CommandEventsOnAfterExecute(string guid, int id1, object customIn, object customOut)
-        {            
+        {
             if (_vsInstance == null) return;
 
             var command = _vsInstance.Commands.Item(guid, id1);
@@ -64,11 +63,11 @@ namespace ReSharperTutorials.Checker
                     _shellLocks.QueueReadLock("StepActionChecker.CheckOnAfterAction",
                         () => _psiFiles.CommitAllDocumentsAsync(CheckCode));
                 }
-            }            
+            }
         }
 
         private void CheckCode()
-        {            
+        {
             if (Check())
                 AfterActionApplied.Fire(true);
         }

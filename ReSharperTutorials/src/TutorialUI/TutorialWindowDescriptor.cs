@@ -5,15 +5,13 @@ using JetBrains.UI.ToolWindowManagement;
 namespace ReSharperTutorials.TutorialUI
 {
     [ToolWindowDescriptor(
-        ProductNeutralId = "TutorialWindow",
-        Text = "ReSharper Tutorials",
-        Icon = typeof(JetBrains.Ide.Resources.IdeThemedIcons.TextDocument),
-        Type = ToolWindowType.MultiInstance,
-        VisibilityPersistenceScope = ToolWindowVisibilityPersistenceScope.Global,        
-        InitialDocking = ToolWindowInitialDocking.Right)
-        ]
-
-
+            ProductNeutralId = "TutorialWindow",
+            Text = "ReSharper Tutorials",
+            Icon = typeof(JetBrains.Ide.Resources.IdeThemedIcons.TextDocument),
+            Type = ToolWindowType.MultiInstance,
+            VisibilityPersistenceScope = ToolWindowVisibilityPersistenceScope.Global,
+            InitialDocking = ToolWindowInitialDocking.Right)
+    ]
     public class TutorialWindowDescriptor : ToolWindowDescriptor
     {
         public TutorialWindowDescriptor(IApplicationHost host) : base(host)
@@ -24,5 +22,5 @@ namespace ReSharperTutorials.TutorialUI
         public class ShowToolWindow : ActivateToolWindowActionHandler<TutorialWindowDescriptor>
         {
         }
-    }    
+    }
 }

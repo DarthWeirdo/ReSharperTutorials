@@ -8,22 +8,37 @@ using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
 {
-    public enum TutorialId { None, Tutorial1, Tutorial2, Tutorial3, Tutorial4, Tutorial5 }
+    public enum TutorialId
+    {
+        None,
+        Tutorial1,
+        Tutorial2,
+        Tutorial3,
+        Tutorial4,
+        Tutorial5
+    }
 
     public enum PathType
     {
-        BaseSolutionFolder, BaseContentFolder, BaseSolutionFile, BaseContentFile, WorkCopySolutionFolder, 
-        WorkCopyContentFolder, WorkCopySolutionFile, WorkCopyContentFile
+        BaseSolutionFolder,
+        BaseContentFolder,
+        BaseSolutionFile,
+        BaseContentFile,
+        WorkCopySolutionFolder,
+        WorkCopyContentFolder,
+        WorkCopySolutionFile,
+        WorkCopyContentFile
     }
-    
+
     [ShellComponent]
     public class GlobalSettings
-    {                
+    {
         private readonly string _commonTutorialPath;
         private readonly string _commonWorkCopyPath;
         public readonly Dictionary<TutorialId, string> AvailableTutorials;
-        public readonly Lifetime Lifetime;        
+        public readonly Lifetime Lifetime;
         public TutorialWindowManager TutorialWindowManager = null;
+        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.1";
 
         public GlobalSettings(Lifetime lifetime)
         {
@@ -33,14 +48,14 @@ namespace ReSharperTutorials.Runner
             _commonWorkCopyPath = SolutionCopyHelper.GetWorkingCopyPath();
 
             if (_commonTutorialPath == null || _commonWorkCopyPath == null)
-                throw new DirectoryNotFoundException("Unable to find the folder with sample solutions. Please reinstall the plugin");
+                throw new DirectoryNotFoundException(
+                    "Unable to find the folder with sample solutions. Please reinstall the plugin");
 
             AvailableTutorials = new Dictionary<TutorialId, string>
             {
                 {TutorialId.Tutorial1, GetPath(TutorialId.Tutorial1, PathType.WorkCopySolutionFile)},
                 {TutorialId.Tutorial3, GetPath(TutorialId.Tutorial3, PathType.WorkCopySolutionFile)}
             };
-
         }
 
         public string GetGlobalImgPath()
@@ -61,9 +76,10 @@ namespace ReSharperTutorials.Runner
                         case PathType.BaseSolutionFolder:
                             return _commonTutorialPath + "\\Tutorial1_EssentialShortcuts";
                         case PathType.BaseContentFolder:
-                            return _commonTutorialPath + "\\Content\\Tutorial1";                            
+                            return _commonTutorialPath + "\\Content\\Tutorial1";
                         case PathType.BaseSolutionFile:
-                            return _commonTutorialPath + "\\Tutorial1_EssentialShortcuts\\Tutorial1_EssentialShortcuts.sln";
+                            return _commonTutorialPath +
+                                   "\\Tutorial1_EssentialShortcuts\\Tutorial1_EssentialShortcuts.sln";
                         case PathType.BaseContentFile:
                             return _commonTutorialPath + "\\Content\\Tutorial1\\Tutorial1Content.xml";
                         case PathType.WorkCopySolutionFolder:
@@ -71,9 +87,10 @@ namespace ReSharperTutorials.Runner
                         case PathType.WorkCopyContentFolder:
                             return _commonWorkCopyPath + "\\Content\\Tutorial1";
                         case PathType.WorkCopySolutionFile:
-                            return _commonWorkCopyPath + "\\Tutorial1_EssentialShortcuts\\Tutorial1_EssentialShortcuts.sln";
+                            return _commonWorkCopyPath +
+                                   "\\Tutorial1_EssentialShortcuts\\Tutorial1_EssentialShortcuts.sln";
                         case PathType.WorkCopyContentFile:
-                            return _commonWorkCopyPath + "\\Content\\Tutorial1\\Tutorial1Content.xml";                        
+                            return _commonWorkCopyPath + "\\Content\\Tutorial1\\Tutorial1Content.xml";
                         default:
                             throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
                     }
@@ -88,7 +105,8 @@ namespace ReSharperTutorials.Runner
                         case PathType.BaseContentFolder:
                             return _commonTutorialPath + "\\Content\\Tutorial3";
                         case PathType.BaseSolutionFile:
-                            return _commonTutorialPath + "\\Tutorial3_WhatsNewReSharper2016.3\\Tutorial3_WhatsNewReSharper2016.3.sln";
+                            return _commonTutorialPath +
+                                   "\\Tutorial3_WhatsNewReSharper2016.3\\Tutorial3_WhatsNewReSharper2016.3.sln";
                         case PathType.BaseContentFile:
                             return _commonTutorialPath + "\\Content\\Tutorial3\\Tutorial3Content.xml";
                         case PathType.WorkCopySolutionFolder:
@@ -96,7 +114,8 @@ namespace ReSharperTutorials.Runner
                         case PathType.WorkCopyContentFolder:
                             return _commonWorkCopyPath + "\\Content\\Tutorial3";
                         case PathType.WorkCopySolutionFile:
-                            return _commonWorkCopyPath + "\\Tutorial3_WhatsNewReSharper2016.3\\Tutorial3_WhatsNewReSharper2016.3.sln";
+                            return _commonWorkCopyPath +
+                                   "\\Tutorial3_WhatsNewReSharper2016.3\\Tutorial3_WhatsNewReSharper2016.3.sln";
                         case PathType.WorkCopyContentFile:
                             return _commonWorkCopyPath + "\\Content\\Tutorial3\\Tutorial3Content.xml";
                         default:

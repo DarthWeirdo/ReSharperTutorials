@@ -1,16 +1,18 @@
 ﻿using System;
-using JetBrains.Annotations;
 using JetBrains.DataFlow;
 using ReSharperTutorials.Checker;
 
 namespace ReSharperTutorials.TutStep
 {
-    
-    public enum GoToNextStep { Auto, Manual }
+    public enum GoToNextStep
+    {
+        Auto,
+        Manual
+    }
 
     public delegate void StepIsDoneHandler(object sender, EventArgs e);
 
-    public class TutorialStep 
+    public class TutorialStep
     {
         public int Id { get; }
         public bool StrikeOnDone { get; }
@@ -22,8 +24,8 @@ namespace ReSharperTutorials.TutStep
         /// If GoToNextStep is specified as Manual or not specified, 
         /// a user can proceed to the next step ONLY by clicking the Next button. 
         /// </summary>
-        public GoToNextStep GoToNextStep { get; }               
-        
+        public GoToNextStep GoToNextStep { get; }
+
         private bool _isActionDone;
         private bool _isCheckDone;
         public event StepIsDoneHandler StepIsDone;
@@ -31,7 +33,7 @@ namespace ReSharperTutorials.TutStep
         /// <summary>
         /// Lifetime created for the duration of performing checks
         /// </summary>
-        private LifetimeDefinition _processingLifetime;        
+        private LifetimeDefinition _processingLifetime;
 
 
         public bool IsActionDone
@@ -39,46 +41,42 @@ namespace ReSharperTutorials.TutStep
             get { return _isActionDone; }
             set
             {
-                if (value == _isActionDone) return;                
+                if (value == _isActionDone) return;
                 _isActionDone = value;
 
-                if (Check.Method == null || IsCheckDone)                
-                    OnStepIsDone();                
+                if (Check.Method == null || IsCheckDone)
+                    OnStepIsDone();
             }
         }
 
         public bool IsCheckDone
         {
-            get
-            {
-                return _isCheckDone;
-            }
+            get { return _isCheckDone; }
             set
             {
                 if (value == _isCheckDone) return;
                 _isCheckDone = value;
 
-                if (Check.Actions != null && IsActionDone)                
-                    OnStepIsDone();                
+                if (Check.Actions != null && IsActionDone)
+                    OnStepIsDone();
                 else if (Check.Actions == null)
-                    OnStepIsDone();                
+                    OnStepIsDone();
             }
-        } 
-        
+        }
+
 
         public TutorialStep(int li, NavNode navNode, Check check, string text, string goToNextStep, bool strkieOnDone)
         {
             Id = li;
             NavNode = navNode;
-            Text = text;                       
+            Text = text;
             Check = check;
             StrikeOnDone = strkieOnDone;
             _processingLifetime = null;
 
-//            if (goToNextStep != null && goToNextStep.ToLower() == "auto") GoToNextStep = GoToNextStep.Auto;
-            GoToNextStep = check != null ? GoToNextStep.Auto : GoToNextStep.Manual;                                   
+            GoToNextStep = check != null ? GoToNextStep.Auto : GoToNextStep.Manual;
         }
-       
+
 
         protected virtual void OnStepIsDone()
         {
@@ -91,8 +89,10 @@ namespace ReSharperTutorials.TutStep
         {
             _processingLifetime = Lifetimes.Define(stepPresenter.Lifetime);
 
-            var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution, stepPresenter.PsiFiles,
-                stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks, stepPresenter.EditorManager,
+            var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution,
+                stepPresenter.PsiFiles,
+                stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
+                stepPresenter.EditorManager,
                 stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
 
             checker.PerformStepChecks();

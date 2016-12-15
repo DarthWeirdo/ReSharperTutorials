@@ -37,7 +37,7 @@ namespace ReSharperTutorials.Utils
                 XmlNode root = doc.DocumentElement;
                 var elem = doc.CreateElement("currentStep");
                 elem.InnerText = value;
-                root.AppendChild(elem);
+                root?.AppendChild(elem);
             }
             doc.Save(path);
             doc = null;          
@@ -117,7 +117,6 @@ namespace ReSharperTutorials.Utils
                             case "text":
                                 text = reader.ReadInnerXml();
                                 text = Regex.Replace(text, @"\s+", " ");
-//                                text = SubstituteShortcuts(text);
                                 break;                                
                         }
                     }

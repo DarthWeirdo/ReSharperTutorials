@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Text;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.changes;
@@ -8,12 +7,9 @@ using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Files;
-using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using JetBrains.UI.Application;
-using JetBrains.Util;
 using ReSharperTutorials.CodeNavigator;
 
 namespace ReSharperTutorials.Checker
@@ -77,11 +73,11 @@ namespace ReSharperTutorials.Checker
 
 
         public void PerformStepChecks()
-        {            
+        {
             var attr = new RunCheckAttribute(OnEvent.None);
 
             if (_currentStep.Check.Method != null)
-            {                
+            {
                 var typeName = PsiNavigationHelper.GetLongNameFromFqn(_currentStep.Check.Method);
                 var methodName = PsiNavigationHelper.GetShortNameFromFqn(_currentStep.Check.Method);
                 var customType = Type.GetType(typeName);
@@ -90,11 +86,11 @@ namespace ReSharperTutorials.Checker
 
                 var mInfo = customType.GetMethod(methodName);
                 if (mInfo != null)
-                {                    
-                    var parameterArray = new object[] { _solution, _editorManager, _documentManager, _textControlManager };
+                {
+                    var parameterArray = new object[] {_solution, _editorManager, _documentManager, _textControlManager};
                     var customInst = Activator.CreateInstance(customType, parameterArray);
-                    var checkMethod = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), customInst, mInfo);
-                    attr = (RunCheckAttribute)mInfo.GetCustomAttribute(typeof(RunCheckAttribute));
+                    var checkMethod = (Func<bool>) Delegate.CreateDelegate(typeof(Func<bool>), customInst, mInfo);
+                    attr = (RunCheckAttribute) mInfo.GetCustomAttribute(typeof(RunCheckAttribute));
 
                     switch (attr.OnEvent)
                     {
@@ -127,13 +123,14 @@ namespace ReSharperTutorials.Checker
                     }
                 }
                 else
-                    throw new ApplicationException($"Unable to find the checker method {_currentStep.Check}. Please reinstall the plugin.");
+                    throw new ApplicationException(
+                        $"Unable to find the checker method {_currentStep.Check}. Please reinstall the plugin.");
             }
 
             if (_currentStep.Check.Actions == null || attr.OnEvent == OnEvent.AfterAction) return;
             _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
             _stepActionChecker.AfterActionApplied.Advise(_lifetime,
-                () => { _currentStep.IsActionDone = true; });            
-        }                
+                () => { _currentStep.IsActionDone = true; });
+        }
     }
 }

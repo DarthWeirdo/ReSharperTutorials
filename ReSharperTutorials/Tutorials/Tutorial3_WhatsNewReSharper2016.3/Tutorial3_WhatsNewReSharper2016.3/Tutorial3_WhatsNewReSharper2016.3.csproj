@@ -44,10 +44,13 @@
     <Compile Include="CodeGeneration.cs" />
     <Compile Include="CSharp7.cs" />
     <Compile Include="InterpolatedStringsImprovement.cs" />
+    <Compile Include="IntroduceFromUnusedParameters.cs" />
+    <Compile Include="IntroducePropertyForLazilyInitialisedField.cs" />
     <Compile Include="JoinLines.cs" />
     <Compile Include="LanguageInjections.cs" />
     <Compile Include="MatchSimilarConstructs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransformParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

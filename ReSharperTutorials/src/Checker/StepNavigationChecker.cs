@@ -1,18 +1,12 @@
 ﻿using System;
-using JetBrains.Annotations;
 using JetBrains.Application;
-using JetBrains.Application.changes;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
-using JetBrains.DocumentManagers.Transactions;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
-using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using JetBrains.UI.Application;
-using JetBrains.Util;
 
 namespace ReSharperTutorials.Checker
 {
@@ -47,19 +41,20 @@ namespace ReSharperTutorials.Checker
             _shellLocks = shellLocks;
             _documentManager = documentManager;
             _environment = environment;
-            _editorManager = editorManager;                        
+            _editorManager = editorManager;
 
-            EventHandler caretMoved = (sender, args) =>
-            {
-                _shellLocks.QueueReadLock(_lifetime, "StepNavigationChecker.CheckOnCaretChange", CheckCode);
-            };
+            EventHandler caretMoved =
+                (sender, args) =>
+                {
+                    _shellLocks.QueueReadLock(_lifetime, "StepNavigationChecker.CheckOnCaretChange", CheckCode);
+                };
 
             _lifetime.AddBracket(
                 () => textControlManager.Legacy.CaretMoved += caretMoved,
                 () => textControlManager.Legacy.CaretMoved -= caretMoved);
 
             AfterNavigationDone = new Signal<bool>(lifetime, "StepNavigationChecker.AfterNavigationDone");
-        }        
+        }
 
         public ISolution Solution
         {
@@ -69,11 +64,11 @@ namespace ReSharperTutorials.Checker
 
         private void CheckCode()
         {
-            if (!_psiFiles.AllDocumentsAreCommitted) return;                
-            
+            if (!_psiFiles.AllDocumentsAreCommitted) return;
+
             if (Check == null) return;
             if (Check())
                 AfterNavigationDone.Fire(true);
-        }        
+        }
     }
 }

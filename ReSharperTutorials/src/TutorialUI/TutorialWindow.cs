@@ -45,12 +45,15 @@ namespace ReSharperTutorials.TutorialUI
         private readonly ToolWindowInstance _toolWindowInstance;
         private LifetimeDefinition _animationLifetime;
         private HtmlMediator _htmlMediator;
-        private CustomProgressBar _progressBar = new CustomProgressBar {
+
+        private CustomProgressBar _progressBar = new CustomProgressBar
+        {
             Visible = true,
             Step = 1,
             Value = 0,
             Dock = DockStyle.Bottom
         };
+
         private readonly HtmlGenerator _htmlGenerator;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;
@@ -58,10 +61,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public int StepCount
         {
-            set
-            {                
-                _progressBar.Maximum = value;
-            }
+            set { _progressBar.Maximum = value; }
         }
 
         public event EventHandler NextStep;
@@ -70,7 +70,7 @@ namespace ReSharperTutorials.TutorialUI
         {
             get { return _stepText; }
             set
-            {                                
+            {
                 if (_stepText != null && _stepText.Contains("prevStep"))
                 {
                     _animationLifetime = Lifetimes.Define(_tutorialLifetime);
@@ -83,7 +83,7 @@ namespace ReSharperTutorials.TutorialUI
 
                         _animationLifetime.Terminate();
                     });
-                    
+
                     _htmlMediator.Animate();
                 }
                 else
@@ -91,15 +91,19 @@ namespace ReSharperTutorials.TutorialUI
                     _stepText = value;
                     _shellLocks.ExecuteOrQueue(_tutorialLifetime, "TutorialTextUpdate",
                         () => { _viewControl.DocumentText = _htmlGenerator.PrepareHtmlContent(_stepText); });
-                }                               
+                }
             }
-        }        
+        }
 
-        
-        public TutorialWindow(string contentPath, Lifetime tutorialLifetime, TutorialWindowManager windowManager, ISolution solution, IPsiFiles psiFiles,
-            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
-            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager, TabbedToolWindowClass toolWindowClass, 
-            WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager, IColorThemeManager colorThemeManager)
+
+        public TutorialWindow(string contentPath, Lifetime tutorialLifetime, TutorialWindowManager windowManager,
+            ISolution solution, IPsiFiles psiFiles,
+            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks,
+            IEditorManager editorManager,
+            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
+            TabbedToolWindowClass toolWindowClass,
+            WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
+            IColorThemeManager colorThemeManager)
         {
             _windowManager = windowManager;
             _htmlGenerator = new HtmlGenerator(tutorialLifetime, colorThemeManager);
@@ -110,7 +114,7 @@ namespace ReSharperTutorials.TutorialUI
             _psiServices = psiServices;
             _shortcutManager = shortcutManager;
             _colorThemeManager = colorThemeManager;
-            _toolWindowClass = toolWindowClass;            
+            _toolWindowClass = toolWindowClass;
 
             if (solution.GetComponent<ISolutionOwner>().IsRealSolutionOwner)
             {
@@ -121,22 +125,22 @@ namespace ReSharperTutorials.TutorialUI
                         twi.QueryClose.Value = true;
 
                         var containerControl = new TutorialPanel(environment).BindToLifetime(lt);
-                        
+
                         var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
-                        {                            
-                            Dock = DockStyle.Fill, 
+                        {
+                            Dock = DockStyle.Fill,
                             WebBrowserShortcutsEnabled = false
-                        }.BindToLifetime(lt);                                                                    
+                        }.BindToLifetime(lt);
 
                         lt.AddBracket(
                             () => _containerControl = containerControl,
-                            () => _containerControl = null);                                              
+                            () => _containerControl = null);
 
                         lt.AddAction(() => _progressBar = null);
 
                         lt.AddBracket(
                             () => _viewControl = viewControl,
-                            () => _viewControl = null);                        
+                            () => _viewControl = null);
 
                         lt.AddBracket(
                             () =>
@@ -152,17 +156,20 @@ namespace ReSharperTutorials.TutorialUI
 
                         _colorThemeManager.ColorThemeChanged.Advise(tutorialLifetime, RefreshKeepContent);
 
-                        SetColors();                        
+                        SetColors();
 
                         _htmlMediator = new HtmlMediator(tutorialLifetime, this);
-                        _htmlMediator.OnButtonClick.Advise(tutorialLifetime, () => NextStep?.Invoke(null, EventArgs.Empty));
+                        _htmlMediator.OnButtonClick.Advise(tutorialLifetime,
+                            () => NextStep?.Invoke(null, EventArgs.Empty));
                         _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
 
                         return new EitherControl(lt, containerControl);
                     });
 
-                _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles, changeManager,
-                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, psiServices, shortcutManager);                
+                _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles,
+                    changeManager,
+                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager,
+                    psiServices, shortcutManager);
 
                 _toolWindowInstance.Title.Value = _stepPresenter.Title;
             }
@@ -170,15 +177,15 @@ namespace ReSharperTutorials.TutorialUI
 
 
         public void UpdateProgress()
-        {            
-            _progressBar.PerformStep();                        
+        {
+            _progressBar.PerformStep();
             _progressBar.CustomText = $"Step {_progressBar.Value} of {_progressBar.Maximum}";
             _progressBar.Refresh();
         }
 
 
         public void Show()
-        {                                   
+        {
             _toolWindowInstance.Show(true);
         }
 
@@ -202,9 +209,9 @@ namespace ReSharperTutorials.TutorialUI
 
 
         private void SetColors()
-        {            
+        {
             var backViewColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowBackground);
-            backViewColor.ForEachValue(_tutorialLifetime, (lt, color) =>_viewControl.BackColor = color.GDIColor);
+            backViewColor.ForEachValue(_tutorialLifetime, (lt, color) => _viewControl.BackColor = color.GDIColor);
 
             var foreViewColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
             foreViewColor.ForEachValue(_tutorialLifetime, (lt, color) => _viewControl.ForeColor = color.GDIColor);
@@ -213,12 +220,12 @@ namespace ReSharperTutorials.TutorialUI
             backControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.BackColor = color.GDIColor);
 
             var foreControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
-            foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);                        
+            foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);
         }
 
         public void RunTutorial(string htmlTutorialId)
         {
-            _windowManager.RunTutorial(htmlTutorialId);            
+            _windowManager.RunTutorial(htmlTutorialId);
         }
     }
 }

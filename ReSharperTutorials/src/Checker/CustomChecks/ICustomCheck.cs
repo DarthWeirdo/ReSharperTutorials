@@ -5,7 +5,7 @@ using JetBrains.TextControl;
 
 namespace ReSharperTutorials.Checker
 {
-    interface ICustomCheck
+    internal interface ICustomCheck
     {
         ISolution Solution { get; set; }
         IEditorManager EditorManager { get; set; }

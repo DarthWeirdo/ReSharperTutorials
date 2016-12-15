@@ -1,8 +1,5 @@
-﻿using System;
-using JetBrains.CommonControls.Browser;
+﻿using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
-using JetBrains.Threading;
-using ReSharperTutorials.Runner;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.TutorialUI
@@ -22,26 +19,23 @@ namespace ReSharperTutorials.TutorialUI
 
         private bool MoveOutStepDone
         {
-            get
-            {
-                return _moveOutStepDone;
-            }
+            get { return _moveOutStepDone; }
             set
-            {                
+            {
                 _moveOutStepDone = value;
 //                if (IsOtherAnimationsDone)                
-                    OnAnimationsDone();
+                OnAnimationsDone();
             }
         }
 
         private void OnAnimationsDone()
         {
-            AllAnimationsDone.Fire(true);           
+            AllAnimationsDone.Fire(true);
         }
 
         public HtmlMediator(Lifetime lifetime, IHtmlCommunication window)
         {
-            _window = window;       
+            _window = window;
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
             OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
             OnRunStepNavigationLinkClick = new Signal<bool>(lifetime, "HtmlMediator.OnRunStepNavigationLinkClick");
@@ -65,32 +59,32 @@ namespace ReSharperTutorials.TutorialUI
             objArray[0] = htmlTutorialId;
             objArray[1] = imgSrc;
 //            _viewControl.Document?.InvokeScript("agreeToRunTutorial", objArray);            
-            _viewControl.Document?.InvokeScript("agreeToRunTutorial");            
+            _viewControl.Document?.InvokeScript("agreeToRunTutorial");
         }
 
         public void HideImages()
-        {            
+        {
             _viewControl.Document?.InvokeScript("hideImages");
         }
 
         public void MoveOutPrevStepDone()
         {
-            MoveOutStepDone = true;            
+            MoveOutStepDone = true;
         }
 
         public void ClickNextButton()
-        {            
-            OnButtonClick.Fire(true);            
+        {
+            OnButtonClick.Fire(true);
         }
 
         public void RunTutorial(object id)
-        {            
+        {
             _window.RunTutorial(id.ToString());
         }
 
         public void RunStepNavigation()
         {
-            OnRunStepNavigationLinkClick.Fire(true);            
+            OnRunStepNavigationLinkClick.Fire(true);
         }
 
         public void CloseSolution()

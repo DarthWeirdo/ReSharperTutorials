@@ -5,8 +5,8 @@ using JetBrains.ActionManagement;
 using JetBrains.UI.ActionsRevised.Loader;
 
 namespace ReSharperTutorials.Utils
-{    
-    class ActionToShortcutConverter
+{
+    internal class ActionToShortcutConverter
     {
         private readonly IEnumerable<IActionDefWithId> _actionDefs;
         private readonly ShortcutScheme _currentScheme;

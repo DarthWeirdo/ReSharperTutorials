@@ -12,7 +12,7 @@ namespace ReSharperTutorials.Runner
         ISignal<ISolution> AfterSolutionContainerCreated { get; }
         ISignal<ISolution> AfterSolutionOpened { get; }
         ISignal<ISolution> BeforeSolutionClosed { get; }
-        ISignal<ISolution> AfterPsiLoaded { get; }      
-        ISignal<bool> AgreeToRunTutorial { get; }      
+        ISignal<ISolution> AfterPsiLoaded { get; }
+        ISignal<bool> AgreeToRunTutorial { get; }
     }
 }

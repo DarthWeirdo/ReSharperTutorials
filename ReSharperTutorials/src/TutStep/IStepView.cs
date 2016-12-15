@@ -12,5 +12,4 @@ namespace ReSharperTutorials.TutStep
 
         void UpdateProgress();
     }
-    
 }

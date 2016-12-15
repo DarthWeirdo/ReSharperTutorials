@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ReSharperTutorials.TutStep
+﻿namespace ReSharperTutorials.TutStep
 {
     public class Check
     {

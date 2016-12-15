@@ -4,10 +4,7 @@ using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
-using JetBrains.ReSharper.Psi.Tree;
-using JetBrains.Rider.Model.Refactorings;
 using JetBrains.TextControl;
 using JetBrains.UI.Application;
 using JetBrains.Util;
@@ -23,12 +20,12 @@ namespace ReSharperTutorials.CodeNavigator
         private readonly IShellLocks _shellLocks;
         private readonly IEditorManager _editorManager;
         private readonly DocumentManager _documentManager;
-        private readonly IUIApplication _environment;        
+        private readonly IUIApplication _environment;
 
         public SourceCodeNavigator(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-                                  TextControlManager textControlManager, IShellLocks shellLocks,
-                                  IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment)
-        {            
+            TextControlManager textControlManager, IShellLocks shellLocks,
+            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment)
+        {
             _lifetime = lifetime;
             _solution = solution;
             _psiFiles = psiFiles;
@@ -36,13 +33,13 @@ namespace ReSharperTutorials.CodeNavigator
             _shellLocks = shellLocks;
             _documentManager = documentManager;
             _environment = environment;
-            _editorManager = editorManager;                                                                          
+            _editorManager = editorManager;
         }
 
 
         public void Navigate(TutStep.TutorialStep step)
         {
-            if (step.NavNode == null) 
+            if (step.NavNode == null)
                 return;
 
             if (step.NavNode.RunMethod != null)
@@ -55,14 +52,15 @@ namespace ReSharperTutorials.CodeNavigator
                 return;
 
             _shellLocks.ExecuteOrQueueReadLock(_lifetime, "Navigate", () =>
-            {                
+            {
                 _psiFiles.CommitAllDocumentsAsync(() =>
                 {
                     var project = PsiNavigationHelper.GetProjectByName(_solution, step.NavNode.ProjectName);
 
                     var file = PsiNavigationHelper.GetCSharpFile(project, step.NavNode.FileName);
 
-                    var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName, step.NavNode.MethodName,
+                    var node = PsiNavigationHelper.GetTreeNodeForStep(file, step.NavNode.TypeName,
+                        step.NavNode.MethodName,
                         step.NavNode.MethodNameOccurrence, step.NavNode.TextToFind, step.NavNode.TextToFindOccurrence);
 
                     if (node == null)
@@ -74,33 +72,26 @@ namespace ReSharperTutorials.CodeNavigator
                     {
                         PsiNavigationHelper.NavigateToNode(_documentManager, _editorManager, node, true);
                     }
-                });                                
+                });
             });
         }
 
 
         private void RunCustomNavigation(string methodFqn)
-        {            
+        {
             var typeName = PsiNavigationHelper.GetLongNameFromFqn(methodFqn);
             var methodName = PsiNavigationHelper.GetShortNameFromFqn(methodFqn);
             var customType = Type.GetType(typeName);
             if (customType == null)
-                throw new ApplicationException("Unknown custom navigation class. Try reinstalling the plugin.");                        
+                throw new ApplicationException("Unknown custom navigation class. Try reinstalling the plugin.");
             var navMethod = customType.GetMethod(methodName);
             if (navMethod == null)
-                throw new ApplicationException("Unknown custom navigation method. Try reinstalling the plugin."); 
-            var parameterArray = new object[] { _solution, _editorManager, _documentManager };
+                throw new ApplicationException("Unknown custom navigation method. Try reinstalling the plugin.");
+            var parameterArray = new object[] {_solution, _editorManager, _documentManager};
             var customInst = Activator.CreateInstance(customType, parameterArray);
 
-            _shellLocks.ExecuteOrQueueReadLock(_lifetime, "Navigate", () =>
-            {
-                _psiFiles.CommitAllDocumentsAsync(() => { navMethod.Invoke(customInst, null); });
-            });
-
-            //_shellLocks.ExecuteWithWriteLockWhenAvailable(_lifetime, "Navigate", () =>
-            //{                                
-            //    _psiFiles.CommitAllDocumentsAsync(() => { navMethod.Invoke(customInst, null); });                
-            //});
+            _shellLocks.ExecuteOrQueueReadLock(_lifetime, "Navigate",
+                () => { _psiFiles.CommitAllDocumentsAsync(() => { navMethod.Invoke(customInst, null); }); });
         }
     }
 }

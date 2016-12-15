@@ -1,17 +1,14 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
-using JetBrains.TextControl.Coords;
 using ReSharperTutorials.CodeNavigator;
 
 namespace ReSharperTutorials.Checker
 {
-    class Tutorial3Checks: ICustomCheck
+    class Tutorial3Checks : ICustomCheck
     {
         public ISolution Solution { get; set; }
         public IEditorManager EditorManager { get; set; }
@@ -58,70 +55,105 @@ namespace ReSharperTutorials.Checker
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep9()
         {
-            return TypicalChecks.StringExistsInCssFile(Solution, "Tutorial3_WhatsNewReSharper2016.3", "LanguageInjections.cs", 1, "red");
-        }
-
-        [RunCheck(OnEvent.PsiChange)]
-        public bool CheckStep10()
-        {
-            return TypicalChecks.StringExistsInCssFile(Solution, "Tutorial3_WhatsNewReSharper2016.3", "LanguageInjections.cs", 1, "rgb");
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CodeGeneration.cs",
+                "ArgumentNullException(");
         }
 
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep11()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3",
+                "IntroduceFromUnusedParameters.cs",
+                "Unused1 = unused1;");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep13()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3",
+                "IntroducePropertyForLazilyInitialisedField.cs",
+                "_foo.Value");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep15()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "TransformParameters.cs",
+                "ReturnValue");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep17()
+        {
+            return TypicalChecks.StringExistsInCssFile(Solution, "Tutorial3_WhatsNewReSharper2016.3",
+                "LanguageInjections.cs", 1, "red");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep18()
+        {
+            return TypicalChecks.StringExistsInCssFile(Solution, "Tutorial3_WhatsNewReSharper2016.3",
+                "LanguageInjections.cs", 1, "rgb");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep19()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "LanguageInjections.cs",
                 "javascript");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckStep12()
+        public bool CheckStep20()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "LanguageInjections.cs",
                 "postfix=;}");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckStep14()
+        public bool CheckStep22()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CSharp7.cs",
                 "0b11101110");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckStep15()
+        public bool CheckStep23()
         {
             return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "CSharp7.cs",
                 "0b111011_");
         }
 
         [RunCheck(OnEvent.CaretMove)]
-        public bool CheckStep17()
+        public bool CheckStep25()
         {
             var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
-            var parentNode = node?.Parent?.Parent as IPropertyDeclaration;            
+            var parentNode = node?.Parent?.Parent as IPropertyDeclaration;
             return parentNode != null && parentNode.DeclaredName == "Third";
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckStep19()
+        public bool CheckStep27()
         {
-            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3", "InterpolatedStringsImprovement.cs",
+            return TypicalChecks.StringExists(Solution, "Tutorial3_WhatsNewReSharper2016.3",
+                "InterpolatedStringsImprovement.cs",
                 "$\"\"");
         }
 
         [RunCheck(OnEvent.PsiChange)]
-        public bool CheckStep21()
+        public bool CheckStep29()
         {
             var project = PsiNavigationHelper.GetProjectByName(Solution, "Tutorial3_WhatsNewReSharper2016.3");
-            var file = PsiNavigationHelper.GetCSharpFile(project, "JoinLines.cs");            
+            var file = PsiNavigationHelper.GetCSharpFile(project, "JoinLines.cs");
             var namespaceDecl = file?.NamespaceDeclarations.FirstOrDefault(
-                    namespaceDeclaration => namespaceDeclaration.ShortName == "ReSharper20163");            
-            var typeDecl = namespaceDecl?.TypeDeclarations.FirstOrDefault(declaration => declaration.CLRName == "ReSharper20163.JoinLines");
-            var methodDecl = (IPropertyDeclaration)typeDecl?.MemberDeclarations.FirstOrDefault(memberDeclaration =>
-                   memberDeclaration.DeclaredName == "MyProperty");
-            
-            var newLines = methodDecl?.ChildrenInSubtrees().Where(node => node.GetText() == "\r\n").ToList();            
+                namespaceDeclaration => namespaceDeclaration.ShortName == "ReSharper20163");
+            var typeDecl =
+                namespaceDecl?.TypeDeclarations.FirstOrDefault(
+                    declaration => declaration.CLRName == "ReSharper20163.JoinLines");
+            var methodDecl = (IPropertyDeclaration) typeDecl?.MemberDeclarations.FirstOrDefault(memberDeclaration =>
+                memberDeclaration.DeclaredName == "MyProperty");
+
+            var newLines = methodDecl?.ChildrenInSubtrees().Where(node => node.GetText() == "\r\n").ToList();
             return newLines?.Count == 0;
         }
     }

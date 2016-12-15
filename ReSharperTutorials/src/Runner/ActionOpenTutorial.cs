@@ -1,24 +1,20 @@
-﻿using System;
-using JetBrains.ActionManagement;
+﻿using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.DataContext;
 using JetBrains.Application.Interop.NativeHook;
-using JetBrains.DataFlow;
 using JetBrains.Threading;
 using JetBrains.UI.ActionsRevised;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
 using JetBrains.UI.MenuGroups;
 using JetBrains.UI.ToolWindowManagement;
-using JetBrains.Util;
 using ReSharperTutorials.TutorialUI;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
-{    
+{
     public abstract class ActionOpenTutorial : IExecutableAction
     {
-
         public bool Update(IDataContext context, ActionPresentation presentation, DelegateUpdate nextUpdate)
         {
             return true;
@@ -37,16 +33,15 @@ namespace ReSharperTutorials.Runner
             var solutionStateTracker = context.GetComponent<SolutionStateTracker>();
             var titleString = TutorialXmlReader.ReadIntro(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
             var step = TutorialXmlReader.ReadCurrentStep(globalOptions.GetPath(id, PathType.WorkCopyContentFile));
-            var firstTime = step == 1;            
+            var firstTime = step == 1;
 
             VsIntegration.CloseVsSolution();
             solutionStateTracker.NotifyAgreeToRunTutorial();
             SolutionCopyHelper.CleanUpDirectory(globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
             SolutionCopyHelper.CopySolution(globalOptions.GetPath(id, PathType.BaseSolutionFolder),
                 globalOptions.GetPath(id, PathType.WorkCopySolutionFolder));
-            VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));                
+            VsIntegration.OpenVsSolution(globalOptions.GetPath(id, PathType.WorkCopySolutionFile));
         }
-
     }
 
 
@@ -90,8 +85,10 @@ namespace ReSharperTutorials.Runner
             var colorThemeManager = context.GetComponent<IColorThemeManager>();
             var threading = context.GetComponent<IThreading>();
 
-            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime, solutionStateTracker, 
-                globalSettings, shellLocks, toolWindowManager, toolWindowDescriptor, environment, actionManager, windowsHookManager, 
+            globalSettings.TutorialWindowManager = new TutorialWindowManager(globalSettings.Lifetime,
+                solutionStateTracker,
+                globalSettings, shellLocks, toolWindowManager, toolWindowDescriptor, environment, actionManager,
+                windowsHookManager,
                 colorThemeManager, threading);
 
             globalSettings.TutorialWindowManager.ShowHomeWindow();

@@ -40,7 +40,6 @@ namespace ReSharperTutorials.Runner
             if (globalSettings == null)
                 throw new ArgumentNullException("globalSettings");
 
-            
 
             foreach (var tutorial in globalSettings.AvailableTutorials)
             {
@@ -50,25 +49,28 @@ namespace ReSharperTutorials.Runner
                         sol =>
                             RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles, changeManager,
                                 textControlManager, shellLocks, editorManager, documentManager, environment,
-                                actionManager, windowsHookManager, psiServices, shortcutManager, colorThemeManager, 
+                                actionManager, windowsHookManager, psiServices, shortcutManager, colorThemeManager,
                                 threading));
                 }
             }
         }
 
-        private static void RunTutorial(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime, ISolution solution, 
-            IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, 
-            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,            
+        private static void RunTutorial(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime,
+            ISolution solution,
+            IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager,
+            IShellLocks shellLocks,
+            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
+            IActionManager actionManager,
             WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
             IColorThemeManager colorThemeManager, IThreading threading)
-        {            
-            if (globalSettings.TutorialWindowManager == null)           
+        {
+            if (globalSettings.TutorialWindowManager == null)
                 throw new ApplicationException("Expected globalSettings.TutorialWindowManager");
 
-            globalSettings.TutorialWindowManager.ShowTutorialWindow(tutorialId, lifetime, solution, psiFiles, changeManager, 
-                textControlManager, shellLocks, editorManager, documentManager, environment, actionManager, 
-                windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);                                                                          
+            globalSettings.TutorialWindowManager.ShowTutorialWindow(tutorialId, lifetime, solution, psiFiles,
+                changeManager,
+                textControlManager, shellLocks, editorManager, documentManager, environment, actionManager,
+                windowsHookManager, psiServices, shortcutManager, colorThemeManager, threading);
         }
-
     }
 }

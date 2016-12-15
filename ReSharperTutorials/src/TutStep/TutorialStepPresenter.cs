@@ -18,14 +18,13 @@ using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.TutStep
 {
-
     public class TutorialStepPresenter
     {
         private readonly IStepView _stepView;
-        private readonly SourceCodeNavigator _codeNavigator;                
+        private readonly SourceCodeNavigator _codeNavigator;
         private readonly string _contentPath;
         private readonly Dictionary<int, TutorialStep> _steps;
-        private int _currentStepId;        
+        private int _currentStepId;
         public readonly Lifetime Lifetime;
         public readonly ISolution Solution;
         public readonly IPsiFiles PsiFiles;
@@ -41,8 +40,10 @@ namespace ReSharperTutorials.TutStep
         public bool IsLastStep => _currentStepId == _steps.Count;
 
 
-        public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks, IEditorManager editorManager,
+        public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution,
+            IPsiFiles psiFiles,
+            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks,
+            IEditorManager editorManager,
             DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
             IPsiServices psiServices, IActionShortcuts shortcutManager)
         {
@@ -58,33 +59,33 @@ namespace ReSharperTutorials.TutStep
             Environment = environment;
             ActionManager = actionManager;
             _contentPath = contentPath;
-            _codeNavigator = new SourceCodeNavigator(lifetime, solution, psiFiles, textControlManager, shellLocks, editorManager,
-                documentManager, environment);                        
+            _codeNavigator = new SourceCodeNavigator(lifetime, solution, psiFiles, textControlManager, shellLocks,
+                editorManager,
+                documentManager, environment);
             _steps = new Dictionary<int, TutorialStep>();
             _steps = TutorialXmlReader.ReadTutorialSteps(contentPath);
             Title = TutorialXmlReader.ReadTitle(contentPath);
 
             var converter = new ActionToShortcutConverter(actionManager);
-            foreach (var step in _steps.Values)            
-                step.Text = converter.SubstituteShortcutsViaVs(step.Text);                        
+            foreach (var step in _steps.Values)
+                step.Text = converter.SubstituteShortcutsViaVs(step.Text);
 
             // always start from the beginning
             // _currentStepId = TutorialXmlReader.ReadCurrentStep(contentPath);
-            _currentStepId = 1; 
+            _currentStepId = 1;
             CurrentStep = _steps[_currentStepId];
-            _stepView.StepCount = _steps.Count;            
+            _stepView.StepCount = _steps.Count;
 
             lifetime.AddBracket(
-                () => { _stepView.NextStep += GoNext; }, 
-                () => { _stepView.NextStep -= GoNext; });            
+                () => { _stepView.NextStep += GoNext; },
+                () => { _stepView.NextStep -= GoNext; });
 
             ProcessStep();
-
         }
 
         public void Close(object sender, RoutedEventArgs args)
         {
-            VsIntegration.CloseVsSolution(true);         
+            VsIntegration.CloseVsSolution(true);
         }
 
         public void RunStepNavigation()
@@ -97,7 +98,7 @@ namespace ReSharperTutorials.TutStep
             if (_currentStepId == _steps.Count) return;
 
             _currentStepId++;
-            CurrentStep = _steps[_currentStepId];            
+            CurrentStep = _steps[_currentStepId];
             ProcessStep();
         }
 
@@ -116,24 +117,24 @@ namespace ReSharperTutorials.TutStep
         private void StepOnStepIsDone(object sender, EventArgs eventArgs)
         {
             CurrentStep.StepIsDone -= StepOnStepIsDone;
-            GoNext(this, null);            
+            GoNext(this, null);
         }
 
 
         private void ShowText(TutorialStep step)
-        {            
+        {
             var result = $"<div id =\"currentStep\" class =\"currentStep\">{step.Text}</div>";
 
             if (step.Id > 1)
             {
                 var prevStep = _steps[step.Id - 1];
-//                if ((prevStep.StrikeOnDone && step.GoToNextStep == GoToNextStep.Auto) || (prevStep.StrikeOnDone && step.Id == _steps.Count))    
-                if (prevStep.StrikeOnDone)    
-                    result = $"<div id=\"prevStep\" class=\"prevStep\">{prevStep.Text}</div> <div id=\"currentStep\" class =\"currentStep\">{step.Text}</div>"; 
+
+                if (prevStep.StrikeOnDone)
+                    result =
+                        $"<div id=\"prevStep\" class=\"prevStep\">{prevStep.Text}</div> <div id=\"currentStep\" class =\"currentStep\">{step.Text}</div>";
             }
 
             _stepView.StepText = result;
-        }        
-
+        }
     }
 }

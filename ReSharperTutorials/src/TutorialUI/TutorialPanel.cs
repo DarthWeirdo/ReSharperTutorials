@@ -10,7 +10,7 @@ namespace ReSharperTutorials.TutorialUI
     {
         public TutorialPanel([CanBeNull] IUIApplicationSimple uiapp) : base(uiapp)
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void InitializeComponent()
@@ -18,7 +18,7 @@ namespace ReSharperTutorials.TutorialUI
             Dock = DockStyle.Fill;
             BorderStyle = BorderStyle.None;
             BackColor = SystemColors.ButtonShadow;
-            Padding = new Padding(1, 0, 1, 1);                            
+            Padding = new Padding(1, 0, 1, 1);
         }
     }
 }
