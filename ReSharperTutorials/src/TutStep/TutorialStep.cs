@@ -4,12 +4,6 @@ using ReSharperTutorials.Checker;
 
 namespace ReSharperTutorials.TutStep
 {
-    public enum GoToNextStep
-    {
-        Auto,
-        Manual
-    }
-
     public delegate void StepIsDoneHandler(object sender, EventArgs e);
 
     public class TutorialStep
@@ -57,6 +51,12 @@ namespace ReSharperTutorials.TutStep
                 if (value == _isCheckDone) return;
                 _isCheckDone = value;
 
+                if (Check == null)
+                {
+                    OnStepIsDone();
+                    return;
+                }
+
                 if (Check.Actions != null && IsActionDone)
                     OnStepIsDone();
                 else if (Check.Actions == null)
@@ -89,13 +89,21 @@ namespace ReSharperTutorials.TutStep
         {
             _processingLifetime = Lifetimes.Define(stepPresenter.Lifetime);
 
-            var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution,
-                stepPresenter.PsiFiles,
-                stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
-                stepPresenter.EditorManager,
-                stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
+            if (GoToNextStep == GoToNextStep.Auto)
+            {
+                var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution,
+                    stepPresenter.PsiFiles,
+                    stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
+                    stepPresenter.EditorManager,
+                    stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
 
-            checker.PerformStepChecks();
+                checker.PerformStepChecks();
+            }
+            else if (GoToNextStep == GoToNextStep.Manual)
+            {
+                var nextStepPressChecker =
+                    new NextStepPressChecker(_processingLifetime.Lifetime, this, "ReSharper_AltEnter");
+            }
         }
     }
 }

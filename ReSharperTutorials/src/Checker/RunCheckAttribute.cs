@@ -2,14 +2,6 @@
 
 namespace ReSharperTutorials.Checker
 {
-    internal enum OnEvent
-    {
-        None,
-        PsiChange,
-        CaretMove,
-        AfterAction
-    }
-
     [AttributeUsage(AttributeTargets.Method)]
     internal class RunCheckAttribute : Attribute
     {

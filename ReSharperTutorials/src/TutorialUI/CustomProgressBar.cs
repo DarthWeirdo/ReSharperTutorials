@@ -11,7 +11,7 @@ namespace ReSharperTutorials.TutorialUI
     {
         public CustomProgressBar()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
         }
 
         public string CustomText { get; set; }

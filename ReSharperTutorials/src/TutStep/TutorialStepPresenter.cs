@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.changes;
@@ -108,7 +109,9 @@ namespace ReSharperTutorials.TutStep
             _codeNavigator.Navigate(CurrentStep);
             _stepView.UpdateProgress();
 
-            if (CurrentStep.GoToNextStep != GoToNextStep.Auto) return;
+//            if (CurrentStep.GoToNextStep == GoToNextStep.Manual)
+//                return;
+
             CurrentStep.StepIsDone += StepOnStepIsDone;
             CurrentStep.PerformChecks(this);
         }
