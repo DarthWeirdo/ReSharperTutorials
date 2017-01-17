@@ -48,7 +48,7 @@
           <a class="externalLink" href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.          
         </p>
         <p>But, enough words! Let's start!</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -94,7 +94,7 @@
         <p>
           Now, let's take a look at the other code generation features.
         </p>        
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -202,7 +202,7 @@
         <p>
           Let's take a look at one more code generation feature.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
     
@@ -245,7 +245,7 @@
         <p>
           Now, let's proceed to a new quick fix.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -291,7 +291,7 @@
         <p>
           Next in line is a new context action...
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -333,7 +333,7 @@
         <p>
           The next one is a new refactoring...
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -377,7 +377,7 @@
         <p>
           Now, let's proceed to other R# 2016.3 features.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>        
 
@@ -494,7 +494,7 @@
         <p>
           Now let's take a look at less significant yet useful new ReSharper features.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -565,7 +565,7 @@
           They are out of scope of this tutorial as on the moment of the ReSharper 2016.3 release, Visual Studio 15 was still
           in the preview state.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -612,7 +612,7 @@
         <p>
           Now, let's take a look at other minor ReSharper 2016.3 improvements.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -644,7 +644,7 @@
         <p>
           Awesome!
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 

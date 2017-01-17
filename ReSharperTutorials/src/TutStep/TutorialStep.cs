@@ -16,7 +16,7 @@ namespace ReSharperTutorials.TutStep
 
         /// <summary>
         /// If GoToNextStep is specified as Manual or not specified, 
-        /// a user can proceed to the next step ONLY by clicking the Next button. 
+        /// a user can proceed to the Next Step (Alt+Enter) ONLY by clicking the Next button. 
         /// </summary>
         public GoToNextStep GoToNextStep { get; }
 

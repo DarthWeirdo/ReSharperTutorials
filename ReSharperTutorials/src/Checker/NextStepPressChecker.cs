@@ -11,8 +11,6 @@ namespace ReSharperTutorials.Checker
         private readonly TutorialStep _step;
         private static DTE _vsInstance;
         private readonly string _nextStepActionName;
-//        public ISignal<bool> AfterNextStepActionApplied { get; }
-
 
         public NextStepPressChecker(Lifetime lifetime, TutorialStep step, string nextStepActionName)
         {
@@ -27,8 +25,6 @@ namespace ReSharperTutorials.Checker
             lifetime.AddBracket(
                 () => commandEvents.BeforeExecute += CommandEventsOnBeforeExecute,
                 () => commandEvents.BeforeExecute -= CommandEventsOnBeforeExecute);
-
-//            AfterNextStepActionApplied = new Signal<bool>(lifetime, "NextStepPressChecker.AfterNextStepActionApplied");
         }
 
         private void CommandEventsOnBeforeExecute(string guid, int id, object customin, object customout, ref bool canceldefault)
@@ -39,7 +35,6 @@ namespace ReSharperTutorials.Checker
 
             if (command.Name == _nextStepActionName)
             {
-//            AfterNextStepActionApplied.Fire(true);
                 _step.IsCheckDone = true;
                 canceldefault = true;
             }

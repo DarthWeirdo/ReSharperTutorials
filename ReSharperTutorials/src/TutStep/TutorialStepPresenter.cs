@@ -77,9 +77,9 @@ namespace ReSharperTutorials.TutStep
             CurrentStep = _steps[_currentStepId];
             _stepView.StepCount = _steps.Count;
 
-            lifetime.AddBracket(
-                () => { _stepView.NextStep += GoNext; },
-                () => { _stepView.NextStep -= GoNext; });
+            lifetime.AddBracket(                
+                () => { _stepView.NextStep += StepOnStepIsDone; },
+                () => { _stepView.NextStep -= StepOnStepIsDone; });
 
             ProcessStep();
         }
@@ -108,9 +108,6 @@ namespace ReSharperTutorials.TutStep
             ShowText(CurrentStep);
             _codeNavigator.Navigate(CurrentStep);
             _stepView.UpdateProgress();
-
-//            if (CurrentStep.GoToNextStep == GoToNextStep.Manual)
-//                return;
 
             CurrentStep.StepIsDone += StepOnStepIsDone;
             CurrentStep.PerformChecks(this);

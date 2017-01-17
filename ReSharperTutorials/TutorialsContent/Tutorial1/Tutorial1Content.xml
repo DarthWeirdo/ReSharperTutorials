@@ -45,7 +45,7 @@
         <p>
           This is by far the <b>most important shortcut</b> in ReSharper. It's used to apply quick fixes to inspections, or apply context specific actions, depending on location of text caret. Also it allows searching and applying all ReSharper commands direct from the menu.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -72,7 +72,7 @@
             </li>
           </ul>
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -159,7 +159,7 @@
           But enough for today with <shortcut>ReSharper_AltEnter</shortcut>!
           Let's proceed to the other cool ReSharper's features. Please welcome <b>Predefined live templates</b>.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -171,7 +171,7 @@
           The code of the template can be a short expression, a complete construct, or even an entire class or method.
         </p>
         <p>To insert a template, you should write a short string of characters right in the place where you want to insert a code.</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -409,7 +409,7 @@
           .
           But now, let's check other ReSharper's code generation capabilities.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -420,7 +420,7 @@
           The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_Generate</shortcut>.
           It opens the context-dependent menu of available code generation options for the current type.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -461,7 +461,7 @@
           Awesome!
         </p>
         <p>Now, let's finish with code generation and take a look at ReSharper's refactoring features.</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -472,7 +472,7 @@
           The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
           It opens the context-dependent menu of all possible refactorings: renaming, extracting methods and classes, and so on.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -513,7 +513,7 @@
           you can find info about all other types of refactorings.
         </p>
         <p>Now, let's talk a little bit about ReSharper's navigation capabilities.</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -598,7 +598,7 @@
           <shortcut>ReSharper.ReSharper_NavigateTo</shortcut>.
           It shows context dependent drop-down list with all possible navigation destinations.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -636,7 +636,7 @@
           <shortcut>ReSharper.ReSharper_MoveRight</shortcut>,
           <shortcut>ReSharper.ReSharper_MoveUp</shortcut>, and <shortcut>ReSharper.ReSharper_MoveDown</shortcut> allow you quickly rearrange expressions, statements, type members, and other elements in your code.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -702,7 +702,7 @@
           </a>
           you can find out how to configure code formatting rules.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
