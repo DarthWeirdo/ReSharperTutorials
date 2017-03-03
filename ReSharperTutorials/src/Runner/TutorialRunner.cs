@@ -46,7 +46,7 @@ namespace ReSharperTutorials.Runner
                 if (VsIntegration.GetCurrentSolutionPath() == tutorial.Value)
                 {
                     solutionStateTracker.AfterPsiLoaded.Advise(lifetime,
-                        sol =>
+                        () =>
                             RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles, changeManager,
                                 textControlManager, shellLocks, editorManager, documentManager, environment,
                                 actionManager, windowsHookManager, psiServices, shortcutManager, colorThemeManager,
