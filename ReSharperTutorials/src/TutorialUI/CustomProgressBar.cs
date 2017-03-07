@@ -1,9 +1,18 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using JetBrains.TextControl.Graphics;
 using Brushes = System.Drawing.Brushes;
 using Color = System.Drawing.Color;
 using FontFamily = System.Drawing.FontFamily;
+using Point = System.Drawing.Point;
+using ProgressBar = System.Windows.Forms.ProgressBar;
+using Rectangle = System.Drawing.Rectangle;
+
 
 namespace ReSharperTutorials.TutorialUI
 {

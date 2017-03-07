@@ -38,7 +38,7 @@ namespace ReSharperTutorials.Runner
         public readonly Dictionary<TutorialId, string> AvailableTutorials;
         public readonly Lifetime Lifetime;
         public TutorialWindowManager TutorialWindowManager = null;
-        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.1";
+        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.2";
 
         public GlobalSettings(Lifetime lifetime)
         {
