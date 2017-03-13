@@ -11,7 +11,7 @@ namespace ReSharperTutorials.TutorialUI
     public class HtmlMediator
     {
         public ISignal<bool> AllAnimationsDone { get; }
-        public ISignal<bool> OnButtonClick { get; }
+        public ISignal<bool> OnNextStepButtonClick { get; }
         public ISignal<bool> OnRunStepNavigationLinkClick { get; }
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
@@ -37,7 +37,7 @@ namespace ReSharperTutorials.TutorialUI
         {
             _window = window;
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
-            OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
+            OnNextStepButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
             OnRunStepNavigationLinkClick = new Signal<bool>(lifetime, "HtmlMediator.OnRunStepNavigationLinkClick");
             _viewControl = window.HtmlViewControl;
             _viewControl.ObjectForScripting = this;
@@ -74,7 +74,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public void ClickNextButton()
         {
-            OnButtonClick.Fire(true);
+            OnNextStepButtonClick.Fire(true);
         }
 
         public void RunTutorial(object id)

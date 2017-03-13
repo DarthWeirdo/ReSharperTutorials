@@ -16,7 +16,7 @@ namespace ReSharperTutorials.TutStep
 
         /// <summary>
         /// If GoToNextStep is specified as Manual or not specified, 
-        /// a user can proceed to the Next Step (Alt+Enter) ONLY by clicking the Next button. 
+        /// a user can proceed to the Next Step (Alt+Enter) ONLY by clicking the Next button or pressing Alt+Enter. 
         /// </summary>
         public GoToNextStep GoToNextStep { get; }
 
@@ -25,11 +25,8 @@ namespace ReSharperTutorials.TutStep
         public event StepIsDoneHandler StepIsDone;
 
         /// <summary>
-        /// Lifetime created for the duration of performing checks
+        /// Shows whether a user performed the action required by the step 
         /// </summary>
-        private LifetimeDefinition _processingLifetime;
-
-
         public bool IsActionDone
         {
             get { return _isActionDone; }
@@ -43,6 +40,9 @@ namespace ReSharperTutorials.TutStep
             }
         }
 
+        /// <summary>
+        /// Shows whether the check required by the step passes or not
+        /// </summary>
         public bool IsCheckDone
         {
             get { return _isCheckDone; }
@@ -64,6 +64,13 @@ namespace ReSharperTutorials.TutStep
             }
         }
 
+        /// <summary>
+        /// Go to next step avoiding all checks
+        /// </summary>
+        public void ForceStepDone()
+        {
+            OnStepIsDone();
+        }
 
         public TutorialStep(int li, NavNode navNode, Check check, string text, string goToNextStep, bool strkieOnDone)
         {
@@ -72,7 +79,6 @@ namespace ReSharperTutorials.TutStep
             Text = text;
             Check = check;
             StrikeOnDone = strkieOnDone;
-            _processingLifetime = null;
 
             GoToNextStep = check != null ? GoToNextStep.Auto : GoToNextStep.Manual;
         }
@@ -80,29 +86,26 @@ namespace ReSharperTutorials.TutStep
 
         protected virtual void OnStepIsDone()
         {
-            _processingLifetime.Terminate();
             StepIsDone?.Invoke(this, EventArgs.Empty);
         }
 
 
-        public void PerformChecks(TutorialStepPresenter stepPresenter)
+        public void PerformChecks(Lifetime processingLifetime, TutorialStepPresenter stepPresenter)
         {
-            _processingLifetime = Lifetimes.Define(stepPresenter.Lifetime);
-
-            if (GoToNextStep == GoToNextStep.Auto)
+            switch (GoToNextStep)
             {
-                var checker = new MainChecker(_processingLifetime.Lifetime, this, stepPresenter.Solution,
-                    stepPresenter.PsiFiles,
-                    stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
-                    stepPresenter.EditorManager,
-                    stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
-
-                checker.PerformStepChecks();
-            }
-            else if (GoToNextStep == GoToNextStep.Manual)
-            {
-                var nextStepPressChecker =
-                    new NextStepPressChecker(_processingLifetime.Lifetime, this, "ReSharper_AltEnter");
+                case GoToNextStep.Auto:
+                    var checker = new MainChecker(processingLifetime, this, stepPresenter.Solution,
+                        stepPresenter.PsiFiles,
+                        stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
+                        stepPresenter.EditorManager,
+                        stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
+                    checker.PerformStepChecks();
+                    break;
+                case GoToNextStep.Manual:
+                    var nextStepPressChecker =
+                        new NextStepPressChecker(processingLifetime, this, "ReSharper_AltEnter");
+                    break;
             }
         }
     }

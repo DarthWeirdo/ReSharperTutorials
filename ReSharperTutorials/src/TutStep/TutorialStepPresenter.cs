@@ -26,7 +26,7 @@ namespace ReSharperTutorials.TutStep
         private readonly string _contentPath;
         private readonly Dictionary<int, TutorialStep> _steps;
         private int _currentStepId;
-        public readonly Lifetime Lifetime;
+        private readonly Lifetime _lifetime;
         public readonly ISolution Solution;
         public readonly IPsiFiles PsiFiles;
         public readonly ChangeManager ChangeManager;
@@ -39,6 +39,10 @@ namespace ReSharperTutorials.TutStep
         public readonly string Title;
         public TutorialStep CurrentStep { get; set; }
         public bool IsLastStep => _currentStepId == _steps.Count;
+        /// <summary>
+        /// Lifetime created for the duration of performing checks in current step
+        /// </summary>
+        private LifetimeDefinition _processingLifetime;
 
 
         public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution,
@@ -47,9 +51,9 @@ namespace ReSharperTutorials.TutStep
             IEditorManager editorManager,
             DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
             IPsiServices psiServices, IActionShortcuts shortcutManager)
-        {
+        {            
             _stepView = view;
-            Lifetime = lifetime;
+            _lifetime = lifetime;
             Solution = solution;
             PsiFiles = psiFiles;
             ChangeManager = changeManager;
@@ -81,7 +85,7 @@ namespace ReSharperTutorials.TutStep
                 () => { _stepView.NextStep += StepOnStepIsDone; },
                 () => { _stepView.NextStep -= StepOnStepIsDone; });
 
-            ProcessStep();
+            ProcessCurrentStep();
         }
 
         public void Close(object sender, RoutedEventArgs args)
@@ -94,30 +98,32 @@ namespace ReSharperTutorials.TutStep
             _codeNavigator.Navigate(CurrentStep);
         }
 
-        private void GoNext(object sender, EventArgs args)
+        private void GoToNextStep(object sender, EventArgs args)
         {
             if (_currentStepId == _steps.Count) return;
 
             _currentStepId++;
             CurrentStep = _steps[_currentStepId];
-            ProcessStep();
+            ProcessCurrentStep();
         }
 
-        private void ProcessStep()
+        private void ProcessCurrentStep()
         {
             ShowText(CurrentStep);
             _codeNavigator.Navigate(CurrentStep);
             _stepView.UpdateProgress();
 
             CurrentStep.StepIsDone += StepOnStepIsDone;
-            CurrentStep.PerformChecks(this);
+            _processingLifetime = Lifetimes.Define(_lifetime);
+            CurrentStep.PerformChecks(_processingLifetime.Lifetime, this);
         }
 
 
         private void StepOnStepIsDone(object sender, EventArgs eventArgs)
         {
-            CurrentStep.StepIsDone -= StepOnStepIsDone;
-            GoNext(this, null);
+            CurrentStep.StepIsDone -= StepOnStepIsDone;            
+            _processingLifetime.Terminate();
+            GoToNextStep(this, null);
         }
 
 

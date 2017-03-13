@@ -159,7 +159,7 @@ namespace ReSharperTutorials.TutorialUI
                         SetColors();
 
                         _htmlMediator = new HtmlMediator(tutorialLifetime, this);
-                        _htmlMediator.OnButtonClick.Advise(tutorialLifetime,
+                        _htmlMediator.OnNextStepButtonClick.Advise(tutorialLifetime,
                             () => NextStep?.Invoke(null, EventArgs.Empty));
                         _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
 

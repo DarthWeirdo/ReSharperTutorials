@@ -24,7 +24,10 @@ namespace ReSharperTutorials.Checker
 
             lifetime.AddBracket(
                 () => commandEvents.BeforeExecute += CommandEventsOnBeforeExecute,
-                () => commandEvents.BeforeExecute -= CommandEventsOnBeforeExecute);
+                () =>
+                {
+                    commandEvents.BeforeExecute -= CommandEventsOnBeforeExecute;
+                });
         }
 
         private void CommandEventsOnBeforeExecute(string guid, int id, object customin, object customout, ref bool canceldefault)
@@ -35,7 +38,7 @@ namespace ReSharperTutorials.Checker
 
             if (command.Name == _nextStepActionName)
             {
-                _step.IsCheckDone = true;
+                _step.ForceStepDone();
                 canceldefault = true;
             }
             else
