@@ -7,7 +7,7 @@
   <steps>
     <step li="1">
       <text>        
-        <h1>
+        <h1 class="stepTitle">
           Welcome!
         </h1>
         <p>
@@ -39,7 +39,7 @@
 
     <step li="2" strikeOnDone="true">
       <text>
-        <h1>
+        <h1 class="stepTitle">
           Alt+Enter
         </h1>
         <p>
@@ -52,7 +52,7 @@
     <step li="3" strikeOnDone="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep3" />
       <text>
-        <h1>
+        <h1 class="stepTitle">
           Alt+Enter
         </h1>
         <p>
@@ -81,7 +81,7 @@
                 type="Tutorial1_EssentialShortcuts.badlyNamedClass" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step4" />
       <text>
-        <h1>Apply QuickFix for an inspection</h1>
+        <h1 class="stepTitle">Apply QuickFix for an inspection</h1>
         <p>
           The <code>badlyNamedClass</code> class doesn't match our naming style - it must start with a capital letter! Let's fix this:
         </p>
@@ -106,7 +106,7 @@
                 textToFindOccurrence="2" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step5" />
       <text>
-        <h1>Apply context action</h1>
+        <h1 class="stepTitle">Apply context action</h1>
         <ol>
           <li>
             The text caret must be behind <code>
@@ -128,7 +128,7 @@
                 type="Tutorial1_EssentialShortcuts.FindAction" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step6" />
       <text>
-        <h1>Find and apply an action</h1>
+        <h1 class="stepTitle">Find and apply an action</h1>
         <p>
           Use <shortcut>ReSharper_AltEnter</shortcut> to run any ReSharper command. For example,
           let's use it to rename a class.
@@ -153,7 +153,7 @@
 
     <step li="7" strikeOnDone="true">
       <text>
-        <h1>Alt+Enter</h1>
+        <h1 class="stepTitle">Alt+Enter</h1>
         <p>
           Note how many different types of actions we've performed with only one shortcut.
           But enough for today with <shortcut>ReSharper_AltEnter</shortcut>!
@@ -165,7 +165,7 @@
 
     <step li="8" strikeOnDone="true">
       <text>
-        <h1>Predefined live templates</h1>
+        <h1 class="stepTitle">Predefined live templates</h1>
         <p>
           Live templates are code fragments that can be quickly inserted into your code.
           The code of the template can be a short expression, a complete construct, or even an entire class or method.
@@ -179,7 +179,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep9" />
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step9" />
       <text>
-        <h1>Create a class</h1>
+        <h1 class="stepTitle">Create a class</h1>
         <p>
           Let's quickly create a new class using a live template.
         </p>
@@ -203,7 +203,7 @@
     <step li="10" strikeOnDone="true">
       <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step10" />
       <text>
-        <h1>Create a class</h1>
+        <h1 class="stepTitle">Create a class</h1>
         <p>
           Note the red frame around <code class="frame">MyCircle</code>. It indicates the active template parameter.
         </p>
@@ -218,7 +218,7 @@
     <step li="11" strikeOnDone="true">
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step11" />
       <text>
-        <h1>Create a constructor</h1>
+        <h1 class="stepTitle">Create a constructor</h1>
         <p>
           Our class lacks a constructor. Let's add it with a live template as well.
         </p>
@@ -240,7 +240,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep12" />
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step12" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           In the same way we can add a property. As this is a class that represents a circle, it
           should have some <code>Radius</code> property of the <code>int</code> type.
@@ -262,7 +262,7 @@
     <step li="13" strikeOnDone="true">      
       <check action="Edit.InsertTab;Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step13" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           Note that the <span class="menuItem">prop</span> template has two editable parameters: property's type and name.
           The one that is active for input is highlighted with a red frame - <code class="frame">TYPE</code>. Our <code>Radius</code>
@@ -282,7 +282,7 @@
     <step li="14" strikeOnDone="true">
       <check action="Edit.InsertTab" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step14" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           Move the input to the next parameter:
         </p>
@@ -297,7 +297,7 @@
     <step li="15" strikeOnDone="true">      
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step15" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           Now, we should specify the property name:
         </p>
@@ -312,7 +312,7 @@
     <step li="16" strikeOnDone="true">
       <check action="Edit.InsertTab;Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step16"/>
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           Finish creating the property:
         </p>
@@ -328,7 +328,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial1Navigation.NavigateStep17" />
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step17" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           Now, let's add another property of the <code>CenterCoordinates</code> type for circle's center coordinates.
         </p>
@@ -349,7 +349,7 @@
     <step li="18" strikeOnDone="true">      
       <check action="Edit.InsertTab;Edit.BreakLine" method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step18" />
       <text>
-        <h1>Create a property</h1>        
+        <h1 class="stepTitle">Create a property</h1>        
         <ol start="4">
           <li>
             ReSharper supports camelhumps. So, simply type <span class="userInput">ccoo</span>.
@@ -364,7 +364,7 @@
     <step li="19" strikeOnDone="true">
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step19" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>
           Move the input to the next parameter:
         </p>
@@ -379,7 +379,7 @@
     <step action="Edit.InsertTab;Edit.BreakLine" li="20" strikeOnDone="true">      
       <check  method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step20" />
       <text>
-        <h1>Create a property</h1>
+        <h1 class="stepTitle">Create a property</h1>
         <p>Let's leave the suggested <code>CenterCoordinates</code> name:
       </p>
         <ol start="4">          
@@ -392,7 +392,7 @@
 
     <step li="21" strikeOnDone="true">
       <text>
-        <h1>Predefined live templates</h1>
+        <h1 class="stepTitle">Predefined live templates</h1>
         <p>
           Really fast, isn't it? ReSharper has predefined templates for all occasions: <code>if</code> and
           <code>else</code>,
@@ -415,7 +415,7 @@
 
     <step li="22" strikeOnDone="true">
       <text>
-        <h1>Code generation</h1>
+        <h1 class="stepTitle">Code generation</h1>
         <p>
           The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_Generate</shortcut>.
           It opens the context-dependent menu of available code generation options for the current type.
@@ -429,7 +429,7 @@
       <check action="ReSharper.ReSharper_Generate"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step23" />
       <text>
-        <h1>Generate equality members</h1>
+        <h1 class="stepTitle">Generate equality members</h1>
         <p>
           Say, to guarantee the value equality for the <code>MyCircle</code> type, we want to implement the
           <code>Equals()</code> and <code>GetHashCode()</code> methods based on the <code>Radius</code> and
@@ -456,7 +456,7 @@
 
     <step li="24" strikeOnDone="true">
       <text>
-        <h1>Generate equality members</h1>
+        <h1 class="stepTitle">Generate equality members</h1>
         <p>
           Awesome!
         </p>
@@ -467,7 +467,7 @@
 
     <step li="25" strikeOnDone="true">
       <text>
-        <h1>Refactorings</h1>
+        <h1 class="stepTitle">Refactorings</h1>
         <p>
           The only shortcut you have to remember here is <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
           It opens the context-dependent menu of all possible refactorings: renaming, extracting methods and classes, and so on.
@@ -482,7 +482,7 @@
       <check action="ReSharper.ReSharper_RefactorThis"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step26" />
       <text>
-        <h1>Move to another file</h1>
+        <h1 class="stepTitle">Move to another file</h1>
         <p>
           Say, now we want to move our newly created <code>MyCircle</code> class to a new file.
         </p>
@@ -504,7 +504,7 @@
 
     <step li="27" strikeOnDone="true">
       <text>
-        <h1>Refactorings</h1>
+        <h1 class="stepTitle">Refactorings</h1>
         <p>
           Very easy, right?
           <a class="externalLink" href="https://www.jetbrains.com/help/resharper/Main_Set_of_Refactorings.html">
@@ -522,7 +522,7 @@
                 type="Tutorial1_EssentialShortcuts.MyCircle" textToFind="CenterCoordinates" textToFindOccurrence="1" />
       <check method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2832" />
       <text>
-        <h1>Go To Declaration</h1>
+        <h1 class="stepTitle">Go To Declaration</h1>
         <p>
           ReSharper enables you to easily find your way through the source code using the declarations, members, method calls,
           inheritance hierarchy, errors, etc. Let's see how it works.
@@ -545,7 +545,7 @@
       <check action="ReSharper.ReSharper_FindUsages"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step29" />
       <text>
-        <h1>Find usages</h1>
+        <h1 class="stepTitle">Find usages</h1>
         <p>
           For example, we're interested in this class and want to find out where else is it used.
         </p>
@@ -569,7 +569,7 @@
       <check action="ReSharper.ReSharper_GotoType"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step30" />
       <text>
-        <h1>Go to everything</h1>
+        <h1 class="stepTitle">Go to everything</h1>
         <p>
           Great! Now, say, we want to navigate back to <code>MyCircle</code>. Let's do this by using
           the superhelpful <b>Go to everything</b> <shortcut>ReSharper.ReSharper_GotoType</shortcut> shortcut.
@@ -591,7 +591,7 @@
 
     <step li="31" strikeOnDone="true">
       <text>
-        <h1>Navigate to</h1>
+        <h1 class="stepTitle">Navigate to</h1>
         <p>
           You're doing great! Let's learn the last important navigation shortcut and end up with this topic. Actually, this may be
           the only navigation shortcut you may want to know - <b>Navigate To</b>
@@ -608,7 +608,7 @@
       <check action="ReSharper.ReSharper_NavigateTo"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step2832" />
       <text>
-        <h1>Navigate to</h1>
+        <h1 class="stepTitle">Navigate to</h1>
         <p>
           Let's navigate back to <code>CenterCoordinates</code> declaration, but this time we'll use <b>Navigate To</b>.
         </p>
@@ -629,7 +629,7 @@
 
     <step li="33" strikeOnDone="true">
       <text>
-        <h1>Rearranging code elements</h1>
+        <h1 class="stepTitle">Rearranging code elements</h1>
         <p>
           The next thing we want you to know is a quick rearrangement of code elements.
           Four simple shortcuts: <shortcut>ReSharper.ReSharper_MoveLeft</shortcut>,
@@ -646,7 +646,7 @@
       <check action="ReSharper.ReSharper_MoveRight"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step34" />
       <text>
-        <h1>Rearranging code elements</h1>
+        <h1 class="stepTitle">Rearranging code elements</h1>
         <p>
           For example, we want to make <code>stringArg</code> the second argument in the <code>ReturnString</code>
           method.
@@ -670,7 +670,7 @@
       <check action="ReSharper.ReSharper_MoveUp"
              method="ReSharperTutorials.Checker.Tutorial1Checks.CheckTutorial1Step35" />
       <text>
-        <h1>Rearranging code elements</h1>
+        <h1 class="stepTitle">Rearranging code elements</h1>
         <p>
           Now, we want to move <code>ReturnString</code> up - above the <code>ReturnCoordinates()</code> method.
         </p>
@@ -688,7 +688,7 @@
 
     <step li="36" strikeOnDone="true">      
       <text>
-        <h1>Reformatting code</h1>
+        <h1 class="stepTitle">Reformatting code</h1>
         <p>
           The last but not the least feature we'll take a look at is code reformatting.
           The way you use whitespaces and blank lines to arrange code blocks is a very
@@ -711,7 +711,7 @@
                 type="Tutorial1_EssentialShortcuts.BadlyFormattedCode" />
       <check action="ReSharper.ReSharper_ReformatCode" />
       <text>
-        <h1>Reformatting code</h1>
+        <h1 class="stepTitle">Reformatting code</h1>
         <p>
           To rearrange the badly formatted code:
         </p>
@@ -728,7 +728,7 @@
 
     <step li="38">
       <text>
-        <h1>That's All!</h1>
+        <h1 class="stepTitle">That's All!</h1>
         <p>
           Thanks for passing the tutorial. Of course we just showed you only a tiny bit of ReSharper's capabilities.
           More complex and deep tutorials are coming soon. Stay tuned!

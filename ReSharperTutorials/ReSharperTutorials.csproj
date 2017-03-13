@@ -401,6 +401,7 @@
     <Compile Include="src\TutorialUI\TutorialWindow.cs" />
     <Compile Include="src\TutorialUI\TutorialWindowDescriptor.cs" />
     <Compile Include="src\TutorialUI\TutorialWindowManager.cs" />
+    <Compile Include="src\TutorialUI\UiColorTheme.cs" />
     <Compile Include="src\TutStep\Check.cs" />
     <Compile Include="src\TutStep\GoToNextStep.cs" />
     <Compile Include="src\TutStep\IStepView.cs" />

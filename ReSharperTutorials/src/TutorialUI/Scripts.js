@@ -29,16 +29,16 @@ function stepLoad() {
     }
 
     var pElem = document.getElementById("prevStep");
-    var pHeight = pElem.clientHeight;
+    var pHeight = pElem.clientHeight + 10;    
     var cElem = document.getElementById("currentStep");
-    cElem.style.top = pHeight + "px";
+    cElem.style.top = pHeight + "px";    
 
-    var buttons = document.querySelectorAll("div.prevStep button");
-
-    for (i = 0; i < buttons.length; i++) {
-        buttons[i].disabled = true;
-        buttons[i].style.textDecoration = "line-through";
-    }
+    setNewClassName("div.prevStep .shortcut", "shortcutDisabled", false);
+    setNewClassName("div.prevStep code", "codeDisabled", false);
+    setNewClassName("div.prevStep .menuItem", "menuItemDisabled", false);
+    setNewClassName("div.prevStep button", "nextButtonDisabled", true);    
+    setNewClassName("div.prevStep .externalLink", "done", true);
+    setNewClassName("div.prevStep h1", "done", false);
 
     var navLinks = document.getElementsByClassName("navigate");
     for (i = 0; i < navLinks.length; i++) {
@@ -53,6 +53,19 @@ function stepLoad() {
 
     window.scroll(0, findPos(cElem));
 }
+
+function setNewClassName(obj, newClassName, disable) {
+    var i;
+    var objects = document.querySelectorAll(obj);
+
+    for (i = 0; i < objects.length; i++) {
+        objects[i].className = newClassName;
+        if (disable) {
+            objects[i].disabled = true;
+        }
+    }
+}
+
 
 function checkParentsClassName(obj, className) {
     var parent = obj.parentNode;
@@ -115,6 +128,7 @@ function disableButtons() {
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true;
         buttons[i].title = "You must first close the currently open tutorial";
+        buttons[i].className = "runButtonDisabled";
     }
 }
 
@@ -123,6 +137,7 @@ function enableButtons() {
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].disabled = false;
         buttons[i].title = "";
+        buttons[i].className = "runButton";
     }
 }
 

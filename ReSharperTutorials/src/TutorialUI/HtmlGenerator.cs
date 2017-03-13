@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,24 +10,28 @@ using JetBrains.UI.Components.Theming;
 namespace ReSharperTutorials.TutorialUI
 {
     public class HtmlGenerator
-    {
-        private readonly Lifetime _lifetime;
-        private readonly IColorThemeManager _colorThemeManager;
-        private string _textColor;
-        private string _scrollBackColor;
-        private string _scrollFaceColor;
-        private string _disabledTextColor;
-        private string _buttonBackColor;
-        private string _buttonForeColor;
-        private string _buttonHoverColor;
-        private string _codeColor;
+    {           
         private const string HtmlDoctype = "<!DOCTYPE html>";
         private const string HtmlHead = @"<HTML><HEAD><TITLE></TITLE>";
 
+        private Color _scrollBackColor;
+        private Color _scrollFaceColor;
+        private Color _scrollArrowColor;
+        private Color _disabledTextColor;
+        private Color _header1Color;
+        private Color _header3Color;
+        private Color _mainTextColor;
+        private Color _backgroundColor;
+        private Color _shortcutBackgroundColor;
+        private Color _shortcutBorderColor;
+        private Color _shortcutBackgroundDisabledColor;
+        private Color _shortcutBorderDisabledColor;
+
+
         public HtmlGenerator(Lifetime lifetime, IColorThemeManager colorThemeManager)
-        {
-            _lifetime = lifetime;
-            _colorThemeManager = colorThemeManager;
+        {            
+            var isDarkTheme = colorThemeManager.IsDarkTheme(lifetime);
+            isDarkTheme.Change.Advise_HasNew(lifetime, args => ApplyColorTheme(args.New ? UiColorTheme.Dark : UiColorTheme.Light));
         }
 
         public static string GetResource(string fileName)
@@ -46,7 +51,7 @@ namespace ReSharperTutorials.TutorialUI
                     using (var reader = new StreamReader(stream))
                         result = reader.ReadToEnd();
                 else
-                    throw new Exception("Unable to find content. Please reinstall the plugin");
+                    throw new FileNotFoundException("Unable to find content. Please reinstall the plugin");
             }
             return result;
         }
@@ -68,49 +73,34 @@ namespace ReSharperTutorials.TutorialUI
             return $"rgb({r},{g},{b})";
         }
 
-        private void BuildHeader(StringBuilder html)
+        private static string ColorAsHtmlRgb(Color color)
         {
-            var fontColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.WindowText);
-            fontColor.ForEachValue(_lifetime, (lt, color) => _textColor = ColorAsHtmlRgb(color));
+            var r = color.R;
+            var g = color.G;
+            var b = color.B;
+            return $"rgb({r},{g},{b})";
+        }
 
-            var disabledFontColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.DisabledText);
-            disabledFontColor.ForEachValue(_lifetime, (lt, color) => _disabledTextColor = ColorAsHtmlRgb(color));
-
-            var scrollBackColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.ScrollBarBackground);
-            scrollBackColor.ForEachValue(_lifetime, (lt, color) => _scrollBackColor = ColorAsHtmlRgb(color));
-
-            var scrollFaceColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
-            scrollFaceColor.ForEachValue(_lifetime, (lt, color) => _scrollFaceColor = ColorAsHtmlRgb(color));
-
-            var buttonBackColor = _colorThemeManager.CreateLiveColor(_lifetime,
-                ThemeColor.ContextMenuIconBackgroundGradientMiddle);
-            buttonBackColor.ForEachValue(_lifetime, (lt, color) => _buttonBackColor = ColorAsHtmlRgb(color));
-
-            var buttonForeColor = _colorThemeManager.CreateLiveColor(_lifetime, ThemeColor.TabStripButtonForeground);
-            buttonForeColor.ForEachValue(_lifetime, (lt, color) => _buttonForeColor = ColorAsHtmlRgb(color));
-
-            var buttonHoverColor = _colorThemeManager.CreateLiveColor(_lifetime,
-                ThemeColor.ContextMenuItemMouseOverBackgroundGradientMiddle1);
-            buttonHoverColor.ForEachValue(_lifetime, (lt, color) => _buttonHoverColor = ColorAsHtmlRgb(color));
-
-            var codeColor = _colorThemeManager.CreateLiveColor(_lifetime,
-                ThemeColor.ToolWindowSelectedInactiveTreeItemBackground);
-            codeColor.ForEachValue(_lifetime, (lt, color) => _codeColor = ColorAsHtmlRgb(color));
-
+        private void BuildHeader(StringBuilder html)
+        {                            
             html.AppendLine(HtmlDoctype);
             html.AppendLine(HtmlHead);
             BuildCss(html);
             BuildScript(html);
             html.AppendLine("<BODY onload=\"stepLoad()\">");
-            html.Replace("FNTCLR", _textColor); // step text color
-            html.Replace("DISFNT", _disabledTextColor); // disabled step text color
-            html.Replace("SCRLFACECLR", _scrollFaceColor); // scrollbar tracker 
-            html.Replace("SCRLARROWCLR", _scrollFaceColor); // scrollbar arrows
-            html.Replace("SCRLHLCLR", _scrollBackColor); // scrollbar background                        
-            html.Replace("BTNBCKCLR", _buttonBackColor); // button background
-            html.Replace("BTNFORECLR", _buttonForeColor); // button text                        
-            html.Replace("BTNHVRCLR", _buttonForeColor); // button text                        
-            html.Replace("CDECLR", _codeColor); // button text                        
+            html.Replace("SCRLFACECLR", ColorAsHtmlRgb(_scrollFaceColor)); // scrollbar tracker 
+            html.Replace("SCRLARROWCLR", ColorAsHtmlRgb(_scrollArrowColor)); // scrollbar arrows
+            html.Replace("SCRLHLCLR", ColorAsHtmlRgb(_scrollBackColor)); // scrollbar background                                    
+            html.Replace("DISFNT", ColorAsHtmlRgb(_disabledTextColor)); // disabled step text color
+            html.Replace("H1FNT", ColorAsHtmlRgb(_header1Color)); // heading 1 (step name) color 
+            html.Replace("H3FNT", ColorAsHtmlRgb(_header3Color)); // heading 3 (tutorial name on home page) color 
+            html.Replace("FNTCLR", ColorAsHtmlRgb(_mainTextColor)); // step text color
+            html.Replace("BGCLR", ColorAsHtmlRgb(_backgroundColor)); // window background color
+            html.Replace("SHCTBG", ColorAsHtmlRgb(_shortcutBackgroundColor)); // shortcut background color
+            html.Replace("SCBGDIS", ColorAsHtmlRgb(_shortcutBackgroundDisabledColor)); // disabled shortcut background color
+            html.Replace("SHCTBRD", ColorAsHtmlRgb(_shortcutBorderColor)); // shortcut border color
+            html.Replace("SCBRDDIS", ColorAsHtmlRgb(_shortcutBorderDisabledColor)); // disabled shortcut border color
+
         }
 
         private static void BuildFooter(StringBuilder html)
@@ -132,6 +122,22 @@ namespace ReSharperTutorials.TutorialUI
             html.AppendLine("<style type='text/css'>");
             html.AppendLine(GetResource("Styles.css"));
             html.AppendLine("</style>");
+        }
+
+        private void ApplyColorTheme(UiColorTheme colorTheme)
+        {
+            _scrollBackColor = colorTheme.ScrollBackColor;
+            _scrollFaceColor = colorTheme.ScrollFaceColor;
+            _scrollArrowColor = colorTheme.ScrollArrowColor;
+            _header1Color = colorTheme.Header1Color;
+            _header3Color = colorTheme.Header3Color;
+            _mainTextColor = colorTheme.MainTextColor;
+            _backgroundColor = colorTheme.BackgroundColor;
+            _disabledTextColor = colorTheme.DisabledTextColor;
+            _shortcutBackgroundColor = colorTheme.ShortcutBackgroundColor;
+            _shortcutBackgroundDisabledColor = colorTheme.ShortcutBackgroundDisabledColor;
+            _shortcutBorderColor = colorTheme.ShortcutBorderColor;
+            _shortcutBorderDisabledColor = colorTheme.ShortcutBorderDisabledColor;
         }
     }
 }
