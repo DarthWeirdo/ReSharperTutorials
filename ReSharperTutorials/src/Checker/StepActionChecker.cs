@@ -32,7 +32,7 @@ namespace ReSharperTutorials.Checker
             _shellLocks = shellLocks;
             _psiFiles = psiFiles;
             _vsInstance = VsIntegration.GetCurrentVsInstance();
-            var events2 = _vsInstance?.Events as Events2;
+            var events2 = _vsInstance.Events as Events2;
             if (events2 == null) return;
 
             _commandEvents = events2.CommandEvents;

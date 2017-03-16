@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using JetBrains.Application;
 using JetBrains.DataFlow;
+using JetBrains.ReSharper.Resources.Shell;
 using ReSharperTutorials.TutorialUI;
 using ReSharperTutorials.Utils;
 
@@ -38,7 +39,9 @@ namespace ReSharperTutorials.Runner
         public readonly Dictionary<TutorialId, string> AvailableTutorials;
         public readonly Lifetime Lifetime;
         public TutorialWindowManager TutorialWindowManager = null;
-        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.2";
+        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.3";
+        //public const string NextStepShortcutAction = "ReSharper_AltEnter";
+        public const string NextStepShortcutAction = "Edit.InsertTab";
 
         public GlobalSettings(Lifetime lifetime)
         {
@@ -57,6 +60,8 @@ namespace ReSharperTutorials.Runner
                 {TutorialId.Tutorial3, GetPath(TutorialId.Tutorial3, PathType.WorkCopySolutionFile)}
             };
         }
+
+        public static GlobalSettings Instance => Shell.Instance.GetComponent<GlobalSettings>();
 
         public string GetGlobalImgPath()
         {

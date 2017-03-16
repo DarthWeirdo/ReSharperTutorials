@@ -22,6 +22,7 @@ using JetBrains.UI.CrossFramework;
 using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
 using ReSharperTutorials.TutStep;
+using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.TutorialUI
 {
@@ -45,6 +46,7 @@ namespace ReSharperTutorials.TutorialUI
         private readonly ToolWindowInstance _toolWindowInstance;
         private LifetimeDefinition _animationLifetime;
         private HtmlMediator _htmlMediator;
+        private WindowFocusTracker _focusTracker;
 
         private CustomProgressBar _progressBar = new CustomProgressBar
         {
@@ -75,16 +77,16 @@ namespace ReSharperTutorials.TutorialUI
                 {
                     _animationLifetime = Lifetimes.Define(_tutorialLifetime);
 
-                    _htmlMediator.AllAnimationsDone.Advise(_animationLifetime.Lifetime, () =>
+                    _htmlMediator?.AllAnimationsDone.Advise(_animationLifetime.Lifetime, () =>
                     {
                         _stepText = value;
                         _shellLocks.ExecuteOrQueue(_tutorialLifetime, "TutorialTextUpdate",
                             () => { _viewControl.DocumentText = _htmlGenerator.PrepareHtmlContent(_stepText); });
-
+                        //_shellLocks.Dispatcher.Invoke("sdf",() => {},);
                         _animationLifetime.Terminate();
                     });
 
-                    _htmlMediator.Animate();
+                    _htmlMediator?.Animate();
                 }
                 else
                 {
@@ -163,6 +165,13 @@ namespace ReSharperTutorials.TutorialUI
                             () => NextStep?.Invoke(null, EventArgs.Empty));
                         _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
 
+                        _focusTracker = new WindowFocusTracker(tutorialLifetime);
+                        _focusTracker.IsFocusOnEditor.Change.Advise(tutorialLifetime,
+                            () => _htmlMediator.ChangeNextStepButtonText(_focusTracker.IsFocusOnEditor.Value));
+
+                        _htmlMediator.OnPageHasFullyLoaded.Advise(tutorialLifetime,
+                            () => { _htmlMediator.ChangeNextStepButtonText(_focusTracker.IsFocusOnEditor.Value); });
+
                         return new EitherControl(lt, containerControl);
                     });
 
@@ -216,11 +225,15 @@ namespace ReSharperTutorials.TutorialUI
             var foreViewColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
             foreViewColor.ForEachValue(_tutorialLifetime, (lt, color) => _viewControl.ForeColor = color.GDIColor);
 
-            var backControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowBackground);
-            backControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.BackColor = color.GDIColor);
+            var backControlColor =
+                _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowBackground);
+            backControlColor.ForEachValue(_tutorialLifetime,
+                (lt, color) => _containerControl.BackColor = color.GDIColor);
 
-            var foreControlColor = _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
-            foreControlColor.ForEachValue(_tutorialLifetime, (lt, color) => _containerControl.ForeColor = color.GDIColor);
+            var foreControlColor =
+                _colorThemeManager.CreateLiveColor(_tutorialLifetime, ThemeColor.ToolWindowForeground);
+            foreControlColor.ForEachValue(_tutorialLifetime,
+                (lt, color) => _containerControl.ForeColor = color.GDIColor);
         }
 
         public void RunTutorial(string htmlTutorialId)

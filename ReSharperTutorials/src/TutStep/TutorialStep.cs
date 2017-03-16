@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.DataFlow;
 using ReSharperTutorials.Checker;
+using ReSharperTutorials.Runner;
 
 namespace ReSharperTutorials.TutStep
 {
@@ -90,12 +91,12 @@ namespace ReSharperTutorials.TutStep
         }
 
 
-        public void PerformChecks(Lifetime processingLifetime, TutorialStepPresenter stepPresenter)
+        public void PerformChecks(Lifetime checksLifetime, TutorialStepPresenter stepPresenter)
         {
             switch (GoToNextStep)
             {
                 case GoToNextStep.Auto:
-                    var checker = new MainChecker(processingLifetime, this, stepPresenter.Solution,
+                    var checker = new MainChecker(checksLifetime, this, stepPresenter.Solution,
                         stepPresenter.PsiFiles,
                         stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
                         stepPresenter.EditorManager,
@@ -104,7 +105,7 @@ namespace ReSharperTutorials.TutStep
                     break;
                 case GoToNextStep.Manual:
                     var nextStepPressChecker =
-                        new NextStepPressChecker(processingLifetime, this, "ReSharper_AltEnter");
+                        new NextStepShortcutChecker(checksLifetime, this, GlobalSettings.NextStepShortcutAction);
                     break;
             }
         }

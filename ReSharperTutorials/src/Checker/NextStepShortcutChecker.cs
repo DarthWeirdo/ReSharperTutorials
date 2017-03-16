@@ -6,18 +6,18 @@ using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Checker
 {
-    public class NextStepPressChecker
+    public class NextStepShortcutChecker
     {
         private readonly TutorialStep _step;
         private static DTE _vsInstance;
         private readonly string _nextStepActionName;
 
-        public NextStepPressChecker(Lifetime lifetime, TutorialStep step, string nextStepActionName)
+        public NextStepShortcutChecker(Lifetime lifetime, TutorialStep step, string nextStepActionName)
         {
             _step = step;
             _nextStepActionName = nextStepActionName;
             _vsInstance = VsIntegration.GetCurrentVsInstance();
-            var events2 = _vsInstance?.Events as Events2;
+            var events2 = _vsInstance.Events as Events2;
             if (events2 == null) return;
 
             var commandEvents = events2.CommandEvents;

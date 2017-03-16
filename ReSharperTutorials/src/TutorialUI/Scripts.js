@@ -21,7 +21,7 @@ function stepLoad() {
     var i;
 
     var extLinks = document.getElementsByClassName("externalLink");
-    for (i = 0; i < extLinks.length; i++) {        
+    for (i = 0; i < extLinks.length; i++) {
         var index = i;
         extLinks[i].onclick = function() {
             window.openLink(extLinks[index].href);
@@ -29,14 +29,16 @@ function stepLoad() {
     }
 
     var pElem = document.getElementById("prevStep");
-    var pHeight = pElem.clientHeight + 10;    
+    var pHeight = pElem.clientHeight + 10;
     var cElem = document.getElementById("currentStep");
-    cElem.style.top = pHeight + "px";    
+    cElem.style.top = pHeight + "px";
+
+    pageHasFullyLoaded();
 
     setNewClassName("div.prevStep .shortcut", "shortcutDisabled", false);
     setNewClassName("div.prevStep code", "codeDisabled", false);
     setNewClassName("div.prevStep .menuItem", "menuItemDisabled", false);
-    setNewClassName("div.prevStep button", "nextButtonDisabled", true);    
+    setNewClassName("div.prevStep button", "nextButtonDisabled", true);
     setNewClassName("div.prevStep .externalLink", "done", true);
     setNewClassName("div.prevStep h1", "done", false);
 
@@ -49,9 +51,9 @@ function stepLoad() {
         if (checkParentsClassName(navLinks[i], "currentStep") === true) {
             navLinks[i].onclick = runStepNavigation;
         }
-    }    
+    }
 
-    window.scroll(0, findPos(cElem));
+    window.scroll(0, findPos(cElem));    
 }
 
 function setNewClassName(obj, newClassName, disable) {
@@ -64,6 +66,21 @@ function setNewClassName(obj, newClassName, disable) {
             objects[i].disabled = true;
         }
     }
+}
+
+function setNextStepButtonText(isFocusOnEditor, text) {
+    var i;
+    var buttons = document.querySelectorAll("div.currentStep button");
+
+    for (i = 0; i < buttons.length; i++) {        
+        var textBefore = buttons[i].firstChild.nodeValue;
+
+        if (isFocusOnEditor === true) {
+            buttons[i].innerHTML = textBefore + " (hit " + text + ")";            
+        } else {
+            buttons[i].innerHTML = textBefore.replace(" (hit " + text + ")", "");     
+        }        
+    }   
 }
 
 
@@ -149,7 +166,7 @@ function runTutorial(id) {
     window.external.RunTutorial(id);
 }
 
-function openLink(s) {    
+function openLink(s) {
     window.external.OpenLink(s);
     return false;
 }
@@ -169,7 +186,7 @@ function hideImages() {
     for (var i = 0; i < images.length; i++) {
         images[i].style.visibility = "hidden";
     }
-    
+
     var loading = document.getElementById("loading");
     loading.style.visibility = "hidden";
 }
@@ -185,4 +202,8 @@ function createImage(id, src, alt, title) {
 
 function closeSolution() {
     window.external.CloseSolution();
+}
+
+function pageHasFullyLoaded() {
+    window.external.PageHasFullyLoaded();
 }

@@ -42,7 +42,7 @@ namespace ReSharperTutorials.TutStep
         /// <summary>
         /// Lifetime created for the duration of performing checks in current step
         /// </summary>
-        private LifetimeDefinition _processingLifetime;
+        private LifetimeDefinition _checksLifetime;
 
 
         public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution,
@@ -114,15 +114,15 @@ namespace ReSharperTutorials.TutStep
             _stepView.UpdateProgress();
 
             CurrentStep.StepIsDone += StepOnStepIsDone;
-            _processingLifetime = Lifetimes.Define(_lifetime);
-            CurrentStep.PerformChecks(_processingLifetime.Lifetime, this);
+            _checksLifetime = Lifetimes.Define(_lifetime);
+            CurrentStep.PerformChecks(_checksLifetime.Lifetime, this);
         }
 
 
         private void StepOnStepIsDone(object sender, EventArgs eventArgs)
         {
             CurrentStep.StepIsDone -= StepOnStepIsDone;            
-            _processingLifetime.Terminate();
+            _checksLifetime.Terminate();
             GoToNextStep(this, null);
         }
 

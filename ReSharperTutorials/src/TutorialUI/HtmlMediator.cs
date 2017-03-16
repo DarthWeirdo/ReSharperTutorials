@@ -1,5 +1,6 @@
 ﻿using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
+using ReSharperTutorials.Runner;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.TutorialUI
@@ -13,6 +14,7 @@ namespace ReSharperTutorials.TutorialUI
         public ISignal<bool> AllAnimationsDone { get; }
         public ISignal<bool> OnNextStepButtonClick { get; }
         public ISignal<bool> OnRunStepNavigationLinkClick { get; }
+        public ISignal<bool> OnPageHasFullyLoaded { get; }
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
         private IHtmlCommunication _window;
@@ -39,6 +41,7 @@ namespace ReSharperTutorials.TutorialUI
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
             OnNextStepButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
             OnRunStepNavigationLinkClick = new Signal<bool>(lifetime, "HtmlMediator.OnRunStepNavigationLinkClick");
+            OnPageHasFullyLoaded = new Signal<bool>(lifetime, "HtmlMediator.OnPageHasFullyLoaded");
             _viewControl = window.HtmlViewControl;
             _viewControl.ObjectForScripting = this;
         }
@@ -95,6 +98,18 @@ namespace ReSharperTutorials.TutorialUI
         public void CloseSolution()
         {
             VsIntegration.CloseVsSolution(true);
+        }
+
+        public void ChangeNextStepButtonText(bool isFocusOnEditor)
+        {
+            var nextStepShortcut = VsIntegration.GetActionShortcut(GlobalSettings.NextStepShortcutAction);
+            var args = new object[] {isFocusOnEditor, nextStepShortcut};
+            _viewControl.Document?.InvokeScript("setNextStepButtonText", args);
+        }
+
+        public void PageHasFullyLoaded()
+        {
+            OnPageHasFullyLoaded.Fire(true);
         }
     }
 }

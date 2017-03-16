@@ -369,7 +369,7 @@
     <Compile Include="src\Checker\CustomChecks\Tutorial3Checks.cs" />
     <Compile Include="src\Checker\CustomChecks\TypicalChecks.cs" />
     <Compile Include="src\Checker\MainChecker.cs" />
-    <Compile Include="src\Checker\NextStepPressChecker.cs" />
+    <Compile Include="src\Checker\NextStepShortcutChecker.cs" />
     <Compile Include="src\Checker\OnEvent.cs" />
     <Compile Include="src\Checker\RunCheckAttribute.cs" />
     <Compile Include="src\Checker\StepActionChecker.cs" />
@@ -413,6 +413,7 @@
     <Compile Include="src\Utils\SolutionCopyHelper.cs" />
     <Compile Include="src\Utils\TutorialXmlReader.cs" />
     <Compile Include="src\Utils\VsIntegration.cs" />
+    <Compile Include="src\Utils\WindowFocusTracker.cs" />
     <Compile Include="ZoneMarker.cs" />
   </ItemGroup>
   <ItemGroup>
