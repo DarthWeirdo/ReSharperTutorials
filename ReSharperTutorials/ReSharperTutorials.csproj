@@ -367,6 +367,7 @@
     <Compile Include="src\Checker\CustomChecks\ICustomCheck.cs" />
     <Compile Include="src\Checker\CustomChecks\Tutorial1Checks.cs" />
     <Compile Include="src\Checker\CustomChecks\Tutorial3Checks.cs" />
+    <Compile Include="src\Checker\CustomChecks\Tutorial4Checks.cs" />
     <Compile Include="src\Checker\CustomChecks\TypicalChecks.cs" />
     <Compile Include="src\Checker\MainChecker.cs" />
     <Compile Include="src\Checker\NextStepShortcutChecker.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="src\CodeNavigator\CustomNavigation\ICustomNavigation.cs" />
     <Compile Include="src\CodeNavigator\CustomNavigation\Tutorial1Navigation.cs" />
     <Compile Include="src\CodeNavigator\CustomNavigation\Tutorial3Navigation.cs" />
+    <Compile Include="src\CodeNavigator\CustomNavigation\Tutorial4Navigation.cs" />
     <Compile Include="src\CodeNavigator\PsiNavigationHelper.cs" />
     <Compile Include="src\CodeNavigator\SourceCodeNavigator.cs" />
     <Compile Include="src\CodeNavigator\TreeNodeExtensions.cs" />
@@ -421,6 +423,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TutorialsContent\Tutorial4\Tutorial4Content.xml" />
     <EmbeddedResource Include="src\TutorialUI\HomePage.html" />
     <EmbeddedResource Include="src\TutorialUI\Scripts.js" />
     <EmbeddedResource Include="src\TutorialUI\Styles.css" />

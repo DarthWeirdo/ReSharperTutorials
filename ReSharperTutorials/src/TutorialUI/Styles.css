@@ -154,7 +154,7 @@ p { text-align: justify }
 }
 
 .shortcut {
-    font-weight: bold;
+    font-weight: 600;
     position: relative;
     display: inline-block;
     margin: 0 2px;
@@ -168,7 +168,7 @@ p { text-align: justify }
 }
 
 .shortcutDisabled {
-    font-weight: bold;
+    font-weight: 600;
     position: relative;
     display: inline-block;
     margin: 0 2px;
@@ -297,7 +297,7 @@ tr.border_bottom td { border-bottom: 1pt dotted; }
     white-space: nowrap;
     border-radius: 2px;
     font-style: normal;
-    line-height: 1em;
+    line-height: 1.5em;
     vertical-align: baseline;
     display: inline-block;
     position: relative;

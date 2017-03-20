@@ -63,6 +63,15 @@ namespace ReSharperTutorials.Runner
         }
     }
 
+    [Action("ActionOpenTutorial4", "Start Tutorial 4 - What's New in ReSharper 2017.1", Id = 87654325)]
+    public class ActionOpenTutorial4 : ActionOpenTutorial
+    {
+        protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
+        {
+            OpenOrRestart(context, TutorialId.Tutorial4);
+        }
+    }
+
     [Action("ActionShowMainTutorialWindow", "Tutorials...", Id = 87654323)]
     public class ActionShowMainTutorialWindow : ActionOpenTutorial, IInsertLast<MainMenuFeaturesGroup>
     {

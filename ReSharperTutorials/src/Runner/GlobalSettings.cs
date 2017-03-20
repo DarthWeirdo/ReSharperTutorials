@@ -39,7 +39,9 @@ namespace ReSharperTutorials.Runner
         public readonly Dictionary<TutorialId, string> AvailableTutorials;
         public readonly Lifetime Lifetime;
         public TutorialWindowManager TutorialWindowManager = null;
-        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.3";
+
+        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.4";
+
         //public const string NextStepShortcutAction = "ReSharper_AltEnter";
         public const string NextStepShortcutAction = "Edit.InsertTab";
 
@@ -57,7 +59,8 @@ namespace ReSharperTutorials.Runner
             AvailableTutorials = new Dictionary<TutorialId, string>
             {
                 {TutorialId.Tutorial1, GetPath(TutorialId.Tutorial1, PathType.WorkCopySolutionFile)},
-                {TutorialId.Tutorial3, GetPath(TutorialId.Tutorial3, PathType.WorkCopySolutionFile)}
+                {TutorialId.Tutorial3, GetPath(TutorialId.Tutorial3, PathType.WorkCopySolutionFile)},
+                {TutorialId.Tutorial4, GetPath(TutorialId.Tutorial4, PathType.WorkCopySolutionFile)},
             };
         }
 
@@ -127,7 +130,29 @@ namespace ReSharperTutorials.Runner
                             throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
                     }
                 case TutorialId.Tutorial4:
-                    break;
+                    switch (pType)
+                    {
+                        case PathType.BaseSolutionFolder:
+                            return _commonTutorialPath + "\\Tutorial4_WhatsNewReSharper2017.1";
+                        case PathType.BaseContentFolder:
+                            return _commonTutorialPath + "\\Content\\Tutorial4";
+                        case PathType.BaseSolutionFile:
+                            return _commonTutorialPath +
+                                   "\\Tutorial4_WhatsNewReSharper2017.1\\Tutorial4_WhatsNewReSharper2017.1.sln";
+                        case PathType.BaseContentFile:
+                            return _commonTutorialPath + "\\Content\\Tutorial4\\Tutorial4Content.xml";
+                        case PathType.WorkCopySolutionFolder:
+                            return _commonWorkCopyPath + "\\Tutorial4_WhatsNewReSharper2017.1";
+                        case PathType.WorkCopyContentFolder:
+                            return _commonWorkCopyPath + "\\Content\\Tutorial4";
+                        case PathType.WorkCopySolutionFile:
+                            return _commonWorkCopyPath +
+                                   "\\Tutorial4_WhatsNewReSharper2017.1\\Tutorial4_WhatsNewReSharper2017.1.sln";
+                        case PathType.WorkCopyContentFile:
+                            return _commonWorkCopyPath + "\\Content\\Tutorial4\\Tutorial4Content.xml";
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
+                    }
                 case TutorialId.Tutorial5:
                     break;
             }

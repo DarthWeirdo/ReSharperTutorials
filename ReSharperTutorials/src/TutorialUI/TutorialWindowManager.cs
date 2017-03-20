@@ -180,6 +180,10 @@ namespace ReSharperTutorials.TutorialUI
                     _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
                         () => _actionManager.ExecuteAction<ActionOpenTutorial3>());
                     break;
+                case "4":
+                    _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
+                        () => _actionManager.ExecuteAction<ActionOpenTutorial4>());
+                    break;
             }
         }
     }
