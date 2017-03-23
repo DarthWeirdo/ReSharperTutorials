@@ -1,5 +1,6 @@
 ﻿namespace ReSharper20171
 {
+
     abstract class Base
     {
         public abstract (string name, string surname) GetPerson();                

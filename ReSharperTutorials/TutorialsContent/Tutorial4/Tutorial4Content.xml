@@ -223,25 +223,24 @@
           Done!
         </p>
         <p>
-          Now, let's proceed to the next very important new feature - support for EditorConfig.
+          Now, let's proceed to very important new features related to code formatting.
         </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
-    <!--STOPPED HERE !!!!-->
+
     <step li="11" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="IntroduceFromUnusedParameters.cs"
-                type="ReSharper20163.IntroduceFromUnusedParameters" textToFind="unused1" textToFindOccurrence="1" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep11" />
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep11_14_15" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep11" />
       <text>
-        <h1 class="stepTitle">Fields or auto-properties from unused parameters</h1>
+        <h1 class="stepTitle">Formatter settings</h1>
         <p>
-          A new quick-fix allows introducing fields and auto properties from all unused parameters.
-          For example, we need to quickly create auto-properties for all params in the constructor:
+          ReSharper now allows you to quickly observe and change code formatting settings using the new Configure Format window.
+          For example, let's change the braces formatting in our solution:
         </p>
         <ol>
           <li>
-            The caret should be on <a href="www.jetbrains.com" class="navigate">one of the unused parameters</a>.
+            The <a href="www.jetbrains.com" class="navigate">code</a> you want to apply formatting to must be selected.
           </li>
 
           <li>
@@ -250,48 +249,126 @@
 
           <li>
             In the list, select
-            <span class="menuItem">Introduce get-only auto-property 'Unused1'</span>.
+            <span class="menuItem">Format selection | Configure...</span>.
           </li>
           <li>
-            Then <span class="menuItem">For all unused parameters</span>.
+            In window, in <span class="menuItem">Braces Layout</span>, set
+            <span class="menuItem">Method declaration</span>
+            to <span class="menuItem">At end of line (no space)</span>.
           </li>
           <li>
-            Then <span class="menuItem">For all with private setter</span>.
+            Click
+            <span class="menuItem">Save To</span> and select <span class="menuItem">Solution "..." personal</span>. 
+            It would be better to save the settings to the solution layer, so that your global code formatting 
+            settings are not affected.
           </li>
         </ol>
       </text>
     </step>
 
+    <!--<step li="12" strikeOnDone="true">
+      <check method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep12" />
+      <text>
+        <h1 class="stepTitle">Formatter settings</h1>
+        <p>
+          Now, let's save the settings to the solution layer, so that your global code formatting settings are not affected.
+        </p>
+        <ol>
+          <li>
+            Click
+            <span class="menuItem">Save To</span> and select <span class="menuItem">Solution "..." personal</span>.
+          </li>
+        </ol>
+      </text>
+    </step>-->
+
     <step li="12" strikeOnDone="true">
       <text>
-        <h1 class="stepTitle">Fields or auto-properties from unused parameters</h1>
+        <h1 class="stepTitle">EditorConfig</h1>
         <p>
-          Cool!
+          Awesome!
         </p>
         <p>
-          Next in line is a new context action...
+          The next feature that is tightly related to code formatting is support for EditorConfig.
+          EditorConfig is a configuration file convention that maintains consistent code styles
+          between team members as well as between different editors and IDEs. The styles are saved
+          in INI-like files named <code>.editorconfig</code>.
+        </p>
+        <p>
+          ReSharper 2017.1 supports formatting styles defined in EditorConfig format.
+          All settings defined in an <code>.editorconfig</code> file
+          override corresponding ReSharper code formatting settings.
         </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
     <step li="13" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="IntroducePropertyForLazilyInitialisedField.cs"
-                type="ReSharper20163.IntroducePropertyForLazilyInitialisedField" textToFind="_foo"
-                textToFindOccurrence="1" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep13" />
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep13" />
       <text>
-        <h1 class="stepTitle">Properties from lazily initialized fields</h1>
+        <h1 class="stepTitle">EditorConfig</h1>
         <p>
-          A new context action allows creating properties from the fields of type <code>Lazy&lt;T&gt;</code>.
-          Why? Because using a property is easier than calling <code>_foo.Value</code>.
-        </p>
-        <p>
-          Let's try the action on the <code>_foo</code> field:
+          Here you see the <code>.editorconfig</code> file that defines styles for our project (it's located
+          in the project folder). Let's override the braces format we defined in the previous steps:
         </p>
         <ol>
           <li>
-            The caret should be on the <code>_foo</code> <a href="www.jetbrains.com" class="navigate">field</a>.
+            The caret should be after
+            <code>
+              csharp_invocable_declaration_braces=
+            </code>
+            .
+            This option defines braces style for methods.
+          </li>
+          <li>
+            Type <code>next_line</code>. The resulting
+            <code>
+              csharp_invocable_declaration_braces=next_line
+            </code>
+            option will tell the code formatter to always put a brace on a next line in a method declaration.
+          </li>
+          <li>
+            Save the file with <shortcut>File.SaveSelectedItems</shortcut>.
+          </li>
+        </ol>
+        Once you're finished, click the <span class="menuItem">Next Step</span> button to proceed.
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="14" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep11_14_15" />
+      <check action="ReSharper.ReSharper_ReformatCode" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep15" />
+      <text>
+        <h1 class="stepTitle">EditorConfig</h1>
+        <p>
+          Now, let's reapply updated code formatting:
+        </p>
+        <ol>
+          <li>
+            The <a href="www.jetbrains.com" class="navigate">code</a> you want to apply formatting to must be selected.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="15" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep11_14_15" />
+      <text>
+        <h1 class="stepTitle">EditorConfig</h1>
+        <p>
+          Great!
+        </p>
+        <p>
+          Now, you can open the Configure Format window one more time to check out the
+          overriden settings:
+        </p>
+        <ol>
+          <li>
+            Select the <a href="www.jetbrains.com" class="navigate">code</a>.
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut>.
@@ -299,392 +376,28 @@
 
           <li>
             In the list, select
-            <span class="menuItem">Introduce property for lazily initialized value</span>.
+            <span class="menuItem">Format selection | Configure...</span>.
           </li>
         </ol>
-      </text>
-    </step>
-
-    <step li="14" strikeOnDone="true">
-      <text>
-        <h1 class="stepTitle">Properties from lazily initialized fields</h1>
+        Note that the overriden option is highlighted.
         <p>
-          That's it!
-        </p>
-        <p>
-          The next one is a new refactoring...
+          <a class="externalLink"
+             href="https://www.jetbrains.com/help/resharper/Using_EditorConfig.html">
+            Here
+          </a>
+          you can learn more about EditorConfig support in ReSharper.
         </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
 
-    <step li="15" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="TransformParameters.cs"
-                type="ReSharper20163.TransformParameters" textToFind="DoSomething" textToFindOccurrence="1" />
-      <check action="ReSharper.ReSharper_RefactorThis" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep15" />
-      <text>
-        <h1 class="stepTitle">Transform parameters</h1>
-        <p>
-          This new refactoring allows you to quickly transform all incoming parameters to a new class or a tuple.
-        </p>
-        <p>
-          For example, we want to create a new class from all four params of the <code>DoSomething</code> method:
-        </p>
-        <ol>
-          <li>
-            The caret should be on the <code>DoSomething</code>
-            <a href="www.jetbrains.com" class="navigate">method declaration</a>.
-          </li>
-          <li>
-            Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
-          </li>
-          <li>
-            In the list, select <span class="menuItem">Transform Parameters</span>.
-          </li>
-          <li>
-            In the opened window, let's leave everything intact. Note that here you can specify which of the parameters will be transformed,
-            new class name, and so on.
-          </li>
-          <li>
-            Click <span class="menuItem">Next</span>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="16" strikeOnDone="true">
-      <text>
-        <h1 class="stepTitle">Transform parameters</h1>
-        <p>
-          You're doing great!
-        </p>
-        <p>
-          Now, let's proceed to other R# 2016.3 features.
-        </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
-      </text>
-    </step>
-
-    <step li="17" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep17" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep17" />
-      <text>
-        <h1 class="stepTitle">Language injections</h1>
-        <p>
-          The next one on the list is improvements in language injections.
-        </p>
-        <p>
-          ReSharper 2016.3 introduces support for CSS, JSON, and JavaScript. This means that R# parses
-          the contents of a string literal and enables syntax highlighting, code completion, inspections, and
-          so on.
-        </p>
-        <p>
-          Let's try this in action and mark the <code>Style</code> string as a CSS code:
-        </p>
-        <ol>
-          <li>
-            The caret should be <a href="www.jetbrains.com" class="navigate">anywhere inside the string</a>.
-          </li>
-          <li>
-            Hit <shortcut>ReSharper_AltEnter</shortcut> and select
-            <span class="menuItem">Mark as injected language</span>.
-          </li>
-          <li>
-            Then <span class="menuItem">Mark as CSS</span>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="18" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep18" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep18" />
-      <text>
-        <h1 class="stepTitle">Language injections</h1>
-        <p>
-          Now you can treat this string as a CSS code. For example, we can use another color format:
-        </p>
-        <ol>
-          <li>
-            The caret should be on the
-            <code>
-              <a href="www.jetbrains.com" class="navigate">red</a>
-            </code>
-            color value.
-          </li>
-          <li>
-            Hit <shortcut>ReSharper_AltEnter</shortcut> and select
-            <span class="menuItem">Convert color to rgb()</span>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="19" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep19" />
-      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
-      <text>
-        <h1 class="stepTitle">Language injections</h1>
-        <p>
-          Great!
-        </p>
-        <p>
-          Note that using the <span class="menuItem">Mark as</span> submenu, creates the marker that is local to
-          your machine. If you want to share the language injection, you should mark a string with
-          the <code>language=</code> comment. Let's try this on a JavaScript injection:
-        </p>
-        <ol>
-          <li>
-            The caret must be after the statement
-            <code>
-              <a href="www.jetbrains.com" class="navigate">// language=</a>
-            </code>
-            .
-          </li>
-          <li>
-            Type <code>javascript</code>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="20" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep20" />
-      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep20" />
-      <text>
-        <h1 class="stepTitle">Language injections</h1>
-        <p>
-          That's it!
-        </p>
-        <p>
-          The next handy feature concerning injections is the ability to virtually add a prefix and postfix
-          to a string content, so that ReSharper could resolve the content as a language injection.
-        </p>
-        <p>
-          For example, we store a toolbar color in the <code>toolBarColor</code> string. If we want ReSharper
-          to treat it like a CSS code, we must make it a finished CSS expression. We can make it using
-          the <code>prefix</code> and <code>postfix</code> parameters in the <code>// language</code> comment.
-          These parameters will be virtually added to the string.
-        </p>
-        <ol>
-          <li>
-            The caret must be after the statement
-            <code>
-              <a href="www.jetbrains.com" class="navigate">// language=css</a>
-            </code>
-            .
-          </li>
-          <li>
-            Type <code>prefix=.myClass{color: postfix=;}</code>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="21" strikeOnDone="true">
-      <text>
-        <h1 class="stepTitle">Language injections</h1>
-        <p>
-          You're doing great!
-        </p>
-        <p>
-          Now let's take a look at less significant yet useful new ReSharper features.
-        </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
-      </text>
-    </step>
-
-    <step li="22" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CSharp7.cs"
-                type="ReSharper20163.CSharp7" textToFind="1000000000" textToFindOccurrence="1" />
-      <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep22" />
-      <text>
-        <h1 class="stepTitle">Convert to binary (C# 7)</h1>
-        <p>
-          Now, if you develop C# 7 project, you can use binary literals. Note that if you have Visual Studio 2015 or earlier,
-          you will get a compiler error on this literal. Nevertheless, this won't
-          prevent us from testing the feauture:
-        </p>
-        <ol>
-          <li>
-            The caret must be <a href="www.jetbrains.com" class="navigate">on the value</a> we want to convert.
-          </li>
-          <li>
-            Press <shortcut>ReSharper_AltEnter</shortcut>.
-          </li>
-          <li>
-            Select <span class="menuItem">Convert to binary</span>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="23" strikeOnDone="true">
-      <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="CSharp7.cs"
-                type="ReSharper20163.CSharp7" textToFind="0b111011100110101100101000000000" textToFindOccurrence="1" />
-      <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep23" />
-      <text>
-        <h1 class="stepTitle">Digit separators (C# 7)</h1>
-        <p>Awesome!</p>
-        <p>
-          The next C# 7 feature ReSharper supports is digit separators.
-        </p>
-        <ol>
-          <li>
-            The caret must be <a href="www.jetbrains.com" class="navigate">on the value</a>.
-          </li>
-          <li>
-            Press <shortcut>ReSharper_AltEnter</shortcut>.
-          </li>
-          <li>
-            Select <span class="menuItem">Separate bytes</span>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="24" strikeOnDone="true">
-      <text>
-        <h1 class="stepTitle">Digit separators (C# 7)</h1>
-        <p>
-          You're doing great!
-        </p>
-        <p>
-          ReSharper has corresponding actions for other types as well. E.g.,
-          <span class="menuItem">Separate 16-bit words</span> for hex representation
-          or <span class="menuItem">Separate thousands</span> for decimal representation.
-        </p>
-        <p>
-          Note that there are more C# 7 features ReSharper supports.
-          They are out of scope of this tutorial as on the moment of the ReSharper 2016.3 release, Visual Studio 15 was still
-          in the preview state.
-        </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
-      </text>
-    </step>
-
-    <step li="25" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep25" />
-      <check action="ReSharper_AltEnter"
-             method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep25" />
-      <text>
-        <h1 class="stepTitle">'Search with Pattern' improvement</h1>
-        <p>
-          A minor update gets the 'Search with Pattern' feature. Now, it matches integer constants, regardless
-          of how they're encoded:
-        </p>
-        <ol>
-          <li>
-            The
-            <code>
-              <a href="www.jetbrains.com" class="navigate">42 * Second</a>
-            </code>
-            expression must be selected.
-          </li>
-          <li>
-            Press <shortcut>ReSharper_AltEnter</shortcut>.
-          </li>
-          <li>
-            Start typing <span class="userInput">search</span>.
-          </li>
-          <li>
-            In the list, select <span class="menuItem">Search with Pattern</span>.
-          </li>
-          <li>
-            In the window, click <span class="menuItem">Find</span>. Note that the
-            <span class="menuItem">Match similar constructs</span>
-            option is selected.
-          </li>
-          <li>
-            Navigate to the <code>Third</code> property.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="26" strikeOnDone="true">
-      <text>
-        <h1 class="stepTitle">'Search with Pattern' improvement</h1>
-        <p>
-          That's it!
-        </p>
-        <p>
-          Now, let's take a look at other minor ReSharper 2016.3 improvements.
-        </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
-      </text>
-    </step>
-
-    <step li="27" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep27" />
-      textToFindOccurrence="1" />
-      <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep27" />
-      <text>
-        <h1 class="stepTitle">Interpolated strings improvement</h1>
-        <p>
-          The next minor yet handy improvement concerns interpolated strings. Once you type the <code>$</code>
-          character,
-          ReSharper will automatically put parentheses and place the curor inside them:
-        </p>
-        <ol>
-          <li>
-            The caret must be after
-            <code>
-              <a href="www.jetbrains.com" class="navigate">interpolatedString =</a>
-            </code>
-            .
-          </li>
-          <li>
-            Type <code>$</code>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="28" strikeOnDone="true">
-      <text>
-        <h1 class="stepTitle">Interpolated strings improvement</h1>
-        <p>
-          Awesome!
-        </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
-      </text>
-    </step>
-
-    <step li="29" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep29" />
-      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep29" />
-      <text>
-        <h1 class="stepTitle">Join lines</h1>
-        <p>
-          Sometimes, it may be needed to join multiple lines into one. For example, we want
-          <code>MyProperty</code> to fit into one line:
-        </p>
-        <ol>
-          <li>
-            <a href="www.jetbrains.com" class="navigate">All lines we want to join</a> must be selected.
-          </li>
-          <li>
-            Press <shortcut>ReSharper_AltEnter</shortcut>.
-          </li>
-          <li>
-            Start typing <span class="userInput">join</span>.
-          </li>
-          <li>
-            In the list, select <span class="menuItem">Join Lines</span>.
-          </li>
-        </ol>
-      </text>
-    </step>
-
-    <step li="30">
+    <step li="16">
       <text>
         <h1 class="stepTitle">That's All!</h1>
         <p>
           Thanks for passing the tutorial. Note that we've acquainted only with the ReSharper features related to C#.
-          To learn about other ReSharper 2016.3 improvements, please follow this link.
+          To learn about other ReSharper 2017.1 improvements, please follow this
+          <a class="exrenalLink" href="https://www.jetbrains.com/resharper/whatsnew/">link</a>.
         </p>
         <p>
           Now, you can:
@@ -692,6 +405,16 @@
         <ul>
           <li>
             <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(3); return false;">
+              Run <b>What's New in ReSharper 2016.3</b> tutorial
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(1); return false;">
+              Run <b>ReSharper Essentials</b> tutorial
+            </a>
           </li>
         </ul>
       </text>

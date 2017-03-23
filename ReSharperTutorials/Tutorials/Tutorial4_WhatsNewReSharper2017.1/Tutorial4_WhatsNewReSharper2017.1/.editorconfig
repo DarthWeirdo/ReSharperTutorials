@@ -1,0 +1,4 @@
+root = true
+[*]
+
+csharp_invocable_declaration_braces=

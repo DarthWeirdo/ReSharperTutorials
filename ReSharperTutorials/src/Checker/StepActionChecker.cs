@@ -22,7 +22,7 @@ namespace ReSharperTutorials.Checker
         private readonly IShellLocks _shellLocks;
         private readonly IPsiFiles _psiFiles;
         public string[] StepActionNames;
-        public ISignal<bool> AfterActionApplied { get; private set; }
+        public ISignal<bool> OnCheckPass { get; private set; }
         public Func<bool> Check = null;
 
 
@@ -41,7 +41,7 @@ namespace ReSharperTutorials.Checker
                 () => _commandEvents.AfterExecute += CommandEventsOnAfterExecute,
                 () => _commandEvents.AfterExecute -= CommandEventsOnAfterExecute);
 
-            AfterActionApplied = new Signal<bool>(lifetime, "StepActionChecker.AfterActionApplied");
+            OnCheckPass = new Signal<bool>(lifetime, "StepActionChecker.AfterActionApplied");
         }
 
         private void CommandEventsOnAfterExecute(string guid, int id1, object customIn, object customOut)
@@ -57,7 +57,7 @@ namespace ReSharperTutorials.Checker
             {
                 if (command.Name != actionName) continue;
                 if (Check == null)
-                    AfterActionApplied.Fire(true);
+                    OnCheckPass.Fire(true);
                 else
                 {
                     _shellLocks.QueueReadLock("StepActionChecker.CheckOnAfterAction",
@@ -69,7 +69,7 @@ namespace ReSharperTutorials.Checker
         private void CheckCode()
         {
             if (Check())
-                AfterActionApplied.Fire(true);
+                OnCheckPass.Fire(true);
         }
 
         private void Log(string line)

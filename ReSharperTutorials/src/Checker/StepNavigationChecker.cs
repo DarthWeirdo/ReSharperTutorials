@@ -28,7 +28,7 @@ namespace ReSharperTutorials.Checker
         /// </summary>
         public Func<bool> Check;
 
-        public ISignal<bool> AfterNavigationDone { get; private set; }
+        public ISignal<bool> OnCheckPass { get; private set; }
 
         public StepNavigationChecker(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
             TextControlManager textControlManager, IShellLocks shellLocks,
@@ -53,7 +53,7 @@ namespace ReSharperTutorials.Checker
                 () => textControlManager.Legacy.CaretMoved += caretMoved,
                 () => textControlManager.Legacy.CaretMoved -= caretMoved);
 
-            AfterNavigationDone = new Signal<bool>(lifetime, "StepNavigationChecker.AfterNavigationDone");
+            OnCheckPass = new Signal<bool>(lifetime, "StepNavigationChecker.AfterNavigationDone");
         }
 
         public ISolution Solution
@@ -68,7 +68,7 @@ namespace ReSharperTutorials.Checker
 
             if (Check == null) return;
             if (Check())
-                AfterNavigationDone.Fire(true);
+                OnCheckPass.Fire(true);
         }
     }
 }

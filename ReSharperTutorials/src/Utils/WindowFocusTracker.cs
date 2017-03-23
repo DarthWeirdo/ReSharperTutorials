@@ -1,5 +1,4 @@
-﻿using System;
-using EnvDTE;
+﻿using EnvDTE;
 using JetBrains.DataFlow;
 
 namespace ReSharperTutorials.Utils

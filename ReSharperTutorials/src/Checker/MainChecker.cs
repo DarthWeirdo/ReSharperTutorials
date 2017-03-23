@@ -96,23 +96,29 @@ namespace ReSharperTutorials.Checker
                     {
                         case OnEvent.PsiChange:
                             _stepPsiChecker.Check = checkMethod;
-                            _stepPsiChecker.AfterPsiChangesDone.Advise(_lifetime,
+                            _stepPsiChecker.OnCheckPass.Advise(_lifetime,
                                 () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.CaretMove:
                             _stepNavigationChecker.Check = checkMethod;
-                            _stepNavigationChecker.AfterNavigationDone.Advise(_lifetime,
+                            _stepNavigationChecker.OnCheckPass.Advise(_lifetime,
                                 () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.AfterAction:
                             _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
                             _stepActionChecker.Check = checkMethod;
-                            _stepActionChecker.AfterActionApplied.Advise(_lifetime,
+                            _stepActionChecker.OnCheckPass.Advise(_lifetime,
                                 () =>
                                 {
                                     _currentStep.IsActionDone = true;
                                     _currentStep.IsCheckDone = true;
                                 });
+                            break;
+                        case OnEvent.OnTimer:
+                            var timer = new CheckTimer(_lifetime);
+                            timer.Check = checkMethod;
+                            timer.OnCheckPass.Advise(_lifetime,
+                                () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.None:
                             throw new ApplicationException(
@@ -129,7 +135,7 @@ namespace ReSharperTutorials.Checker
 
             if (_currentStep.Check.Actions == null || attr.OnEvent == OnEvent.AfterAction) return;
             _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
-            _stepActionChecker.AfterActionApplied.Advise(_lifetime,
+            _stepActionChecker.OnCheckPass.Advise(_lifetime,
                 () => { _currentStep.IsActionDone = true; });
         }
     }

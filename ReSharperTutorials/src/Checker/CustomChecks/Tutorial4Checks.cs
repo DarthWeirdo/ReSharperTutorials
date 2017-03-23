@@ -1,7 +1,9 @@
-﻿using JetBrains.DocumentManagers;
+﻿using System.IO;
+using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.TextControl;
+using ReSharperTutorials.Runner;
 
 namespace ReSharperTutorials.Checker
 {
@@ -26,7 +28,7 @@ namespace ReSharperTutorials.Checker
         {
             return TypicalChecks.StringExists(Solution, "Tutorial4_WhatsNewReSharper2017.1", "Exceptions.cs",
                 "firstName ?? throw new");
-        }        
+        }
 
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckStep5()
@@ -47,6 +49,30 @@ namespace ReSharperTutorials.Checker
         {
             return TypicalChecks.StringExists(Solution, "Tutorial4_WhatsNewReSharper2017.1", "LocalFunctions.cs",
                 "private int");
+        }
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep11()
+        {
+            return TypicalChecks.StringExists(Solution, "Tutorial4_WhatsNewReSharper2017.1", "CodeFormatting.cs",
+                "foo){");
+        }
+
+        //[RunCheck(OnEvent.OnTimer)]
+        //public bool CheckStep12()
+        //{
+        //    var di = new DirectoryInfo(
+        //        GlobalSettings.Instance.GetPath(TutorialId.Tutorial4, PathType.WorkCopySolutionFolder) +
+        //        "\\Tutorial4_WhatsNewReSharper2017.1");
+        //    FileInfo[] settingsFiles = di.GetFiles("*.sln.DotSetting.User");
+        //    return settingsFiles.Length > 0;
+        //}
+
+        [RunCheck(OnEvent.PsiChange)]
+        public bool CheckStep15()
+        {
+            return !TypicalChecks.StringExists(Solution, "Tutorial4_WhatsNewReSharper2017.1", "CodeFormatting.cs",
+                "foo){");
         }
     }
 }

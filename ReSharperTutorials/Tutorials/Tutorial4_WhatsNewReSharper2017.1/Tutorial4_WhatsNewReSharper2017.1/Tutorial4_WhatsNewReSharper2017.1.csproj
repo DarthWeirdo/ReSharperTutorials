@@ -46,7 +46,10 @@
     <Compile Include="LocalFunctions.cs" />
     <Compile Include="Tuples.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnformattedCode.cs" />
+    <Compile Include="CodeFormatting.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

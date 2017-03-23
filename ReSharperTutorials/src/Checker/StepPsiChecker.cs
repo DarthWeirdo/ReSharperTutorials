@@ -32,7 +32,7 @@ namespace ReSharperTutorials.Checker
         /// </summary>
         public Func<bool> Check;
 
-        public ISignal<bool> AfterPsiChangesDone { get; private set; }
+        public ISignal<bool> OnCheckPass { get; private set; }
 
         public StepPsiChecker(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles, ChangeManager changeManager,
             TextControlManager textControlManager, IShellLocks shellLocks,
@@ -54,7 +54,7 @@ namespace ReSharperTutorials.Checker
                 () => psiFiles.AfterPsiChanged += psiChanged,
                 () => psiFiles.AfterPsiChanged -= psiChanged);
 
-            AfterPsiChangesDone = new Signal<bool>(lifetime, "StepPsiChecker.AfterPsiChangesDone");
+            OnCheckPass = new Signal<bool>(lifetime, "StepPsiChecker.AfterPsiChangesDone");
         }
 
         public bool IsUpToDate()
@@ -77,7 +77,7 @@ namespace ReSharperTutorials.Checker
         {
             if (Check == null) return;
             if (Check())
-                AfterPsiChangesDone.Fire(true);
+                OnCheckPass.Fire(true);
         }
     }
 }

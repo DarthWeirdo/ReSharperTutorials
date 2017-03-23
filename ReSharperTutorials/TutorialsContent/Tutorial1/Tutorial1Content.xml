@@ -743,6 +743,9 @@
           <li>
             <a href="#" onclick="runTutorial(3); return false;">Run <b>What's New in ReSharper 2016.3</b> tutorial</a>
           </li>
+          <li>
+            <a href="#" onclick="runTutorial(4); return false;">Run <b>What's New in ReSharper 2017.1</b> tutorial</a>
+          </li>
         </ul>
       </text>
     </step>

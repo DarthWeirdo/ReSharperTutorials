@@ -364,6 +364,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Checker\CheckTimer.cs" />
     <Compile Include="src\Checker\CustomChecks\ICustomCheck.cs" />
     <Compile Include="src\Checker\CustomChecks\Tutorial1Checks.cs" />
     <Compile Include="src\Checker\CustomChecks\Tutorial3Checks.cs" />
@@ -412,9 +413,11 @@
     <Compile Include="src\TutStep\TutorialStepPresenter.cs" />
     <Compile Include="src\Utils\ActionToShortcutConverter.cs" />
     <Compile Include="src\Utils\EnvironmentChecker.cs" />
+    <Compile Include="src\Utils\FileWatcher.cs" />
     <Compile Include="src\Utils\SolutionCopyHelper.cs" />
     <Compile Include="src\Utils\TutorialXmlReader.cs" />
     <Compile Include="src\Utils\VsIntegration.cs" />
+    <Compile Include="src\Utils\WatchFile.cs" />
     <Compile Include="src\Utils\WindowFocusTracker.cs" />
     <Compile Include="ZoneMarker.cs" />
   </ItemGroup>

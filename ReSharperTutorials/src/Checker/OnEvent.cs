@@ -5,6 +5,7 @@
         None,
         PsiChange,
         CaretMove,
-        AfterAction
+        AfterAction, 
+        OnTimer
     }
 }
