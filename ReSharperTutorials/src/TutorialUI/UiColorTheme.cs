@@ -16,6 +16,8 @@ namespace ReSharperTutorials.TutorialUI
         public Color ShortcutBorderColor { get; private set; }
         public Color ShortcutBackgroundDisabledColor { get; private set; }
         public Color ShortcutBorderDisabledColor { get; private set; }
+        public Color MenuItemBackgroundColor { get; private set ; }
+        public Color CodeBackgroundColor { get; private set ; }
 
         public static readonly UiColorTheme Dark = new UiColorTheme
         {
@@ -27,10 +29,12 @@ namespace ReSharperTutorials.TutorialUI
             MainTextColor = Color.FromArgb(254, 254, 254),
             BackgroundColor = Color.FromArgb(37, 37, 38),
             DisabledTextColor = Color.FromArgb(98, 98, 98),                        
-            ShortcutBackgroundColor = Color.FromArgb(227, 223, 230),
-            ShortcutBorderColor = Color.FromArgb(181, 174, 184),
+            ShortcutBackgroundColor = Color.FromArgb(101, 92, 105),
+            ShortcutBorderColor = Color.FromArgb(140, 128, 145),
             ShortcutBackgroundDisabledColor = Color.FromArgb(68, 68, 68),
             ShortcutBorderDisabledColor = Color.FromArgb(58, 58, 58),
+            MenuItemBackgroundColor = Color.FromArgb(60, 60, 64),
+            CodeBackgroundColor = Color.FromArgb(69, 85, 99)
         };
 
         public static readonly UiColorTheme Light = new UiColorTheme
@@ -47,6 +51,8 @@ namespace ReSharperTutorials.TutorialUI
             ShortcutBorderColor = Color.FromArgb(181, 174, 184),
             ShortcutBackgroundDisabledColor = Color.FromArgb(229, 229, 229),
             ShortcutBorderDisabledColor = Color.FromArgb(184, 184, 184),
+            MenuItemBackgroundColor = Color.FromArgb(239,238,243),
+            CodeBackgroundColor = Color.FromArgb(224,231,238)
         };
     }
 }

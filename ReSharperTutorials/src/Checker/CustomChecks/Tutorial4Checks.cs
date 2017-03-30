@@ -1,9 +1,14 @@
 ﻿using System.IO;
+using ICSharpCode.NRefactory.CSharp;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using ReSharperTutorials.Runner;
+using ReSharperTutorials.Utils;
+using IPropertyDeclaration = JetBrains.ReSharper.Psi.BuildScripts.Declarations.IPropertyDeclaration;
 
 namespace ReSharperTutorials.Checker
 {
@@ -73,6 +78,29 @@ namespace ReSharperTutorials.Checker
         {
             return !TypicalChecks.StringExists(Solution, "Tutorial4_WhatsNewReSharper2017.1", "CodeFormatting.cs",
                 "foo){");
+        }
+
+        [RunCheck(OnEvent.CaretMove)]
+        public bool CheckStep16()
+        {
+            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
+            var parent = node?.Parent as IAsExpression;
+            return parent != null;            
+        }
+
+        [RunCheck(OnEvent.CaretMove)]
+        public bool CheckStep17()
+        {
+            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);            
+            var parent = node?.Parent?.Parent as IClassBody;
+            return parent != null && parent.Properties.Count == 1;
+        }
+
+        [RunCheck(OnEvent.CaretMove)]
+        public bool CheckStep19()
+        {
+            var dte = VsIntegration.GetCurrentVsInstance();
+            return dte.ActiveDocument.Name == "GoToText.xml";
         }
     }
 }

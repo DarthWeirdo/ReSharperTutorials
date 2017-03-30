@@ -3,12 +3,32 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
+using JetBrains.ActionManagement;
+using JetBrains.UI.Actions.ActionManager;
+using ReSharperTutorials.Runner;
 using ReSharperTutorials.TutStep;
 
 namespace ReSharperTutorials.Utils
 {
-    public static class TutorialXmlReader
+    public class TutorialXmlReader
     {
+        private readonly ActionToShortcutConverter _actionToShortcutConverter;
+
+        public TutorialXmlReader(IActionManager actionManager)
+        {
+            _actionToShortcutConverter = new ActionToShortcutConverter(actionManager);
+        }
+
+        private static string ConvertImagePaths(string text)
+        {
+            var pathToImgs = GlobalSettings.Instance.GetGlobalImgPath();
+            var result = Regex.Replace(text, @"<img src=""(.*?)"" */>", txt =>
+            {
+                var src = txt.Groups[1].Value;                
+                return $"<img src=\"{pathToImgs}\\{src}\" />";
+            });
+            return result;
+        }
 
         public static int ReadCurrentStep(string path)
         {            
@@ -67,7 +87,7 @@ namespace ReSharperTutorials.Utils
             }
         }
 
-        public static Dictionary<int, TutorialStep> ReadTutorialSteps(string path)
+        public Dictionary<int, TutorialStep> ReadTutorialSteps(string path)
         {
             var result = new Dictionary<int, TutorialStep>();            
             NavNode navNode = null;
@@ -96,7 +116,8 @@ namespace ReSharperTutorials.Utils
                                 var textToFind = reader.GetAttribute("textToFind");
                                 var textToFindOccurrence = Convert.ToInt32(reader.GetAttribute("textToFindOccurrence"));
                                 var runMethod = reader.GetAttribute("runMethod");
-                                navNode = new NavNode(projectName, file, typeName, methodName, methodNameOccurrence, textToFind, 
+                                navNode = new NavNode(projectName, file, typeName, methodName, methodNameOccurrence,
+                                    textToFind,
                                     textToFindOccurrence, runMethod);
                                 break;
 
@@ -104,20 +125,22 @@ namespace ReSharperTutorials.Utils
                                 var action = reader.GetAttribute("action");
                                 var method = reader.GetAttribute("method");
                                 string[] actions = null;
-                                
+
                                 if (action != null || method != null)
                                 {
-                                    if (action != null)                                   
-                                        actions = Regex.Split(action, ";");                                        
-                                    
-                                    check = new Check(actions, method);                                                                                                            
+                                    if (action != null)
+                                        actions = Regex.Split(action, ";");
+
+                                    check = new Check(actions, method);
                                 }
                                 break;
 
                             case "text":
                                 text = reader.ReadInnerXml();
                                 text = Regex.Replace(text, @"\s+", " ");
-                                break;                                
+                                text = _actionToShortcutConverter.SubstituteShortcutsViaVs(text);
+                                text = ConvertImagePaths(text);
+                                break;
                         }
                     }
                                         

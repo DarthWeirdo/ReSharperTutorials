@@ -75,7 +75,6 @@ p { text-align: justify }
 }
 
 .done {
-    /*text-decoration: line-through;*/
     color: DISFNT;
 }
 
@@ -159,7 +158,6 @@ p { text-align: justify }
     display: inline-block;
     margin: 0 2px;
     padding: 4px 8px;
-    color: black;
     background-color: SHCTBG;
     border: 1px solid SHCTBRD;    
     border-radius: 2px;
@@ -190,8 +188,7 @@ p { text-align: justify }
 code {
     font-family: Consolas, monaco, monospace;
     font-size: 14px;
-    background-color: #e0e7ee;
-    color: black;
+    background-color: CDEBG;
     margin: 4px 2px;
     padding: 4px 8px;
     white-space: nowrap;
@@ -221,27 +218,25 @@ code {
 
 .null_margin { margin: 0; }
 
-.title {
-    /*margin-bottom: 10px;
-    margin-top: 5px*/
-}
-
 .loading {
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     position: absolute;
     z-index: 100;
     top: 50%;
     left: 50%;
-    margin-left: -70px;
+    margin-left: -50px;
     margin-top: -30px;
     color: black;
-    background-color: SHCTBG;
-    border: 1px solid SHCTBRD;
-    border-radius: 2px;
-    padding: 20px 40px;
+    background-color: #e6e6e6;    
+    padding: 5px 20px;
     text-align: center;   
     visibility: hidden;
+}
+
+.fade {
+    -ms-opacity: 0.7;
+    opacity: 0.7;
 }
 
 tr.border_bottom td { border-bottom: 1pt dotted; }
@@ -273,29 +268,27 @@ tr.border_bottom td { border-bottom: 1pt dotted; }
 }
 
 .userInput {
-    font-weight: bold;
-    /*background-color: #468bae;*/
-    margin: 4px 2px;
-    padding: 4px 8px;
-    white-space: nowrap;
-    /*border-radius: 2px;*/
-    border: 1px solid SHCTBRD;  
+    font-weight: 600;    
+    white-space: nowrap;        
     font-style: normal;
     line-height: 1em;
-    vertical-align: baseline;
-    display: inline-block;
-    position: relative;
+    vertical-align: baseline;    
 }
 
-.menuItem {
-    font-weight: bold;
+.userInput:before {
+    content: '\"';
+}
+
+.userInput:after {
+    content: '\"';
+}
+
+.menuItem {    
     font-size: 14px;
-    background-color: #e0e7ee;
-    color: black;
-    margin: 4px 2px;
-    padding: 4px 8px;
+    background-color: MNUBG;    
+    margin: 2px 0px;
+    padding: 0px 6px;
     white-space: nowrap;
-    border-radius: 2px;
     font-style: normal;
     line-height: 1.5em;
     vertical-align: baseline;
@@ -303,17 +296,15 @@ tr.border_bottom td { border-bottom: 1pt dotted; }
     position: relative;
 }
 
-.menuItemDisabled {
-    font-weight: bold;
+.menuItemDisabled {    
     font-size: 14px;
     background-color: SCBGDIS;
     color: DISFNT;
-    margin: 4px 2px;
-    padding: 4px 8px;
+    margin: 2px 0px;
+    padding: 0px 6px;
     white-space: nowrap;
-    border-radius: 2px;
     font-style: normal;
-    line-height: 1em;
+    line-height: 1.5em;
     vertical-align: baseline;
     display: inline-block;
     position: relative;

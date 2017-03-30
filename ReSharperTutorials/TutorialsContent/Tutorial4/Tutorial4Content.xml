@@ -183,7 +183,7 @@
       <check action="Edit.InsertTab;Edit.BreakLine" />
       <text>
         <h1 class="stepTitle">Local functions (C# 7.0)</h1>
-        <ol>
+        <ol start="4">
           <li>
             Specify any name for your new local function.
           </li>
@@ -258,29 +258,13 @@
           </li>
           <li>
             Click
-            <span class="menuItem">Save To</span> and select <span class="menuItem">Solution "..." personal</span>. 
-            It would be better to save the settings to the solution layer, so that your global code formatting 
+            <span class="menuItem">Save To</span> and select <span class="menuItem">Solution "..." personal</span>.
+            It would be better to save the settings to the solution layer, so that your global code formatting
             settings are not affected.
           </li>
         </ol>
       </text>
     </step>
-
-    <!--<step li="12" strikeOnDone="true">
-      <check method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep12" />
-      <text>
-        <h1 class="stepTitle">Formatter settings</h1>
-        <p>
-          Now, let's save the settings to the solution layer, so that your global code formatting settings are not affected.
-        </p>
-        <ol>
-          <li>
-            Click
-            <span class="menuItem">Save To</span> and select <span class="menuItem">Solution "..." personal</span>.
-          </li>
-        </ol>
-      </text>
-    </step>-->
 
     <step li="12" strikeOnDone="true">
       <text>
@@ -391,13 +375,124 @@
       </text>
     </step>
 
-    <step li="16">
+    <step li="16" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="Usages.cs"
+                type="ReSharper20171.Boo" textToFind="IFoo"
+                textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep16" />
+      <text>
+        <h1 class="stepTitle">Find usages</h1>
+        <p>
+          Now, let's take a look at an important update of the <b>Find Usages</b> feature.
+          In 2017.1, you can group the <b>Find Usages</b> results by kind of usage, e.g.,
+          field or property declaration, an argument, type conversion, and so on.
+        </p>
+        <p>
+          For example, let's find where in the code conversions of <code>IFoo</code> take place:
+        </p>
+        <ol>
+          <li>
+            The cursor can be on any
+            <a href="www.jetbrains.com" class="navigate">
+              <code>IFoo</code>
+            </a>
+            usage.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
+          </li>
+          <li>
+            In the <b>Find Results</b> window, turn on <img src="Kind.16x16.png"/> <span class="menuItem">Enable grouping by kind</span>.
+        </li>
+          <li>
+            Navigate to the <code>IFoo</code> usage
+            under <span class="menuItem">Type checking</span>.
+          </li>
+        </ol>                
+      </text>
+    </step>
+
+    <step li="17" strikeOnDone="true">      
+      <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep17" />
+      <text>
+        <h1 class="stepTitle">Go to everything</h1>
+        <p>Done!</p>
+        <p>
+          Finally, let's acquaint with one more important navigation improvement.
+          Now, the <b>Go to Everything</b> feature receives an option to filter the results using a special syntax.
+          Let's look how it works.
+        </p>
+        <p>
+          For example, we want to navigate to a particular <code>Foo</code> property. There are a lot of occurrences of the 'foo' word in our code, so,
+          we want to narrow the navigation scope only to property declarations. 
+          In 2017.1, we can leave only properties in <b>Go to Everything</b> search results:
+        </p>
+        <ol>
+          <li>
+            The cursor can be anywhere in the code.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_GotoType</shortcut>.
+          </li>
+          <li>
+            Type <span class="userInput">/mp foo</span>. The <code>/mp</code> prefix here stands for "member properties".
+          </li>
+          <li>
+            Select the <span class="menuItem">Foo:IFoo</span> item and press <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="18" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Go to everything</h1>
+        <p>
+          Awesome!
+        </p>
+        <p>
+          To see all possible filters, simply type <span class="userInput">/</span> after hitting <shortcut>ReSharper.ReSharper_GotoType</shortcut>
+          and wait.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="19" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep19" />
+      <text>
+        <h1 class="stepTitle">Go to text</h1>        
+        <p>
+          The <b>Go to Text</b> feature also gets a number of filters.          
+        </p>
+        <p>
+          For example, let's use it to navigate to a <code>foo</code> node in an XML file:
+        </p>
+        <ol>
+          <li>
+            The cursor can be anywhere in the code.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_GotoText</shortcut>.
+          </li>
+          <li>
+            Type <span class="userInput">foo /ext:xml</span>. Note that the filter syntax is insensitive to an order. Thus, you
+            can specify a filter after the search pattern.
+          </li>
+          <li>
+            Select the <span class="menuItem">&lt;foo&gt;</span> item and press <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+       
+    <step li="20">
       <text>
         <h1 class="stepTitle">That's All!</h1>
         <p>
           Thanks for passing the tutorial. Note that we've acquainted only with the ReSharper features related to C#.
           To learn about other ReSharper 2017.1 improvements, please follow this
-          <a class="exrenalLink" href="https://www.jetbrains.com/resharper/whatsnew/">link</a>.
+          <a class="externalLink" href="https://www.jetbrains.com/resharper/whatsnew/">link</a>.
         </p>
         <p>
           Now, you can:

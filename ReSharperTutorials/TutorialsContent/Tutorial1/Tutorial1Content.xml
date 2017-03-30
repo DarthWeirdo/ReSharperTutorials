@@ -64,9 +64,11 @@
             <li>
               Icon displayed in gutter margin on left, e.g.:
               <ul>
-              <li>Yellow lightbulb to fix warning</li>
-              <li>Red light bulb to fix error</li>
-              <li>Hammer to context action</li>
+              <li><img src="YellowBulb.16x16.png"/> Yellow lightbulb to fix warning</li>
+              <li>
+                <img src="RedBulb.16x16.png"/> Red lightbulb to fix error</li>
+              <li>
+                <img src="ContextAction.16x16.png"/> Hammer to context action</li>
               <li>and others...</li>
             </ul>
             </li>
@@ -88,13 +90,13 @@
         <ol>
           <li>
             The caret must be on <code>
-              <a href="www.jetbrains.com" class="navigate">badlyNamedClass</a></code>. Note the lightbulb in the margin on the left.
+              <a href="www.jetbrains.com" class="navigate">badlyNamedClass</a></code>. Note the <img src="YellowBulb.16x16.png"/> lightbulb in the margin on the left.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
           <li>
-            Select <b>Rename to 'BadlyNamedClass'</b> to apply the fix.
+            Select <span class="menuItem">Rename to 'BadlyNamedClass'</span> to apply the fix.
           </li>
         </ol>
       </text>
@@ -111,13 +113,13 @@
           <li>
             The text caret must be behind <code>
               <a href="www.jetbrains.com" class="navigate">arg</a>
-            </code>. Note the hammer action - a context actions is available.
+            </code>. Note the <img src="ContextAction.16x16.png"/> hammer - a context action is available.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.
           </li>
           <li>
-            Select <b>To string.Format invocation</b>.
+            Select <span class="menuItem">To string.Format invocation</span>.
           </li>
         </ol>
       </text>
@@ -194,7 +196,7 @@
             After the list focuses on <span class="menuItem">class</span>, press <span class="shortcut">Tab</span> or <span class="shortcut">Enter</span>.
           </li>
           <li>
-            Type <code>MyCircle</code> as a class name.
+            Specify <code>MyCircle</code> as a class name.
           </li>
         </ol>
       </text>

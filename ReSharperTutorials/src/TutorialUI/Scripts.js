@@ -13,8 +13,20 @@
 }
 
 function agreeToRunTutorial() {
+    fadeAllContent(true);
     var loading = document.getElementById("loading");
     loading.style.visibility = "visible";
+}
+
+function fadeAllContent(fade) {
+    var i;
+    var op = fade ? "0.3" : "1";        
+    var elements = document.querySelectorAll("table,h1");    
+    for (i = 0; i < elements.length; i++) {        
+        if (elements[i].id !== "loading") {
+            elements[i].style.opacity = op;
+        }
+    }
 }
 
 function stepLoad() {
@@ -187,6 +199,7 @@ function hideImages() {
         images[i].style.visibility = "hidden";
     }
 
+    fadeAllContent(false);
     var loading = document.getElementById("loading");
     loading.style.visibility = "hidden";
 }

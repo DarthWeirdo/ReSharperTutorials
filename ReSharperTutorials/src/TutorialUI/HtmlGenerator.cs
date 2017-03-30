@@ -26,6 +26,8 @@ namespace ReSharperTutorials.TutorialUI
         private Color _shortcutBorderColor;
         private Color _shortcutBackgroundDisabledColor;
         private Color _shortcutBorderDisabledColor;
+        private Color _menuItemBackgroundColor;
+        private Color _codeBackgroundColor;
 
 
         public HtmlGenerator(Lifetime lifetime, IColorThemeManager colorThemeManager)
@@ -100,6 +102,8 @@ namespace ReSharperTutorials.TutorialUI
             html.Replace("SCBGDIS", ColorAsHtmlRgb(_shortcutBackgroundDisabledColor)); // disabled shortcut background color
             html.Replace("SHCTBRD", ColorAsHtmlRgb(_shortcutBorderColor)); // shortcut border color
             html.Replace("SCBRDDIS", ColorAsHtmlRgb(_shortcutBorderDisabledColor)); // disabled shortcut border color
+            html.Replace("MNUBG", ColorAsHtmlRgb(_menuItemBackgroundColor)); // menuItem background color
+            html.Replace("CDEBG", ColorAsHtmlRgb(_codeBackgroundColor)); // code background color
 
         }
 
@@ -138,6 +142,8 @@ namespace ReSharperTutorials.TutorialUI
             _shortcutBackgroundDisabledColor = colorTheme.ShortcutBackgroundDisabledColor;
             _shortcutBorderColor = colorTheme.ShortcutBorderColor;
             _shortcutBorderDisabledColor = colorTheme.ShortcutBorderDisabledColor;
+            _menuItemBackgroundColor = colorTheme.MenuItemBackgroundColor;
+            _codeBackgroundColor = colorTheme.CodeBackgroundColor;
         }
     }
 }
