@@ -6,6 +6,7 @@ using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
+using ReSharperTutorials.CodeNavigator;
 using ReSharperTutorials.Runner;
 using ReSharperTutorials.Utils;
 using IPropertyDeclaration = JetBrains.ReSharper.Psi.BuildScripts.Declarations.IPropertyDeclaration;
@@ -83,16 +84,16 @@ namespace ReSharperTutorials.Checker
         [RunCheck(OnEvent.CaretMove)]
         public bool CheckStep16()
         {
-            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
-            var parent = node?.Parent as IAsExpression;
+            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);            
+            var parent = PsiNavigationHelper.GetParentOfType<IAsExpression>(node);
             return parent != null;            
         }
 
         [RunCheck(OnEvent.CaretMove)]
         public bool CheckStep17()
         {
-            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);            
-            var parent = node?.Parent?.Parent as IClassBody;
+            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);                        
+            var parent = PsiNavigationHelper.GetParentOfType<IClassBody>(node);
             return parent != null && parent.Properties.Count == 1;
         }
 
@@ -101,6 +102,14 @@ namespace ReSharperTutorials.Checker
         {
             var dte = VsIntegration.GetCurrentVsInstance();
             return dte.ActiveDocument.Name == "GoToText.xml";
+        }
+
+        [RunCheck(OnEvent.CaretMove)]
+        public bool CheckStep21()
+        {
+            var node = TypicalChecks.GetTreeNodeUnderCaret(DocumentManager, TextControlManager);
+            var parent = PsiNavigationHelper.GetParentOfType<IConstructorDeclaration>(node);                
+            return parent != null && parent.DeclaredName == "WrongUsage";
         }
     }
 }

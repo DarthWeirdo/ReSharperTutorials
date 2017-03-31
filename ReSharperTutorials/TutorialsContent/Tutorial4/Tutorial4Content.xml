@@ -367,9 +367,7 @@
         <p>
           <a class="externalLink"
              href="https://www.jetbrains.com/help/resharper/Using_EditorConfig.html">
-            Here
-          </a>
-          you can learn more about EditorConfig support in ReSharper.
+            Here</a> you can learn more about EditorConfig support in ReSharper.
         </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
@@ -381,7 +379,7 @@
                 textToFindOccurrence="1" />
       <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep16" />
       <text>
-        <h1 class="stepTitle">Find usages</h1>
+        <h1 class="stepTitle">Find usages. Grouping by kind</h1>
         <p>
           Now, let's take a look at an important update of the <b>Find Usages</b> feature.
           In 2017.1, you can group the <b>Find Usages</b> results by kind of usage, e.g.,
@@ -393,26 +391,27 @@
         <ol>
           <li>
             The cursor can be on any
-            <a href="www.jetbrains.com" class="navigate">
-              <code>IFoo</code>
-            </a>
+            <code>
+              <a href="www.jetbrains.com" class="navigate">IFoo</a>
+            </code>
             usage.
           </li>
           <li>
             Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
           </li>
           <li>
-            In the <b>Find Results</b> window, turn on <img src="Kind.16x16.png"/> <span class="menuItem">Enable grouping by kind</span>.
-        </li>
+            In the <b>Find Results</b> window, turn on <img src="Kind.16x16.png" />
+            <span class="menuItem">Enable grouping by kind</span>.
+          </li>
           <li>
             Navigate to the <code>IFoo</code> usage
             under <span class="menuItem">Type checking</span>.
           </li>
-        </ol>                
+        </ol>
       </text>
     </step>
 
-    <step li="17" strikeOnDone="true">      
+    <step li="17" strikeOnDone="true">
       <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep17" />
       <text>
         <h1 class="stepTitle">Go to everything</h1>
@@ -424,7 +423,7 @@
         </p>
         <p>
           For example, we want to navigate to a particular <code>Foo</code> property. There are a lot of occurrences of the 'foo' word in our code, so,
-          we want to narrow the navigation scope only to property declarations. 
+          we want to narrow the navigation scope only to property declarations.
           In 2017.1, we can leave only properties in <b>Go to Everything</b> search results:
         </p>
         <ol>
@@ -451,7 +450,8 @@
           Awesome!
         </p>
         <p>
-          To see all possible filters, simply type <span class="userInput">/</span> after hitting <shortcut>ReSharper.ReSharper_GotoType</shortcut>
+          To see all possible filters, simply type <span class="userInput">/</span> after hitting
+          <shortcut>ReSharper.ReSharper_GotoType</shortcut>
           and wait.
         </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
@@ -461,9 +461,9 @@
     <step li="19" strikeOnDone="true">
       <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep19" />
       <text>
-        <h1 class="stepTitle">Go to text</h1>        
+        <h1 class="stepTitle">Go to text</h1>
         <p>
-          The <b>Go to Text</b> feature also gets a number of filters.          
+          The <b>Go to Text</b> feature also gets a number of filters.
         </p>
         <p>
           For example, let's use it to navigate to a <code>foo</code> node in an XML file:
@@ -485,8 +485,57 @@
         </ol>
       </text>
     </step>
-       
-    <step li="20">
+
+    <step li="20" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Go to everything</h1>
+        <p>
+          Great!
+        </p>
+        <p>
+          Now, let's take a look at one more improvement in <b>Find Usages</b>. 
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="21" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="WrongUsage.cs"
+                type="ReSharper20171.SomeClass" textToFind="DoSomething"
+                textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep21" />
+      <text>
+        <h1 class="stepTitle">Find Usages. Highlight wrong usages</h1>
+        <p>
+          The <b>Find Usages</b> window now highlights broken or unfinished usages. This might be superhelpful 
+          during refactoring.
+        </p>
+        <p>
+          For example, we're refactoring the <code>DoSomething</code> method and now we want to know how many
+          outdated usages are left:
+        </p>
+        <ol>
+          <li>
+            The caret should be on the
+            <code>
+              <a href="www.jetbrains.com" class="navigate">DoSomething</a>
+            </code>
+            declaration.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
+          </li>
+          <li>            
+            Note that the wrong <code>someClass.DoSomething();</code> usage is underlined in the <b>Find Results</b> window.
+          </li>
+          <li>
+            Navigate to the wrong <code>someClass.DoSomething();</code> usage using double-click.            
+          </li>
+        </ol>
+      </text>
+    </step>
+    
+    <step li="22">
       <text>
         <h1 class="stepTitle">That's All!</h1>
         <p>
