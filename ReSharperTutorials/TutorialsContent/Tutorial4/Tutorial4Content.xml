@@ -235,8 +235,8 @@
       <text>
         <h1 class="stepTitle">Formatter settings</h1>
         <p>
-          ReSharper now allows you to quickly observe and change code formatting settings using the new Configure Format window.
-          For example, let's change the braces formatting in our solution:
+          ReSharper now allows you to quickly observe and change code formatting settings using the new Configure Format dialog.
+          For example, let's change the preference for method braces formatting:
         </p>
         <ol>
           <li>
@@ -347,7 +347,7 @@
           Great!
         </p>
         <p>
-          Now, you can open the Configure Format window one more time to check out the
+          Now, you can open the Configure Format dialog one more time to check out the
           overriden settings:
         </p>
         <ol>
@@ -417,7 +417,7 @@
         <h1 class="stepTitle">Go to everything</h1>
         <p>Done!</p>
         <p>
-          Finally, let's acquaint with one more important navigation improvement.
+          Finally, let's acquaint ourselves with one more important navigation improvement.
           Now, the <b>Go to Everything</b> feature receives an option to filter the results using a special syntax.
           Let's look how it works.
         </p>
@@ -476,7 +476,7 @@
             Hit <shortcut>ReSharper.ReSharper_GotoText</shortcut>.
           </li>
           <li>
-            Type <span class="userInput">foo /ext:xml</span>. Note that the filter syntax is insensitive to an order. Thus, you
+            Type <span class="userInput">foo /ext:xml</span>. Note that you can type filters both before and after your search query. Thus, you
             can specify a filter after the search pattern.
           </li>
           <li>
@@ -488,7 +488,7 @@
 
     <step li="20" strikeOnDone="true">
       <text>
-        <h1 class="stepTitle">Go to everything</h1>
+        <h1 class="stepTitle">Go to text</h1>
         <p>
           Great!
         </p>
@@ -505,7 +505,7 @@
                 textToFindOccurrence="1" />
       <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep21" />
       <text>
-        <h1 class="stepTitle">Find Usages. Highlight wrong usages</h1>
+        <h1 class="stepTitle">Find Usages. Highlight broken usages</h1>
         <p>
           The <b>Find Usages</b> window now highlights broken or unfinished usages. This might be superhelpful 
           during refactoring.
