@@ -45,27 +45,53 @@ function stepLoad() {
     var cElem = document.getElementById("currentStep");
     cElem.style.top = pHeight + "px";
 
-    pageHasFullyLoaded();
+    try {
+        setNewClassName("div.prevStep .shortcut", "shortcutDisabled", false);
+        setNewClassName("div.prevStep code", "codeDisabled", false);
+        setNewClassName("div.prevStep .menuItem", "menuItemDisabled", false);
+        setNewClassName("div.prevStep button", "nextButtonDisabled", true);
+        setNewClassName("div.prevStep .externalLink", "done", true);
+        setNewClassName("div.prevStep h1", "done", false);
+    } catch (e) {
 
-    setNewClassName("div.prevStep .shortcut", "shortcutDisabled", false);
-    setNewClassName("div.prevStep code", "codeDisabled", false);
-    setNewClassName("div.prevStep .menuItem", "menuItemDisabled", false);
-    setNewClassName("div.prevStep button", "nextButtonDisabled", true);
-    setNewClassName("div.prevStep .externalLink", "done", true);
-    setNewClassName("div.prevStep h1", "done", false);
-
-    var navLinks = document.getElementsByClassName("navigate");
-    for (i = 0; i < navLinks.length; i++) {
-        if (checkParentsClassName(navLinks[i], "prevStep") === true) {
-            navLinks[i].className = "noNavigate";
-            navLinks[i].onclick = window.doNothing;
-        }
-        if (checkParentsClassName(navLinks[i], "currentStep") === true) {
-            navLinks[i].onclick = runStepNavigation;
-        }
     }
 
-    window.scroll(0, findPos(cElem));    
+    try {
+        var navLinks = document.getElementsByClassName("navigate");
+        for (i = 0; i < navLinks.length; i++) {
+            if (checkParentsClassName(navLinks[i], "prevStep") === true) {
+                navLinks[i].className = "noNavigate";
+                navLinks[i].onclick = window.doNothing;
+            }
+            if (checkParentsClassName(navLinks[i], "currentStep") === true) {
+                navLinks[i].onclick = runStepNavigation;
+            }
+        }
+    } catch (e) {
+
+    }
+
+    try {
+        var nxtButtons = document.getElementsByClassName("nextButton");
+        for (i = 0; i < nxtButtons.length; i++) {
+            if (checkParentsClassName(nxtButtons[i], "currentStep") === true) {                
+                nxtButtons[i].onmouseover = function () {
+                    window.external.MouseOverNextStepButton(true);
+                }
+                nxtButtons[i].onmouseout = function () {
+                    window.external.MouseOverNextStepButton(false);
+                }
+            }
+        }
+    } catch (e) {
+
+    }
+
+    window.external.MouseOverNextStepButton(false);
+    
+    window.scroll(0, findPos(cElem));
+
+    pageHasFullyLoaded();
 }
 
 function setNewClassName(obj, newClassName, disable) {
@@ -220,3 +246,4 @@ function closeSolution() {
 function pageHasFullyLoaded() {
     window.external.PageHasFullyLoaded();
 }
+

@@ -18,6 +18,8 @@ namespace ReSharperTutorials.TutorialUI
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
         private IHtmlCommunication _window;
+        private bool _isButtonTextChangeAllowed = true;
+
 
         private bool MoveOutStepDone
         {
@@ -31,7 +33,7 @@ namespace ReSharperTutorials.TutorialUI
         }
 
         private void OnAnimationsDone()
-        {
+        {            
             AllAnimationsDone.Fire(true);
         }
 
@@ -76,7 +78,7 @@ namespace ReSharperTutorials.TutorialUI
         }
 
         public void ClickNextButton()
-        {
+        {            
             OnNextStepButtonClick.Fire(true);
         }
 
@@ -102,14 +104,22 @@ namespace ReSharperTutorials.TutorialUI
 
         public void ChangeNextStepButtonText(bool isFocusOnEditor)
         {
+            if (!_isButtonTextChangeAllowed)
+                return;
+                            
             var nextStepShortcut = VsIntegration.GetActionShortcut(GlobalSettings.NextStepShortcutAction);
             var args = new object[] {isFocusOnEditor, nextStepShortcut};
             _viewControl.Document?.InvokeScript("setNextStepButtonText", args);
         }
 
         public void PageHasFullyLoaded()
-        {
+        {            
             OnPageHasFullyLoaded.Fire(true);
+        }
+
+        public void MouseOverNextStepButton(object hover)
+        {
+            _isButtonTextChangeAllowed = !(bool) hover;
         }
     }
 }
