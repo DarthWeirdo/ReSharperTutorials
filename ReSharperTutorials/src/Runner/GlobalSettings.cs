@@ -41,7 +41,7 @@ namespace ReSharperTutorials.Runner
         public readonly Lifetime Lifetime;
         public TutorialWindowManager TutorialWindowManager = null;
 
-        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.8";
+        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.9";
 
         //public const string NextStepShortcutAction = "ReSharper_AltEnter";
         public const string NextStepShortcutAction = "Edit.InsertTab";
