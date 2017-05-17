@@ -46,7 +46,7 @@ namespace ReSharperTutorials.CodeNavigator
         public void NavigateStep13()
         {
             var dte = VsIntegration.GetCurrentVsInstance();
-            var path = GlobalSettings.Instance.GetPath(TutorialId.Tutorial4, PathType.WorkCopySolutionFolder) +
+            var path = GlobalSettings.Instance.GetPath(4, PathType.WorkCopySolutionFolder) +
                     "\\Tutorial4_WhatsNewReSharper2017.1\\.editorconfig";
             dte.ExecuteCommand("File.OpenFile", path);
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.changes;
@@ -32,7 +34,7 @@ namespace ReSharperTutorials.TutorialUI
         private readonly TabbedToolWindowClass _toolWindowClass;
         private readonly IWindowsHookManager _windowsHookManager;
         private HomeWindow _homeWindow;
-        private TutorialId _runningTutorial;
+        private int _runningTutorial;
         private TutorialWindow _tutorialWindow;
         private readonly GlobalSettings _globalSettings;
         private SolutionStateTracker _solutionStateTracker;
@@ -53,7 +55,7 @@ namespace ReSharperTutorials.TutorialUI
             _colorThemeManager = colorThemeManager;
             _threading = threading;
 
-            _runningTutorial = TutorialId.None;
+            _runningTutorial = 0;
 
             _toolWindowClass = toolWindowManager.Classes[toolWindowDescriptor] as TabbedToolWindowClass;
             if (_toolWindowClass == null)
@@ -61,7 +63,7 @@ namespace ReSharperTutorials.TutorialUI
 
             _toolWindowClass.QueryCloseInstances.Advise(shellLifetime, args =>
             {
-                if (_runningTutorial == TutorialId.None) return;
+                if (_runningTutorial == 0) return;
                 if (!_tutorialWindow.IsLastStep)
                 {
                     args.Cancel = !MessageBox.ShowYesNo(
@@ -80,7 +82,7 @@ namespace ReSharperTutorials.TutorialUI
         }
 
 
-        public void ShowTutorialWindow(TutorialId tutorialId, Lifetime lifetime,
+        public void ShowTutorialWindow(int tutorialId, Lifetime lifetime,
             ISolution solution, IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager,
             IShellLocks shellLocks, IEditorManager editorManager, DocumentManager documentManager,
             IUIApplication environment,
@@ -107,7 +109,7 @@ namespace ReSharperTutorials.TutorialUI
                     {
                         _tutorialWindow.Close();
                         _tutorialWindow = null;
-                        _runningTutorial = TutorialId.None;
+                        _runningTutorial = 0;
                         _homeWindow.EnableButtons(true);
                     });
             });
@@ -135,22 +137,32 @@ namespace ReSharperTutorials.TutorialUI
             });
         }
 
-        public void RunTutorial(string htmlTutorialId)
+        public void RunTutorial(int tutorialId)
         {
             try
             {
-                EnvironmentChecker.RunAllChecks();
+                EnvironmentChecker.RunAllChecks(tutorialId);
             }
-            catch (Exception e)
+            catch (NoShortcutsAssignedException e)
+            {                
+                var shList = (List<string>) e.Data["Shortcuts"];
+                var listText = shList.Aggregate("\n", (current, sh) => current + sh + "\n");
+
+                MessageBox.ShowError(
+                    "Some of the ReSharper shortcuts are not assigned:" + listText +
+                    "\nPlease assign these shortcuts in 'Tools | Options... | Environment | Keyboard' " + 
+                    "or apply a keyboard scheme in 'ReSharper | Options... | Environment | Keyboard & Menus' " +
+                    "before running the tutorial.",
+                    "ReSharper Tutorials");
+                return;
+            }
+            catch (NoShortcutSchemeSelectedException e)
             {
-                if (e is NoShortCutsAssignedException)
-                {
-                    MessageBox.ShowError(
-                        "ReSharper shortcuts are not assigned! Please apply a keyboard scheme in " +
-                        "ReSharper | Options... | Environment | Keyboard & Menus before running the tutorial.",
-                        "ReSharper Tutorials");
-                    return;
-                }
+                MessageBox.ShowError(
+                    "ReSharper shortcut scheme is not selected! Please select a scheme in " +
+                    "ReSharper | Options... | Environment | Keyboard & Menus before running the tutorial.",
+                    "ReSharper Tutorials");
+                return;
             }
 
             var result =
@@ -164,23 +176,23 @@ namespace ReSharperTutorials.TutorialUI
             {
                 var loadingImgPath = _globalSettings.GetGlobalImgPath() + "\\loading20x20.gif";
                 _homeWindow.EnableButtons(false);
-                _homeWindow.AgreeToRunTutorial(htmlTutorialId, loadingImgPath);
+                _homeWindow.AgreeToRunTutorial(tutorialId, loadingImgPath);
             });
 
             _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
 
             // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
-            switch (htmlTutorialId)
+            switch (tutorialId)
             {
-                case "1":
+                case 1:
                     _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
                         () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
                     break;
-                case "3":
+                case 3:
                     _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
                         () => _actionManager.ExecuteAction<ActionOpenTutorial3>());
                     break;
-                case "4":
+                case 4:
                     _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
                         () => _actionManager.ExecuteAction<ActionOpenTutorial4>());
                     break;

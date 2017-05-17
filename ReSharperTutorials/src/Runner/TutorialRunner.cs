@@ -45,7 +45,7 @@ namespace ReSharperTutorials.Runner
             {
                 if (VsIntegration.GetCurrentSolutionPath() == tutorial.Value)
                 {
-                    solutionStateTracker.AfterPsiLoaded.Advise(lifetime,
+                    solutionStateTracker.AfterSolutionOpened.Advise(lifetime,
                         () =>
                             RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles, changeManager,
                                 textControlManager, shellLocks, editorManager, documentManager, environment,
@@ -55,7 +55,7 @@ namespace ReSharperTutorials.Runner
             }
         }
 
-        private static void RunTutorial(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime,
+        private static void RunTutorial(GlobalSettings globalSettings, int tutorialId, Lifetime lifetime,
             ISolution solution,
             IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager,
             IShellLocks shellLocks,

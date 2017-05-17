@@ -9,16 +9,6 @@ using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
 {
-    public enum TutorialId
-    {
-        None,
-        Tutorial1,
-        Tutorial2,
-        Tutorial3,
-        Tutorial4,
-        Tutorial5
-    }
-
     public enum PathType
     {
         BaseSolutionFolder,
@@ -37,11 +27,11 @@ namespace ReSharperTutorials.Runner
     {
         private readonly string _commonTutorialPath;
         private readonly string _commonWorkCopyPath;
-        public readonly Dictionary<TutorialId, string> AvailableTutorials;
+        public readonly Dictionary<int, string> AvailableTutorials;
         public readonly Lifetime Lifetime;
         public TutorialWindowManager TutorialWindowManager = null;
 
-        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.9";
+        public const string PluginName = "JetBrains.ReSharperTutorials.0.9.10";
 
         //public const string NextStepShortcutAction = "ReSharper_AltEnter";
         public const string NextStepShortcutAction = "Edit.InsertTab";
@@ -57,11 +47,11 @@ namespace ReSharperTutorials.Runner
                 throw new DirectoryNotFoundException(
                     "Unable to find the folder with sample solutions. Please reinstall the plugin");
 
-            AvailableTutorials = new Dictionary<TutorialId, string>
+            AvailableTutorials = new Dictionary<int, string>
             {
-                {TutorialId.Tutorial1, GetPath(TutorialId.Tutorial1, PathType.WorkCopySolutionFile)},
-                {TutorialId.Tutorial3, GetPath(TutorialId.Tutorial3, PathType.WorkCopySolutionFile)},
-                {TutorialId.Tutorial4, GetPath(TutorialId.Tutorial4, PathType.WorkCopySolutionFile)},
+                {1, GetPath(1, PathType.WorkCopySolutionFile)},
+                {3, GetPath(3, PathType.WorkCopySolutionFile)},
+                {4, GetPath(4, PathType.WorkCopySolutionFile)},
             };
         }
 
@@ -72,14 +62,14 @@ namespace ReSharperTutorials.Runner
             return _commonWorkCopyPath + "\\Content\\img";
         }
 
-        public string GetPath(TutorialId tutorialId, PathType pType)
+        public string GetPath(int tutorialId, PathType pType)
         {
             switch (tutorialId)
             {
-                case TutorialId.None:
+                case 0:
                     break;
 
-                case TutorialId.Tutorial1:
+                case 1:
                     switch (pType)
                     {
                         case PathType.BaseSolutionFolder:
@@ -104,9 +94,9 @@ namespace ReSharperTutorials.Runner
                             throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
                     }
 
-                case TutorialId.Tutorial2:
+                case 2:
                     break;
-                case TutorialId.Tutorial3:
+                case 3:
                     switch (pType)
                     {
                         case PathType.BaseSolutionFolder:
@@ -130,7 +120,7 @@ namespace ReSharperTutorials.Runner
                         default:
                             throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
                     }
-                case TutorialId.Tutorial4:
+                case 4:
                     switch (pType)
                     {
                         case PathType.BaseSolutionFolder:
@@ -154,7 +144,7 @@ namespace ReSharperTutorials.Runner
                         default:
                             throw new ArgumentOutOfRangeException(nameof(pType), pType, null);
                     }
-                case TutorialId.Tutorial5:
+                case 5:
                     break;
             }
             return null;

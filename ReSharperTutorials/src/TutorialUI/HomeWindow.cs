@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.Interop.NativeHook;
@@ -25,7 +26,7 @@ namespace ReSharperTutorials.TutorialUI
         private HtmlViewControl _viewControl = new HtmlViewControl(null, null);
         private readonly Lifetime _lifetime;
         private readonly IColorThemeManager _colorThemeManager;
-        private TutorialId _runningTutorial;
+        private int _runningTutorial;
         private string _pageText;
         private readonly HtmlGenerator _htmlGenerator;
         private HtmlMediator _htmlMediator;
@@ -112,9 +113,9 @@ namespace ReSharperTutorials.TutorialUI
             _htmlMediator?.HideImages();
         }
 
-        public void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
+        public void AgreeToRunTutorial(int tutorialId, string imgSrc)
         {
-            _htmlMediator?.AgreeToRunTutorial(htmlTutorialId, imgSrc);
+            _htmlMediator?.AgreeToRunTutorial(tutorialId.ToString(), imgSrc);
         }
 
 
@@ -148,7 +149,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public void RunTutorial(string htmlTutorialId)
         {
-            _windowManager.RunTutorial(htmlTutorialId);
+            _windowManager.RunTutorial(Convert.ToInt32(htmlTutorialId));
         }
     }
 }

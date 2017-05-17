@@ -53,8 +53,9 @@ namespace ReSharperTutorials.Checker
         [RunCheck(OnEvent.PsiChange)]
         public bool CheckTutorial1Step6()
         {
-            return TypicalChecks.TypeDeclarationExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
-                "Tutorial1_EssentialShortcuts.Renamed");
+            return TypicalChecks.StringExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs", "public class Renamed");
+            //return TypicalChecks.TypeDeclarationExists(Solution, "Tutorial1_EssentialShortcuts", "Essentials.cs",
+            //    "Tutorial1_EssentialShortcuts.Renamed");
         }
 
         [RunCheck(OnEvent.PsiChange)]

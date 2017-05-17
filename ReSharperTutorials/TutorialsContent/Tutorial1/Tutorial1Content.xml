@@ -147,6 +147,9 @@
             Start typing <span class="userInput">rename</span>.
           </li>
           <li>
+            In the list, select <span class="menuItem">Rename...</span>.
+          </li>
+          <li>
             Rename the class to <code>Renamed</code>.
           </li>
         </ol>

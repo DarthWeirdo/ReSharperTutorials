@@ -238,7 +238,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public void RunTutorial(string htmlTutorialId)
         {
-            _windowManager.RunTutorial(htmlTutorialId);
+            _windowManager.RunTutorial(Convert.ToInt32(htmlTutorialId));
         }
     }
 }

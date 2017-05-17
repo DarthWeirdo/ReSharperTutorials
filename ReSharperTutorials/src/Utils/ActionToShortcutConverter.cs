@@ -42,6 +42,27 @@ namespace ReSharperTutorials.Utils
         }
 
 
+        public List<string> GetUndefinedShortcutsList(string text)
+        {
+            var result = new List<string>();
+            var regex = new Regex(@"<shortcut>(.*?)</shortcut>");
+            var match = regex.Match(text);
+
+            while (match.Success)
+            {
+                var action = match.Groups[1].Value;
+                var shortcut = VsIntegration.GetActionShortcut(action);
+
+                if (!result.Contains(action) && shortcut == "Undefined" && action != "ReSharper.ReSharper_GotoText")               
+                    result.Add(action);                                   
+
+                match = match.NextMatch();
+            }
+
+            return result;
+        }
+
+
         public string SubstituteShortcuts(string text)
         {
             var result = Regex.Replace(text, @"<shortcut>(.*?)</shortcut>", txt =>

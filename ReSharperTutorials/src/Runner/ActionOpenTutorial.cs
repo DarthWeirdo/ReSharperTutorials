@@ -27,7 +27,7 @@ namespace ReSharperTutorials.Runner
 
         protected abstract void OpenTutorial(IDataContext context, DelegateExecute nextExecute);
 
-        protected static void OpenOrRestart(IDataContext context, TutorialId id)
+        protected static void OpenOrRestart(IDataContext context, int id)
         {
             var globalOptions = context.GetComponent<GlobalSettings>();
             var solutionStateTracker = context.GetComponent<SolutionStateTracker>();
@@ -50,7 +50,7 @@ namespace ReSharperTutorials.Runner
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
         {
-            OpenOrRestart(context, TutorialId.Tutorial1);
+            OpenOrRestart(context, 1);
         }
     }
 
@@ -59,7 +59,7 @@ namespace ReSharperTutorials.Runner
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
         {
-            OpenOrRestart(context, TutorialId.Tutorial3);
+            OpenOrRestart(context, 3);
         }
     }
 
@@ -68,7 +68,7 @@ namespace ReSharperTutorials.Runner
     {
         protected override void OpenTutorial(IDataContext context, DelegateExecute nextExecute)
         {
-            OpenOrRestart(context, TutorialId.Tutorial4);
+            OpenOrRestart(context, 4);
         }
     }
 
