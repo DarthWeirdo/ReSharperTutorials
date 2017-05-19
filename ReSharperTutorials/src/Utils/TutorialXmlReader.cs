@@ -4,7 +4,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using JetBrains.ActionManagement;
-using JetBrains.UI.Actions.ActionManager;
 using ReSharperTutorials.Runner;
 using ReSharperTutorials.TutStep;
 

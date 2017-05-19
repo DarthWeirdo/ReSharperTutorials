@@ -11,7 +11,6 @@ using JetBrains.UI.Components.Theming;
 using JetBrains.UI.CrossFramework;
 using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
-using ReSharperTutorials.Runner;
 
 namespace ReSharperTutorials.TutorialUI
 {
@@ -19,19 +18,14 @@ namespace ReSharperTutorials.TutorialUI
     {
         private readonly TutorialWindowManager _windowManager;
         private readonly TabbedToolWindowClass _toolWindowClass;
-        private readonly ToolWindowInstance _toolWindowInstance;
-        private readonly IActionManager _actionManager;
         private readonly IShellLocks _shellLocks;
         private TutorialPanel _containerControl;
         private HtmlViewControl _viewControl = new HtmlViewControl(null, null);
         private readonly Lifetime _lifetime;
         private readonly IColorThemeManager _colorThemeManager;
-        private int _runningTutorial;
         private string _pageText;
         private readonly HtmlGenerator _htmlGenerator;
         private HtmlMediator _htmlMediator;
-        private readonly GlobalSettings _globalSettings;
-        private readonly SolutionStateTracker _solutionStateTracker;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;
         public Lifetime WindowLifetime => _lifetime;
@@ -50,22 +44,18 @@ namespace ReSharperTutorials.TutorialUI
 
 
         public HomeWindow(Lifetime lifetime, TutorialWindowManager windowManager,
-            SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
             IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager,
             TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager,
             IColorThemeManager colorThemeManager)
         {
             _windowManager = windowManager;
             _lifetime = lifetime;
-            _solutionStateTracker = solutionStateTracker;
-            _globalSettings = globalSettings;
-            _actionManager = actionManager;
             _shellLocks = shellLocks;
             _colorThemeManager = colorThemeManager;
             _toolWindowClass = toolWindowClass;
             _htmlGenerator = new HtmlGenerator(lifetime, colorThemeManager);
 
-            _toolWindowInstance = _toolWindowClass.RegisterInstance(
+            var toolWindowInstance = _toolWindowClass.RegisterInstance(
                 lifetime, null, null,
                 (lt, twi) =>
                 {
@@ -100,7 +90,7 @@ namespace ReSharperTutorials.TutorialUI
                     return new EitherControl(lt, containerControl);
                 });
 
-            _toolWindowInstance.Title.Value = "Home";
+            toolWindowInstance.Title.Value = "Home";
         }
 
         public void EnableButtons(bool state)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.changes;
@@ -9,10 +8,8 @@ using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;
-using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using ReSharperTutorials.CodeNavigator;
 using ReSharperTutorials.Utils;
@@ -23,7 +20,6 @@ namespace ReSharperTutorials.TutStep
     {
         private readonly IStepView _stepView;
         private readonly SourceCodeNavigator _codeNavigator;
-        private readonly string _contentPath;
         private readonly Dictionary<int, TutorialStep> _steps;
         private int _currentStepId;
         private readonly Lifetime _lifetime;
@@ -39,6 +35,7 @@ namespace ReSharperTutorials.TutStep
         public readonly string Title;
         public TutorialStep CurrentStep { get; set; }
         public bool IsLastStep => _currentStepId == _steps.Count;
+
         /// <summary>
         /// Lifetime created for the duration of performing checks in current step
         /// </summary>
@@ -49,9 +46,8 @@ namespace ReSharperTutorials.TutStep
             IPsiFiles psiFiles,
             ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks,
             IEditorManager editorManager,
-            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
-            IPsiServices psiServices, IActionShortcuts shortcutManager)
-        {            
+            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager)
+        {
             _stepView = view;
             _lifetime = lifetime;
             Solution = solution;
@@ -63,28 +59,21 @@ namespace ReSharperTutorials.TutStep
             DocumentManager = documentManager;
             Environment = environment;
             ActionManager = actionManager;
-            _contentPath = contentPath;
-            _codeNavigator = new SourceCodeNavigator(lifetime, solution, psiFiles, textControlManager, shellLocks,
+            _codeNavigator = new SourceCodeNavigator(lifetime, solution, psiFiles, shellLocks,
                 editorManager,
-                documentManager, environment);
+                documentManager);
             _steps = new Dictionary<int, TutorialStep>();
 
             var tutorialXmlReader = new TutorialXmlReader(actionManager);
             _steps = tutorialXmlReader.ReadTutorialSteps(contentPath);
             Title = TutorialXmlReader.ReadTitle(contentPath);
 
-            //var converter = new ActionToShortcutConverter(actionManager);
-            //foreach (var step in _steps.Values)
-            //    step.Text = converter.SubstituteShortcutsViaVs(step.Text);
-            //step.Text = converter.SubstituteShortcuts(step.Text);
-
-            // always start from the beginning
-            // _currentStepId = TutorialXmlReader.ReadCurrentStep(contentPath);
+            //TODO: get rid of _currentStepId 
             _currentStepId = 1;
             CurrentStep = _steps[_currentStepId];
             _stepView.StepCount = _steps.Count;
 
-            lifetime.AddBracket(                
+            lifetime.AddBracket(
                 () => { _stepView.NextStep += StepOnStepIsDone; },
                 () => { _stepView.NextStep -= StepOnStepIsDone; });
 
@@ -124,7 +113,7 @@ namespace ReSharperTutorials.TutStep
 
         private void StepOnStepIsDone(object sender, EventArgs eventArgs)
         {
-            CurrentStep.StepIsDone -= StepOnStepIsDone;            
+            CurrentStep.StepIsDone -= StepOnStepIsDone;
             _checksLifetime.Terminate();
             GoToNextStep(this, null);
         }

@@ -3,19 +3,15 @@ using System.Windows.Forms;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.changes;
-using JetBrains.Application.DataContext;
 using JetBrains.Application.Interop.NativeHook;
-using JetBrains.Application.Settings;
 using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;
 using JetBrains.Threading;
-using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
 using JetBrains.UI.CrossFramework;
@@ -29,24 +25,16 @@ namespace ReSharperTutorials.TutorialUI
     public class TutorialWindow : IStepView, IHtmlCommunication
     {
         private readonly TutorialWindowManager _windowManager;
-        private readonly IPsiServices _psiServices;
-        private readonly IActionShortcuts _shortcutManager;
-        private readonly ISettingsStore _settingsStore;
-        private readonly DataContexts _dataContexts;
-        private readonly ISolution _solution;
-        private readonly IActionManager _actionManager;
         private readonly IShellLocks _shellLocks;
         private TutorialPanel _containerControl;
         private HtmlViewControl _viewControl = new HtmlViewControl(null, null);
         private string _stepText;
-        private TutorialStepPresenter _stepPresenter;
+        private readonly TutorialStepPresenter _stepPresenter;
         private readonly Lifetime _tutorialLifetime;
         private readonly IColorThemeManager _colorThemeManager;
-        private readonly TabbedToolWindowClass _toolWindowClass;
         private readonly ToolWindowInstance _toolWindowInstance;
         private LifetimeDefinition _animationLifetime;
         private HtmlMediator _htmlMediator;
-        private WindowFocusTracker _focusTracker;
 
         private CustomProgressBar _progressBar = new CustomProgressBar
         {
@@ -82,7 +70,7 @@ namespace ReSharperTutorials.TutorialUI
                         _stepText = value;
                         _shellLocks.ExecuteOrQueue(_tutorialLifetime, "TutorialTextUpdate",
                             () => { _viewControl.DocumentText = _htmlGenerator.PrepareHtmlContent(_stepText); });
-                        //_shellLocks.Dispatcher.Invoke("sdf",() => {},);
+
                         _animationLifetime.Terminate();
                     });
 
@@ -104,23 +92,18 @@ namespace ReSharperTutorials.TutorialUI
             IEditorManager editorManager,
             DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
             TabbedToolWindowClass toolWindowClass,
-            WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
+            WindowsHookManager windowsHookManager,
             IColorThemeManager colorThemeManager)
         {
             _windowManager = windowManager;
             _htmlGenerator = new HtmlGenerator(tutorialLifetime, colorThemeManager);
             _tutorialLifetime = tutorialLifetime;
-            _solution = solution;
-            _actionManager = actionManager;
             _shellLocks = shellLocks;
-            _psiServices = psiServices;
-            _shortcutManager = shortcutManager;
             _colorThemeManager = colorThemeManager;
-            _toolWindowClass = toolWindowClass;
 
             if (solution.GetComponent<ISolutionOwner>().IsRealSolutionOwner)
             {
-                _toolWindowInstance = _toolWindowClass.RegisterInstance(
+                _toolWindowInstance = toolWindowClass.RegisterInstance(
                     tutorialLifetime, null, null,
                     (lt, twi) =>
                     {
@@ -165,20 +148,19 @@ namespace ReSharperTutorials.TutorialUI
                             () => NextStep?.Invoke(null, EventArgs.Empty));
                         _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
 
-                        _focusTracker = new WindowFocusTracker(tutorialLifetime);
-                        _focusTracker.IsFocusOnEditor.Change.Advise(tutorialLifetime,
-                            () => _htmlMediator.ChangeNextStepButtonText(_focusTracker.IsFocusOnEditor.Value));
+                        var focusTracker = new WindowFocusTracker(tutorialLifetime);
+                        focusTracker.IsFocusOnEditor.Change.Advise(tutorialLifetime,
+                            () => _htmlMediator.ChangeNextStepButtonText(focusTracker.IsFocusOnEditor.Value));
 
                         _htmlMediator.OnPageHasFullyLoaded.Advise(tutorialLifetime,
-                            () => { _htmlMediator.ChangeNextStepButtonText(_focusTracker.IsFocusOnEditor.Value); });
+                            () => { _htmlMediator.ChangeNextStepButtonText(focusTracker.IsFocusOnEditor.Value); });
 
                         return new EitherControl(lt, containerControl);
                     });
 
                 _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles,
                     changeManager,
-                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager,
-                    psiServices, shortcutManager);
+                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager);
 
                 _toolWindowInstance.Title.Value = _stepPresenter.Title;
             }

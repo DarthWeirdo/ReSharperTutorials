@@ -4,7 +4,7 @@ using JetBrains.DataFlow;
 
 namespace ReSharperTutorials.Checker
 {
-    class CheckTimer
+    internal class CheckTimer
     {
         public ISignal<bool> OnCheckPass { get; }
         public Func<bool> Check = null;

@@ -97,10 +97,9 @@ namespace ReSharperTutorials.TutStep
             {
                 case GoToNextStep.Auto:
                     var checker = new MainChecker(checksLifetime, this, stepPresenter.Solution,
-                        stepPresenter.PsiFiles,
-                        stepPresenter.ChangeManager, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
+                        stepPresenter.PsiFiles, stepPresenter.TextControlManager, stepPresenter.ShellLocks,
                         stepPresenter.EditorManager,
-                        stepPresenter.DocumentManager, stepPresenter.ActionManager, stepPresenter.Environment);
+                        stepPresenter.DocumentManager);
                     checker.PerformStepChecks();
                     break;
                 case GoToNextStep.Manual:

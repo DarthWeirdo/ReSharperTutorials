@@ -401,12 +401,13 @@
     <Compile Include="src\CodeNavigator\SourceCodeNavigator.cs" />
     <Compile Include="src\CodeNavigator\TreeNodeExtensions.cs" />
     <Compile Include="src\CodeNavigator\TypeElementExtensions.cs" />
-    <Compile Include="src\Runner\ActionOpenTutorial.cs" />
+    <Compile Include="src\Runner\ActionShowHomeWindow.cs" />
     <Compile Include="src\Runner\GlobalSettings.cs" />
     <Compile Include="src\Runner\ISolutionStateTracker.cs" />
     <Compile Include="src\Runner\SolutionStateTracker.cs" />
-    <Compile Include="src\Runner\TutorialRunner.cs" />
+    <Compile Include="src\Runner\TutorialWindowRunner.cs" />
     <Compile Include="src\Runner\TutorialRunnerEventArgs.cs" />
+    <Compile Include="src\Runner\TutorialSolutionOpener.cs" />
     <Compile Include="src\TutorialUI\CustomProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>

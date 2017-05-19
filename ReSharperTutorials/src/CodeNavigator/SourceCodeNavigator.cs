@@ -5,8 +5,6 @@ using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.Files;
-using JetBrains.TextControl;
-using JetBrains.UI.Application;
 using JetBrains.Util;
 
 namespace ReSharperTutorials.CodeNavigator
@@ -16,23 +14,18 @@ namespace ReSharperTutorials.CodeNavigator
         private readonly Lifetime _lifetime;
         private readonly ISolution _solution;
         private readonly IPsiFiles _psiFiles;
-        private readonly TextControlManager _textControlManager;
         private readonly IShellLocks _shellLocks;
         private readonly IEditorManager _editorManager;
         private readonly DocumentManager _documentManager;
-        private readonly IUIApplication _environment;
 
-        public SourceCodeNavigator(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
-            TextControlManager textControlManager, IShellLocks shellLocks,
-            IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment)
+        public SourceCodeNavigator(Lifetime lifetime, ISolution solution, IPsiFiles psiFiles, IShellLocks shellLocks,
+            IEditorManager editorManager, DocumentManager documentManager)
         {
             _lifetime = lifetime;
             _solution = solution;
             _psiFiles = psiFiles;
-            _textControlManager = textControlManager;
             _shellLocks = shellLocks;
             _documentManager = documentManager;
-            _environment = environment;
             _editorManager = editorManager;
         }
 

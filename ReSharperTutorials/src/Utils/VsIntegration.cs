@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using EnvDTE;
 using JetBrains.Annotations;
-using JetBrains.Util;
 using Process = System.Diagnostics.Process;
 
 namespace ReSharperTutorials.Utils
@@ -27,8 +26,6 @@ namespace ReSharperTutorials.Utils
             }
             catch (Exception)
             {
-//                MessageBox.ShowError($"No shortcut is assigned to {actionName}. Please assign the" +
-//                                     $"shortcut in 'Tools | Options... | Keyboard' and restart the tutuorial!");
                 return "Undefined";
             }
         }

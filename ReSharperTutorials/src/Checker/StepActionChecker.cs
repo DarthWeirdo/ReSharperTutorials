@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using EnvDTE;
 using EnvDTE80;
-using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.DataFlow;
 using JetBrains.ReSharper.Psi.Files;
@@ -18,16 +17,14 @@ namespace ReSharperTutorials.Checker
     internal class StepActionChecker
     {
         private static DTE _vsInstance;
-        private static CommandEvents _commandEvents;
         private readonly IShellLocks _shellLocks;
         private readonly IPsiFiles _psiFiles;
         public string[] StepActionNames;
-        public ISignal<bool> OnCheckPass { get; private set; }
+        public ISignal<bool> OnCheckPass { get; }
         public Func<bool> Check = null;
 
 
-        public StepActionChecker(Lifetime lifetime, IShellLocks shellLocks, IPsiFiles psiFiles,
-            IActionManager actionManager)
+        public StepActionChecker(Lifetime lifetime, IShellLocks shellLocks, IPsiFiles psiFiles)
         {
             _shellLocks = shellLocks;
             _psiFiles = psiFiles;
@@ -35,11 +32,11 @@ namespace ReSharperTutorials.Checker
             var events2 = _vsInstance.Events as Events2;
             if (events2 == null) return;
 
-            _commandEvents = events2.CommandEvents;
+            var commandEvents = events2.CommandEvents;
 
             lifetime.AddBracket(
-                () => _commandEvents.AfterExecute += CommandEventsOnAfterExecute,
-                () => _commandEvents.AfterExecute -= CommandEventsOnAfterExecute);
+                () => commandEvents.AfterExecute += CommandEventsOnAfterExecute,
+                () => commandEvents.AfterExecute -= CommandEventsOnAfterExecute);
 
             OnCheckPass = new Signal<bool>(lifetime, "StepActionChecker.AfterActionApplied");
         }

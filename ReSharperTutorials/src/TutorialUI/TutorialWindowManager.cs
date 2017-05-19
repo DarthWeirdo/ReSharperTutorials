@@ -37,7 +37,7 @@ namespace ReSharperTutorials.TutorialUI
         private int _runningTutorial;
         private TutorialWindow _tutorialWindow;
         private readonly GlobalSettings _globalSettings;
-        private SolutionStateTracker _solutionStateTracker;
+        private readonly SolutionStateTracker _solutionStateTracker;
 
         public TutorialWindowManager(Lifetime shellLifetime, SolutionStateTracker solutionStateTracker,
             GlobalSettings globalSettings,
@@ -97,7 +97,7 @@ namespace ReSharperTutorials.TutorialUI
                 _tutorialWindow = new TutorialWindow(contentPath, lifetime, this, solution, psiFiles, changeManager,
                     textControlManager,
                     shellLocks, editorManager, documentManager, environment, actionManager, _toolWindowClass,
-                    windowsHookManager, psiServices, shortcutManager, colorThemeManager);
+                    windowsHookManager, colorThemeManager);
 
                 lifetime.AddBracket(
                     () =>
@@ -126,7 +126,7 @@ namespace ReSharperTutorials.TutorialUI
 
             _threading.ExecuteOrQueue("RunMainWindow", () =>
             {
-                _homeWindow = new HomeWindow(_shellLifetime, this, _solutionStateTracker, _globalSettings, _shellLocks,
+                _homeWindow = new HomeWindow(_shellLifetime, this, _shellLocks,
                     _environment,
                     _actionManager, _toolWindowClass, _windowsHookManager, _colorThemeManager)
                 {
@@ -179,24 +179,9 @@ namespace ReSharperTutorials.TutorialUI
                 _homeWindow.AgreeToRunTutorial(tutorialId, loadingImgPath);
             });
 
-            _solutionStateTracker.AfterPsiLoaded.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
-
-            // TODO: store id and action in dictionary, search dictionary for this id and run corresponding action
-            switch (tutorialId)
-            {
-                case 1:
-                    _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
-                        () => _actionManager.ExecuteAction<ActionOpenTutorial1>());
-                    break;
-                case 3:
-                    _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
-                        () => _actionManager.ExecuteAction<ActionOpenTutorial3>());
-                    break;
-                case 4:
-                    _shellLocks.ExecuteOrQueue(_homeWindow.WindowLifetime, "RunTutorial",
-                        () => _actionManager.ExecuteAction<ActionOpenTutorial4>());
-                    break;
-            }
+            _solutionStateTracker.AfterSolutionOpened.Advise(loadingLifetime.Lifetime, () => loadingLifetime.Terminate());
+            
+            TutorialSolutionOpener.OpenTutorialSolution(_solutionStateTracker, tutorialId);           
         }
     }
 }

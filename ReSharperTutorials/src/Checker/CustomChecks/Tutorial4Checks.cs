@@ -1,15 +1,10 @@
-﻿using System.IO;
-using ICSharpCode.NRefactory.CSharp;
-using JetBrains.DocumentManagers;
+﻿using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.TextControl;
 using ReSharperTutorials.CodeNavigator;
-using ReSharperTutorials.Runner;
 using ReSharperTutorials.Utils;
-using IPropertyDeclaration = JetBrains.ReSharper.Psi.BuildScripts.Declarations.IPropertyDeclaration;
 
 namespace ReSharperTutorials.Checker
 {
