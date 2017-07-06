@@ -48,7 +48,7 @@ namespace ReSharperTutorials.Checker
             var command = _vsInstance.Commands.Item(guid, id1);
 
             //string logLine = $"Name:{command.Name} | GUID:{command.Guid} | ID:{command.ID}";
-            //Log(logLine);
+            //Logger.Log(logLine);
 
             foreach (var actionName in StepActionNames)
             {
@@ -68,13 +68,6 @@ namespace ReSharperTutorials.Checker
             if (Check())
                 OnCheckPass.Fire(true);
         }
-
-        private void Log(string line)
-        {
-            using (var file = new System.IO.StreamWriter(@"C:\Log\log.txt", true))
-            {
-                file.WriteLine(Stopwatch.GetTimestamp() + ": " + line);
-            }
-        }
+        
     }
 }

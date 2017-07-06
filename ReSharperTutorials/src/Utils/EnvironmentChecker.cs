@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using JetBrains.ActionManagement;
 using JetBrains.ReSharper.Resources.Shell;
+using JetBrains.Util;
 using ReSharperTutorials.Runner;
 
 namespace ReSharperTutorials.Utils
@@ -11,6 +13,7 @@ namespace ReSharperTutorials.Utils
     /// </summary>
     internal static class EnvironmentChecker
     {
+        
 
         public static void RunAllChecks(int tutorialId)
         {
@@ -25,7 +28,7 @@ namespace ReSharperTutorials.Utils
                 var e = new NoShortcutsAssignedException();
                 e.Data.Add("Shortcuts", undefShortcuts);
                 throw e;
-            }                
+            }
         }
 
         private static List<string> ShortcutsUndefined(int tutorialId, IActionManager actionManager)
@@ -33,15 +36,23 @@ namespace ReSharperTutorials.Utils
             var tutPath = GlobalSettings.Instance.GetPath(tutorialId, PathType.WorkCopyContentFile);            
             var actionConverter = new ActionToShortcutConverter(actionManager);
 
-            var text = System.IO.File.ReadAllText(tutPath);
-
-            var undefShortcuts = actionConverter.GetUndefinedShortcutsList(text);
-
-            return undefShortcuts;            
+            try
+            {               
+                var text = System.IO.File.ReadAllText(tutPath);                
+                var undefShortcuts = actionConverter.GetUndefinedShortcutsList(text);
+                return undefShortcuts;
+            }
+            catch (Exception e)
+            {                
+                MessageBox.ShowError(
+                    "Tutorial content files are not found. Please reinstall the plugin.",
+                    "ReSharper Tutorials");
+                throw;
+            }
         }
 
         private static bool ShortcutSchemeNotSelected(IActionManager actionManager)
-        {            
+        {
             var currentScheme = actionManager.Shortcuts.CurrentScheme;
             return currentScheme == ShortcutScheme.None;
         }
@@ -52,6 +63,6 @@ namespace ReSharperTutorials.Utils
     }
 
     public class NoShortcutSchemeSelectedException : Exception
-    {        
+    {
     }
 }

@@ -431,6 +431,7 @@
     <Compile Include="src\Utils\ActionToShortcutConverter.cs" />
     <Compile Include="src\Utils\EnvironmentChecker.cs" />
     <Compile Include="src\Utils\FileWatcher.cs" />
+    <Compile Include="src\Utils\Logger.cs" />
     <Compile Include="src\Utils\SolutionCopyHelper.cs" />
     <Compile Include="src\Utils\TutorialXmlReader.cs" />
     <Compile Include="src\Utils\VsIntegration.cs" />

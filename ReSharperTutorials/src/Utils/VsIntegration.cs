@@ -15,12 +15,12 @@ namespace ReSharperTutorials.Utils
 
         public static string GetActionShortcut(string actionName)
         {
-            var vsInstance = GetCurrentVsInstance();
-            var props = vsInstance.Properties["Environment", "Keyboard"];
-            var cmd = vsInstance.Commands.Item(actionName);
+            var vsInstance = GetCurrentVsInstance();            
+            
             try
             {
-                var sc = cmd?.Bindings[0].ToString();
+                var cmd = vsInstance.Commands.Item(actionName);                
+                var sc = cmd?.Bindings[0].ToString();                
                 var index = sc?.LastIndexOf(":", StringComparison.Ordinal) + 1;
                 return sc?.Substring(index);
             }

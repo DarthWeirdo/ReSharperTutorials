@@ -101,69 +101,68 @@ namespace ReSharperTutorials.TutorialUI
             _shellLocks = shellLocks;
             _colorThemeManager = colorThemeManager;
 
-            if (solution.GetComponent<ISolutionOwner>().IsRealSolutionOwner)
-            {
-                _toolWindowInstance = toolWindowClass.RegisterInstance(
-                    tutorialLifetime, null, null,
-                    (lt, twi) =>
+            if (!solution.GetComponent<ISolutionOwner>().IsRealSolutionOwner) return;
+
+            _toolWindowInstance = toolWindowClass.RegisterInstance(
+                tutorialLifetime, null, null,
+                (lt, twi) =>
+                {
+                    twi.QueryClose.Value = true;
+
+                    var containerControl = new TutorialPanel(environment).BindToLifetime(lt);
+
+                    var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
                     {
-                        twi.QueryClose.Value = true;
+                        Dock = DockStyle.Fill,
+                        WebBrowserShortcutsEnabled = false
+                    }.BindToLifetime(lt);
 
-                        var containerControl = new TutorialPanel(environment).BindToLifetime(lt);
+                    lt.AddBracket(
+                        () => _containerControl = containerControl,
+                        () => _containerControl = null);
 
-                        var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
+                    lt.AddAction(() => _progressBar = null);
+
+                    lt.AddBracket(
+                        () => _viewControl = viewControl,
+                        () => _viewControl = null);
+
+                    lt.AddBracket(
+                        () =>
                         {
-                            Dock = DockStyle.Fill,
-                            WebBrowserShortcutsEnabled = false
-                        }.BindToLifetime(lt);
+                            _containerControl.Controls.Add(_viewControl);
+                            _containerControl.Controls.Add(_progressBar);
+                        },
+                        () =>
+                        {
+                            _containerControl.Controls.Remove(_viewControl);
+                            _containerControl.Controls.Remove(_progressBar);
+                        });
 
-                        lt.AddBracket(
-                            () => _containerControl = containerControl,
-                            () => _containerControl = null);
+                    _colorThemeManager.ColorThemeChanged.Advise(tutorialLifetime, RefreshKeepContent);
 
-                        lt.AddAction(() => _progressBar = null);
+                    SetColors();
 
-                        lt.AddBracket(
-                            () => _viewControl = viewControl,
-                            () => _viewControl = null);
+                    _htmlMediator = new HtmlMediator(tutorialLifetime, this);
+                    _htmlMediator.OnNextStepButtonClick.Advise(tutorialLifetime,
+                        () => NextStep?.Invoke(null, EventArgs.Empty));
+                    _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
 
-                        lt.AddBracket(
-                            () =>
-                            {
-                                _containerControl.Controls.Add(_viewControl);
-                                _containerControl.Controls.Add(_progressBar);
-                            },
-                            () =>
-                            {
-                                _containerControl.Controls.Remove(_viewControl);
-                                _containerControl.Controls.Remove(_progressBar);
-                            });
+                    var focusTracker = new WindowFocusTracker(tutorialLifetime);
+                    focusTracker.IsFocusOnEditor.Change.Advise(tutorialLifetime,
+                        () => _htmlMediator.ChangeNextStepButtonText(focusTracker.IsFocusOnEditor.Value));
 
-                        _colorThemeManager.ColorThemeChanged.Advise(tutorialLifetime, RefreshKeepContent);
+                    _htmlMediator.OnPageHasFullyLoaded.Advise(tutorialLifetime,
+                        () => { _htmlMediator.ChangeNextStepButtonText(focusTracker.IsFocusOnEditor.Value); });
 
-                        SetColors();
+                    return new EitherControl(lt, containerControl);
+                });
 
-                        _htmlMediator = new HtmlMediator(tutorialLifetime, this);
-                        _htmlMediator.OnNextStepButtonClick.Advise(tutorialLifetime,
-                            () => NextStep?.Invoke(null, EventArgs.Empty));
-                        _htmlMediator.OnRunStepNavigationLinkClick.Advise(tutorialLifetime, NavigateToCodeByLink);
+            _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles,
+                changeManager,
+                textControlManager, shellLocks, editorManager, documentManager, environment, actionManager);
 
-                        var focusTracker = new WindowFocusTracker(tutorialLifetime);
-                        focusTracker.IsFocusOnEditor.Change.Advise(tutorialLifetime,
-                            () => _htmlMediator.ChangeNextStepButtonText(focusTracker.IsFocusOnEditor.Value));
-
-                        _htmlMediator.OnPageHasFullyLoaded.Advise(tutorialLifetime,
-                            () => { _htmlMediator.ChangeNextStepButtonText(focusTracker.IsFocusOnEditor.Value); });
-
-                        return new EitherControl(lt, containerControl);
-                    });
-
-                _stepPresenter = new TutorialStepPresenter(this, contentPath, tutorialLifetime, solution, psiFiles,
-                    changeManager,
-                    textControlManager, shellLocks, editorManager, documentManager, environment, actionManager);
-
-                _toolWindowInstance.Title.Value = _stepPresenter.Title;
-            }
+            _toolWindowInstance.Title.Value = _stepPresenter.Title;
         }
 
 

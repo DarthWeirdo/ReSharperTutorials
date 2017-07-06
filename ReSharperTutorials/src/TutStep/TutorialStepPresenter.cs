@@ -65,7 +65,8 @@ namespace ReSharperTutorials.TutStep
             _steps = new Dictionary<int, TutorialStep>();
 
             var tutorialXmlReader = new TutorialXmlReader(actionManager);
-            _steps = tutorialXmlReader.ReadTutorialSteps(contentPath);
+            _steps = tutorialXmlReader.ReadTutorialSteps(contentPath);            
+
             Title = TutorialXmlReader.ReadTitle(contentPath);
 
             //TODO: get rid of _currentStepId 
