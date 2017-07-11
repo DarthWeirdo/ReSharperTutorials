@@ -63,11 +63,17 @@ namespace ReSharperTutorials.TutorialUI
 
                     var containerControl = new TutorialPanel(environment).BindToLifetime(lt);
 
-                    var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
+                    var viewControl = new HtmlViewControl(windowsHookManager, actionManager)                    
                     {
                         Dock = DockStyle.Fill,
                         WebBrowserShortcutsEnabled = false,
                     }.BindToLifetime(lt);
+
+                    var webControlHandler = new WebBrowserHostUiHandler(viewControl)
+                    {
+                        Flags = HostUIFlags.DPI_AWARE,
+                        IsWebBrowserContextMenuEnabled = false
+                    };
 
                     lt.AddBracket(
                         () => _containerControl = containerControl,
@@ -85,7 +91,7 @@ namespace ReSharperTutorials.TutorialUI
 
                     _colorThemeManager.ColorThemeChanged.Advise(lifetime, RefreshKeepContent);
 
-                    SetColors();
+                    SetColors();                    
 
                     return new EitherControl(lt, containerControl);
                 });

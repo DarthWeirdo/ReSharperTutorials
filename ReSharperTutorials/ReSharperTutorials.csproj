@@ -342,6 +342,7 @@
       <HintPath>..\packages\JetBrains.Platform.Lib.System.Windows.Interactivity.3.0.40218\lib\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -414,6 +415,7 @@
     <Compile Include="src\TutorialUI\HomeWindow.cs" />
     <Compile Include="src\TutorialUI\HtmlGenerator.cs" />
     <Compile Include="src\TutorialUI\HtmlMediator.cs" />
+    <Compile Include="src\TutorialUI\WebBrowserHostUiHandler.cs" />
     <Compile Include="src\TutorialUI\IHtmlCommunication.cs" />
     <Compile Include="src\TutorialUI\TutorialPanel.cs">
       <SubType>Component</SubType>

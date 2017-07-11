@@ -41,7 +41,7 @@ namespace ReSharperTutorials.TutorialUI
             Visible = true,
             Step = 1,
             Value = 0,
-            Dock = DockStyle.Bottom
+            Dock = DockStyle.Bottom,            
         };
 
         private readonly HtmlGenerator _htmlGenerator;
@@ -116,6 +116,12 @@ namespace ReSharperTutorials.TutorialUI
                         Dock = DockStyle.Fill,
                         WebBrowserShortcutsEnabled = false
                     }.BindToLifetime(lt);
+
+                    var webControlHandler = new WebBrowserHostUiHandler(viewControl)
+                    {
+                        Flags = HostUIFlags.DPI_AWARE,
+                        IsWebBrowserContextMenuEnabled = false
+                    };
 
                     lt.AddBracket(
                         () => _containerControl = containerControl,
