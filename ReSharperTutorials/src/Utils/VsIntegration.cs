@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using EnvDTE;
 using JetBrains.Annotations;
-using JetBrains.Util;
 using Process = System.Diagnostics.Process;
 
 namespace ReSharperTutorials.Utils
@@ -16,19 +15,17 @@ namespace ReSharperTutorials.Utils
 
         public static string GetActionShortcut(string actionName)
         {
-            var vsInstance = GetCurrentVsInstance();
-            var props = vsInstance?.Properties["Environment", "Keyboard"];
-            var cmd = vsInstance?.Commands.Item(actionName);
+            var vsInstance = GetCurrentVsInstance();            
+            
             try
             {
-                var sc = cmd?.Bindings[0].ToString();
+                var cmd = vsInstance.Commands.Item(actionName);                
+                var sc = cmd?.Bindings[0].ToString();                
                 var index = sc?.LastIndexOf(":", StringComparison.Ordinal) + 1;
                 return sc?.Substring(index);
             }
             catch (Exception)
             {
-//                MessageBox.ShowError($"No shortcut is assigned to {actionName}. Please assign the" +
-//                                     $"shortcut in 'Tools | Options... | Keyboard' and restart the tutuorial!");
                 return "Undefined";
             }
         }
@@ -36,7 +33,7 @@ namespace ReSharperTutorials.Utils
         public static bool FindTextInCurrentDocument(string text)
         {
             var vsInstance = GetCurrentVsInstance();
-            var selection = vsInstance?.ActiveDocument.Selection as TextSelection;            
+            var selection = vsInstance.ActiveDocument.Selection as TextSelection;            
             return selection != null && selection.FindText(text);            
         }
 
@@ -73,7 +70,7 @@ namespace ReSharperTutorials.Utils
         public static bool IsSolutionSaved()
         {
             var vsInstance = GetCurrentVsInstance();
-            var solution = vsInstance?.Solution;
+            var solution = vsInstance.Solution;
             return solution != null && solution.Saved;
         }
 
@@ -81,14 +78,14 @@ namespace ReSharperTutorials.Utils
         public static void OpenVsSolution(string path)
         {                       
             var vsInstance = GetCurrentVsInstance();
-            var solution = vsInstance?.Solution;
+            var solution = vsInstance.Solution;
             solution?.Open(path);
         }
 
         public static void SaveVsSolution()
         {
             var vsInstance = GetCurrentVsInstance();
-            var solution = vsInstance?.Solution;
+            var solution = vsInstance.Solution;
             if (solution == null) return;            
          
             if (!solution.Saved)
@@ -112,7 +109,7 @@ namespace ReSharperTutorials.Utils
         public static void CloseVsSolution(bool saveFirst)
         {
             var vsInstance = GetCurrentVsInstance();
-            var solution = vsInstance?.Solution;
+            var solution = vsInstance.Solution;
 
             if (solution == null) return;
             if (saveFirst)
@@ -124,7 +121,7 @@ namespace ReSharperTutorials.Utils
         public static void CloseVsSolution()
         {            
             var vsInstance = GetCurrentVsInstance();
-            var solution = vsInstance?.Solution;
+            var solution = vsInstance.Solution;
             if (solution?.FileName == "") return;
             vsInstance?.ExecuteCommand("File.CloseSolution");
         }
@@ -133,7 +130,7 @@ namespace ReSharperTutorials.Utils
         public static bool IsAnySolutionOpened()
         {
             var vsInstance = GetCurrentVsInstance();
-            var solution = vsInstance?.Solution;
+            var solution = vsInstance.Solution;
             return solution?.FileName != "";
         }
 
@@ -163,7 +160,7 @@ namespace ReSharperTutorials.Utils
             }
         }
 
-        [CanBeNull]
+        [NotNull]
         public static DTE GetCurrentVsInstance()
         {            
             IRunningObjectTable rot;
@@ -185,8 +182,7 @@ namespace ReSharperTutorials.Utils
                 rot.GetObject(moniker[0], out obj);
                 return (DTE)obj;
             }
-            return null;
-
+            throw new ApplicationException("Unable to identify current Visual Studio instance");
         }
 
         [NotNull]
@@ -202,6 +198,9 @@ namespace ReSharperTutorials.Utils
 
         [DllImport("ole32.dll")]
         private static extern int GetRunningObjectTable(int reserved, out IRunningObjectTable prot);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
     }
 }

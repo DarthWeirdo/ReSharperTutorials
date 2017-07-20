@@ -1,0 +1,568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<tutorial>
+  <currentStep>1</currentStep>
+  <title>What's New in ReSharper 2017.1 (C#)</title>
+
+  <steps>
+    <step li="1">
+      <text>
+        <h1 class="stepTitle">
+          Welcome!
+        </h1>
+        <p>
+          Please read the notes below before running the tutorial.
+        </p>
+        <p>
+          <b>IMPORTANT NOTES:</b>
+          <ul>
+            <li>
+              The tutorial uses its own sample solution and doesn't affect your Visual Studio instance in any way.
+            </li>
+            <li>
+              The tutorial is interactive:
+              <ul>
+                <li>It consists from a number of steps.</li>
+                <li>Each step is a set of actions you should perform.</li>
+                <li>Your progress is checked automatically.</li>
+              </ul>
+            </li>
+            <li>
+              <b>Please follow the instructions precisely and do not take any actions other than those suggested in a step.</b>
+            </li>
+          </ul>
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Start</button>
+      </text>
+    </step>
+
+    <step li="2" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">
+          What's New in ReSharper 2017.1
+        </h1>
+        <p>
+          The main focus of the ReSharper 2017.1 release is support for Visual Studio 2017. Nevertheless, this release also brings a number of
+          quite useful features related to EditorConfig support and C# 7.0. This tutorial will acquaint you with the most important ones.
+        </p>
+        <p>
+          Please note that this tutorial is dedicated only to <b>ReSharper's C# features</b>, while other languages have received their share of
+          attention in 2017.1 as well. For more details on these features, read
+          <a class="externalLink" href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="3" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="Exceptions.cs"
+                type="ReSharper20171.Person" textToFind="null"
+                textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep3" />
+      <text>
+        <h1 class="stepTitle">Exception as part of expression (C# 7.0)</h1>
+        <p>Let's begin with C# 7.0 features.</p>
+        <p>
+          C# 7.0 allows developers to use <code>throw</code> as a part of the expression which makes code more compact and readable.
+          ReSharper 2017.1 provides the corresponding quick fix:
+        </p>
+        <ol>
+          <li>
+            The caret must be anywhere on the
+            <code>
+              <a href="www.jetbrains.com" class="navigate">null</a>
+            </code>
+            check (underlined with a "squiggle").
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            Select
+            <span class="menuItem">Join null check with assignment | <br />Join null check with assignment in construcor 'Person'</span>
+            .
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="4" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Exception as part of expression (C# 7.0)</h1>
+        <p>
+          Great! Note that if you have Visual Studio 2015 or earlier,
+          you will get a compiler error on the updated lines.
+        </p>
+        <p>
+          Now, let's take a look at another C# 7.0 feature related to exceptions.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="5" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="Exceptions.cs"
+                type="ReSharper20171.Address" textToFind="ArgumentNullException"
+                textToFindOccurrence="1" />
+      <check method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep5" />
+      <text>
+        <h1 class="stepTitle">
+          Postfix .throw template
+        </h1>
+        <p>
+          Exceptions now support the <code>throw</code> postfix template. For example, you've just
+          typed <code>ArgumentNullException</code>:
+          <ol>
+            <li>
+              The caret should be after
+              <code>
+                <a href="www.jetbrains.com" class="navigate">ArgumentNullException</a>
+              </code>
+              .
+            </li>
+            <li>
+              Hit <span class="shortcut">.</span>.
+            </li>
+            <li>
+              In the list, select <span class="menuItem">throw</span> and hit <span class="shortcut">Enter</span> or
+              <span class="shortcut">Tab</span>.
+            </li>
+          </ol>
+        </p>
+      </text>
+    </step>
+
+    <step li="6" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Postfix .throw template</h1>
+        <p>
+          You're doing great!
+        </p>
+        <p>
+          Now, let's take a look at one more C# 7.0 feature supported by ReSharper 2017.1.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="7" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="LocalFunctions.cs"
+                type="ReSharper20171.LocalFunctions" textToFind="factorial"
+                textToFindOccurrence="1" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep7" />
+      <text>
+        <h1 class="stepTitle">Local functions (C# 7.0)</h1>
+        <p>
+          C# 7.0 introduced local functions - functions that are defined right in the method body.
+          Compared to lambda expressions, which you would normally use to define local helpers, local functions are more
+          efficient when you want to write a function that is called only from the context of another method.
+          They are the best choice for iterators, async methods and recursive algorithms.
+        </p>
+        <p>
+          ReSharper 2017.1 allows you to quickly convert a lambda or anonymous method into a local function:
+        </p>
+        <ol>
+          <li>
+            The caret should be on the
+            <code>
+              <a href="www.jetbrains.com" class="navigate">factorial</a>
+            </code>
+            declaration.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">To local function</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="8" strikeOnDone="true">
+      <check action="Edit.InsertTab;Edit.BreakLine" />
+      <text>
+        <h1 class="stepTitle">Local functions (C# 7.0)</h1>
+        <ol start="4">
+          <li>
+            Specify any name for your new local function.
+          </li>
+          <li>
+            Hit <shortcut>Edit.InsertTab</shortcut> or <shortcut>Edit.BreakLine</shortcut>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="9" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep9" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep9" />
+      <text>
+        <h1 class="stepTitle">Local functions (C# 7.0)</h1>
+        <p>
+          Note that you can convert any local function to a regular method:
+        </p>
+        <ol>
+          <li>
+            The caret should be on a <a href="www.jetbrains.com" class="navigate">local function</a> declaration.
+          </li>
+          <li>
+            Press <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+          <li>
+            In the list, select <span class="menuItem">To regular method</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="10" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Local functions (C# 7.0)</h1>
+        <p>
+          Done!
+        </p>
+        <p>
+          Now, let's proceed to very important new features related to code formatting.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="11" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep11_14_15" />
+      <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep11" />
+      <text>
+        <h1 class="stepTitle">Formatter settings</h1>
+        <p>
+          ReSharper now allows you to quickly observe and change code formatting settings using the new Configure Format dialog.
+          For example, let's change the preference for method braces formatting:
+        </p>
+        <ol>
+          <li>
+            The <a href="www.jetbrains.com" class="navigate">code</a> you want to apply formatting to must be selected.
+          </li>
+
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+
+          <li>
+            In the list, select
+            <span class="menuItem">Format selection | Configure...</span>.
+          </li>
+          <li>
+            In window, in <span class="menuItem">Braces Layout</span>, set
+            <span class="menuItem">Method declaration</span>
+            to <span class="menuItem">At end of line (no space)</span>.
+          </li>
+          <li>
+            Click
+            <span class="menuItem">Save To</span> and select <span class="menuItem">Solution "..." personal</span>.
+            It would be better to save the settings to the solution layer, so that your global code formatting
+            settings are not affected.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="12" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">EditorConfig</h1>
+        <p>
+          Awesome!
+        </p>
+        <p>
+          The next feature that is tightly related to code formatting is support for EditorConfig.
+          EditorConfig is a configuration file convention that maintains consistent code styles
+          between team members as well as between different editors and IDEs. The styles are saved
+          in INI-like files named <code>.editorconfig</code>.
+        </p>
+        <p>
+          ReSharper 2017.1 supports formatting styles defined in EditorConfig format.
+          All settings defined in an <code>.editorconfig</code> file
+          override corresponding ReSharper code formatting settings.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="13" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep13" />
+      <text>
+        <h1 class="stepTitle">EditorConfig</h1>
+        <p>
+          Here you see the <code>.editorconfig</code> file that defines styles for our project (it's located
+          in the project folder). Let's override the braces format we defined in the previous steps:
+        </p>
+        <ol>
+          <li>
+            The caret should be after
+            <code>
+              csharp_invocable_declaration_braces=
+            </code>
+            .
+            This option defines braces style for methods.
+          </li>
+          <li>
+            Type <code>next_line</code>. The resulting
+            <code>
+              csharp_invocable_declaration_braces=next_line
+            </code>
+            option will tell the code formatter to always put a brace on a next line in a method declaration.
+          </li>
+          <li>
+            Save the file with <shortcut>File.SaveSelectedItems</shortcut>.
+          </li>
+        </ol>
+        Once you're finished, click the <span class="menuItem">Next Step</span> button to proceed.
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="14" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep11_14_15" />
+      <check action="ReSharper.ReSharper_ReformatCode" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep15" />
+      <text>
+        <h1 class="stepTitle">EditorConfig</h1>
+        <p>
+          Now, let's reapply updated code formatting:
+        </p>
+        <ol>
+          <li>
+            The <a href="www.jetbrains.com" class="navigate">code</a> you want to apply formatting to must be selected.
+          </li>
+          <li>
+            Press <shortcut>ReSharper.ReSharper_ReformatCode</shortcut>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="15" strikeOnDone="true">
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial4Navigation.NavigateStep11_14_15" />
+      <text>
+        <h1 class="stepTitle">EditorConfig</h1>
+        <p>
+          Great!
+        </p>
+        <p>
+          Now, you can open the Configure Format dialog one more time to check out the
+          overriden settings:
+        </p>
+        <ol>
+          <li>
+            Select the <a href="www.jetbrains.com" class="navigate">code</a>.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+
+          <li>
+            In the list, select
+            <span class="menuItem">Format selection | Configure...</span>.
+          </li>
+        </ol>
+        Note that the overriden option is highlighted.
+        <p>
+          <a class="externalLink"
+             href="https://www.jetbrains.com/help/resharper/Using_EditorConfig.html">
+            Here</a> you can learn more about EditorConfig support in ReSharper.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="16" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="Usages.cs"
+                type="ReSharper20171.Boo" textToFind="IFoo"
+                textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep16" />
+      <text>
+        <h1 class="stepTitle">Find usages. Grouping by kind</h1>
+        <p>
+          Now, let's take a look at an important update of the <b>Find Usages</b> feature.
+          In 2017.1, you can group the <b>Find Usages</b> results by kind of usage, e.g.,
+          field or property declaration, an argument, type conversion, and so on.
+        </p>
+        <p>
+          For example, let's find where in the code conversions of <code>IFoo</code> take place:
+        </p>
+        <ol>
+          <li>
+            The cursor can be on any
+            <code>
+              <a href="www.jetbrains.com" class="navigate">IFoo</a>
+            </code>
+            usage.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
+          </li>
+          <li>
+            In the <b>Find Results</b> window, turn on <img src="Kind.16x16.png" />
+            <span class="menuItem">Enable grouping by kind</span>.
+          </li>
+          <li>
+            Navigate to the <code>IFoo</code> usage
+            under <span class="menuItem">Type checking</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="17" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep17" />
+      <text>
+        <h1 class="stepTitle">Go to everything</h1>
+        <p>Done!</p>
+        <p>
+          Finally, let's acquaint ourselves with one more important navigation improvement.
+          Now, the <b>Go to Everything</b> feature receives an option to filter the results using a special syntax.
+          Let's look how it works.
+        </p>
+        <p>
+          For example, we want to navigate to a particular <code>Foo</code> property. There are a lot of occurrences of the 'foo' word in our code, so,
+          we want to narrow the navigation scope only to property declarations.
+          In 2017.1, we can leave only properties in <b>Go to Everything</b> search results:
+        </p>
+        <ol>
+          <li>
+            The cursor can be anywhere in the code.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_GotoType</shortcut>.
+          </li>
+          <li>
+            Type <span class="userInput">/mp foo</span>. The <code>/mp</code> prefix here stands for "member properties".
+          </li>
+          <li>
+            Select the <span class="menuItem">Foo:IFoo</span> item and press <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="18" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Go to everything</h1>
+        <p>
+          Awesome!
+        </p>
+        <p>
+          To see all possible filters, simply type <span class="userInput">/</span> after hitting
+          <shortcut>ReSharper.ReSharper_GotoType</shortcut>
+          and wait.
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="19" strikeOnDone="true">
+      <check action="ReSharper.ReSharper_GotoType" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep19" />
+      <text>
+        <h1 class="stepTitle">Go to text</h1>
+        <p>
+          The <b>Go to Text</b> feature also gets a number of filters.
+        </p>
+        <p>
+          For example, let's use it to navigate to a <code>foo</code> node in an XML file:
+        </p>
+        <ol>
+          <li>
+            The cursor can be anywhere in the code.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_GotoText</shortcut>.
+          </li>
+          <li>
+            Type <span class="userInput">foo /ext:xml</span>. Note that you can type filters both before and after your search query. Thus, you
+            can specify a filter after the search pattern.
+          </li>
+          <li>
+            Select the <span class="menuItem">&lt;foo&gt;</span> item and press <span class="shortcut">Enter</span>.
+          </li>
+        </ol>
+      </text>
+    </step>
+
+    <step li="20" strikeOnDone="true">
+      <text>
+        <h1 class="stepTitle">Go to text</h1>
+        <p>
+          Great!
+        </p>
+        <p>
+          Now, let's take a look at one more improvement in <b>Find Usages</b>. 
+        </p>
+        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+      </text>
+    </step>
+
+    <step li="21" strikeOnDone="true">
+      <navigate project="Tutorial4_WhatsNewReSharper2017.1" file="WrongUsage.cs"
+                type="ReSharper20171.SomeClass" textToFind="DoSomething"
+                textToFindOccurrence="1" />
+      <check action="ReSharper.ReSharper_FindUsages" method="ReSharperTutorials.Checker.Tutorial4Checks.CheckStep21" />
+      <text>
+        <h1 class="stepTitle">Find Usages. Highlight broken usages</h1>
+        <p>
+          The <b>Find Usages</b> window now highlights broken or unfinished usages. This might be superhelpful 
+          during refactoring.
+        </p>
+        <p>
+          For example, we're refactoring the <code>DoSomething</code> method and now we want to know how many
+          outdated usages are left:
+        </p>
+        <ol>
+          <li>
+            The caret should be on the
+            <code>
+              <a href="www.jetbrains.com" class="navigate">DoSomething</a>
+            </code>
+            declaration.
+          </li>
+          <li>
+            Hit <shortcut>ReSharper.ReSharper_FindUsages</shortcut>.
+          </li>
+          <li>            
+            Note that the wrong <code>someClass.DoSomething();</code> usage is underlined in the <b>Find Results</b> window.
+          </li>
+          <li>
+            Navigate to the wrong <code>someClass.DoSomething();</code> usage using double-click.            
+          </li>
+        </ol>
+      </text>
+    </step>
+    
+    <step li="22">
+      <text>
+        <h1 class="stepTitle">That's All!</h1>
+        <p>
+          Thanks for passing the tutorial. Note that we've acquainted only with the ReSharper features related to C#.
+          To learn about other ReSharper 2017.1 improvements, please follow this
+          <a class="externalLink" href="https://www.jetbrains.com/resharper/whatsnew/">link</a>.
+        </p>
+        <p>
+          Now, you can:
+        </p>
+        <ul>
+          <li>
+            <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(3); return false;">
+              Run <b>What's New in ReSharper 2016.3</b> tutorial
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(1); return false;">
+              Run <b>ReSharper Essentials</b> tutorial
+            </a>
+          </li>
+        </ul>
+      </text>
+    </step>
+  </steps>
+
+</tutorial>

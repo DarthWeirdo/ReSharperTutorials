@@ -1,0 +1,1 @@
+nuget pack ReSharperTutorials.nuspec -NoDefaultExcludes

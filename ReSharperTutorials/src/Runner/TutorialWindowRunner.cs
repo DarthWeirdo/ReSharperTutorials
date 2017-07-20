@@ -15,21 +15,18 @@ using JetBrains.Threading;
 using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using JetBrains.UI.Components.Theming;
-using JetBrains.UI.ToolWindowManagement;
-using ReSharperTutorials.TutorialUI;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.Runner
 {
     [SolutionComponent]
-    public class TutorialRunner
+    public class TutorialWindowRunner
     {
-        public TutorialRunner([NotNull] Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
+        public TutorialWindowRunner([NotNull] Lifetime lifetime, ISolution solution, IPsiFiles psiFiles,
             ChangeManager changeManager, [NotNull] ISolutionStateTracker solutionStateTracker,
             [NotNull] GlobalSettings globalSettings, TextControlManager textControlManager, IShellLocks shellLocks,
             IEditorManager editorManager, DocumentManager documentManager, IUIApplication environment,
-            IActionManager actionManager, ToolWindowManager toolWindowManager,
-            TutorialWindowDescriptor tutorialWindowDescriptor,
+            IActionManager actionManager,
             WindowsHookManager windowsHookManager, IPsiServices psiServices, IActionShortcuts shortcutManager,
             IColorThemeManager colorThemeManager, IThreading threading)
         {
@@ -45,8 +42,8 @@ namespace ReSharperTutorials.Runner
             {
                 if (VsIntegration.GetCurrentSolutionPath() == tutorial.Value)
                 {
-                    solutionStateTracker.AfterPsiLoaded.Advise(lifetime,
-                        sol =>
+                    solutionStateTracker.AfterSolutionOpened.Advise(lifetime,
+                        () =>
                             RunTutorial(globalSettings, tutorial.Key, lifetime, solution, psiFiles, changeManager,
                                 textControlManager, shellLocks, editorManager, documentManager, environment,
                                 actionManager, windowsHookManager, psiServices, shortcutManager, colorThemeManager,
@@ -55,7 +52,7 @@ namespace ReSharperTutorials.Runner
             }
         }
 
-        private static void RunTutorial(GlobalSettings globalSettings, TutorialId tutorialId, Lifetime lifetime,
+        private static void RunTutorial(GlobalSettings globalSettings, int tutorialId, Lifetime lifetime,
             ISolution solution,
             IPsiFiles psiFiles, ChangeManager changeManager, TextControlManager textControlManager,
             IShellLocks shellLocks,

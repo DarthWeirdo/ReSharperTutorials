@@ -8,10 +8,8 @@ using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;
-using JetBrains.UI.ActionsRevised.Shortcuts;
 using JetBrains.UI.Application;
 using ReSharperTutorials.CodeNavigator;
 using ReSharperTutorials.Utils;
@@ -22,10 +20,9 @@ namespace ReSharperTutorials.TutStep
     {
         private readonly IStepView _stepView;
         private readonly SourceCodeNavigator _codeNavigator;
-        private readonly string _contentPath;
         private readonly Dictionary<int, TutorialStep> _steps;
         private int _currentStepId;
-        public readonly Lifetime Lifetime;
+        private readonly Lifetime _lifetime;
         public readonly ISolution Solution;
         public readonly IPsiFiles PsiFiles;
         public readonly ChangeManager ChangeManager;
@@ -39,16 +36,20 @@ namespace ReSharperTutorials.TutStep
         public TutorialStep CurrentStep { get; set; }
         public bool IsLastStep => _currentStepId == _steps.Count;
 
+        /// <summary>
+        /// Lifetime created for the duration of performing checks in current step
+        /// </summary>
+        private LifetimeDefinition _checksLifetime;
+
 
         public TutorialStepPresenter(IStepView view, string contentPath, Lifetime lifetime, ISolution solution,
             IPsiFiles psiFiles,
             ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks,
             IEditorManager editorManager,
-            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager,
-            IPsiServices psiServices, IActionShortcuts shortcutManager)
+            DocumentManager documentManager, IUIApplication environment, IActionManager actionManager)
         {
             _stepView = view;
-            Lifetime = lifetime;
+            _lifetime = lifetime;
             Solution = solution;
             PsiFiles = psiFiles;
             ChangeManager = changeManager;
@@ -58,29 +59,26 @@ namespace ReSharperTutorials.TutStep
             DocumentManager = documentManager;
             Environment = environment;
             ActionManager = actionManager;
-            _contentPath = contentPath;
-            _codeNavigator = new SourceCodeNavigator(lifetime, solution, psiFiles, textControlManager, shellLocks,
+            _codeNavigator = new SourceCodeNavigator(lifetime, solution, psiFiles, shellLocks,
                 editorManager,
-                documentManager, environment);
+                documentManager);
             _steps = new Dictionary<int, TutorialStep>();
-            _steps = TutorialXmlReader.ReadTutorialSteps(contentPath);
+
+            var tutorialXmlReader = new TutorialXmlReader(actionManager);
+            _steps = tutorialXmlReader.ReadTutorialSteps(contentPath);            
+
             Title = TutorialXmlReader.ReadTitle(contentPath);
 
-            var converter = new ActionToShortcutConverter(actionManager);
-            foreach (var step in _steps.Values)
-                step.Text = converter.SubstituteShortcutsViaVs(step.Text);
-
-            // always start from the beginning
-            // _currentStepId = TutorialXmlReader.ReadCurrentStep(contentPath);
+            //TODO: get rid of _currentStepId 
             _currentStepId = 1;
             CurrentStep = _steps[_currentStepId];
             _stepView.StepCount = _steps.Count;
 
             lifetime.AddBracket(
-                () => { _stepView.NextStep += GoNext; },
-                () => { _stepView.NextStep -= GoNext; });
+                () => { _stepView.NextStep += StepOnStepIsDone; },
+                () => { _stepView.NextStep -= StepOnStepIsDone; });
 
-            ProcessStep();
+            ProcessCurrentStep();
         }
 
         public void Close(object sender, RoutedEventArgs args)
@@ -93,31 +91,32 @@ namespace ReSharperTutorials.TutStep
             _codeNavigator.Navigate(CurrentStep);
         }
 
-        private void GoNext(object sender, EventArgs args)
+        private void GoToNextStep(object sender, EventArgs args)
         {
             if (_currentStepId == _steps.Count) return;
 
             _currentStepId++;
             CurrentStep = _steps[_currentStepId];
-            ProcessStep();
+            ProcessCurrentStep();
         }
 
-        private void ProcessStep()
+        private void ProcessCurrentStep()
         {
             ShowText(CurrentStep);
             _codeNavigator.Navigate(CurrentStep);
             _stepView.UpdateProgress();
 
-            if (CurrentStep.GoToNextStep != GoToNextStep.Auto) return;
             CurrentStep.StepIsDone += StepOnStepIsDone;
-            CurrentStep.PerformChecks(this);
+            _checksLifetime = Lifetimes.Define(_lifetime);
+            CurrentStep.PerformChecks(_checksLifetime.Lifetime, this);
         }
 
 
         private void StepOnStepIsDone(object sender, EventArgs eventArgs)
         {
             CurrentStep.StepIsDone -= StepOnStepIsDone;
-            GoNext(this, null);
+            _checksLifetime.Terminate();
+            GoToNextStep(this, null);
         }
 
 

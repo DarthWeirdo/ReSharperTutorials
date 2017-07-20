@@ -48,7 +48,7 @@
           <a class="externalLink" href="https://blog.jetbrains.com/dotnet/2016/08/18/resharper-ultimate-2016-2-is-here/">link</a>.
         </p>
         <p>But, enough words! Let's start!</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -90,7 +90,7 @@
           move the text selection to the next or previous code element without having to use the cursor keys, 
           letting you quickly navigate to the next important piece of code you need to edit.
         </p>        
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>      
     </step>
 
@@ -164,7 +164,7 @@
           Typing assistance has also got a number of cool features, such as autoreplacing the dot (.) and semicolon (;) symbols.
           But it's always better to see for yourself!
         </p>        
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -238,7 +238,7 @@
           corrects mistyped <code>@$</code> prefixes for verbatim string interpolations.          
         </p>
         <p>Let's move to the next feature - improved surround templates!</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
     
@@ -275,7 +275,7 @@
           That's it! All other live templates now work in the same way.
         </p>
         <p>The next new feature we'll take a look at is new refactoring for partial classes.</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -345,7 +345,7 @@
         <p>
           The next helpful refactoring is related with nested classes.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -382,7 +382,7 @@
           class is now located in the <code>MoveNestedToFileRefacrtoring.Nested.cs</code> file.
         </p>
         <p>Now, let's talk about new quick fixes and context actions.</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -419,7 +419,7 @@
         <p>
           The next context action is the ability to uncomment and delete comments.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -484,7 +484,7 @@
         <p>
           The next new context action is auto-computing a constant value instead of the <code>nameof</code> expression.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -522,7 +522,7 @@
         <p>
           Now, the time has come for new quick fixes.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -563,7 +563,7 @@
           If you now take a look at the resource file <code>Resource.resx</code>, you'll find their the string.
         </p>
         <p>The next quick fix will help you with escaping characters in strings.</p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -628,7 +628,7 @@
         <p>
           The next feature is analysis of HTML and regex inside string literals in <i>.cs</i>, <i>.js</i>, and <i>.ts</i> files.          
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 ----- Stopped here------
@@ -666,7 +666,7 @@
           <shortcut>ReSharper.ReSharper_MoveRight</shortcut>,
           <shortcut>ReSharper.ReSharper_MoveUp</shortcut>, and <shortcut>ReSharper.ReSharper_MoveDown</shortcut> allow you quickly rearrange expressions, statements, type members, and other elements in your code.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 
@@ -729,7 +729,7 @@
           </a>
           you can find out how to configure code formatting rules.
         </p>
-        <button class="nextButton" onclick="buttonClick()">Next Step</button>
+        <button class="nextButton" onclick="buttonClick()">Next Step (Alt+Enter)</button>
       </text>
     </step>
 

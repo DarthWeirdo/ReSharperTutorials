@@ -1,5 +1,6 @@
 ﻿using JetBrains.CommonControls.Browser;
 using JetBrains.DataFlow;
+using ReSharperTutorials.Runner;
 using ReSharperTutorials.Utils;
 
 namespace ReSharperTutorials.TutorialUI
@@ -11,11 +12,14 @@ namespace ReSharperTutorials.TutorialUI
     public class HtmlMediator
     {
         public ISignal<bool> AllAnimationsDone { get; }
-        public ISignal<bool> OnButtonClick { get; }
+        public ISignal<bool> OnNextStepButtonClick { get; }
         public ISignal<bool> OnRunStepNavigationLinkClick { get; }
+        public ISignal<bool> OnPageHasFullyLoaded { get; }
         private readonly HtmlViewControl _viewControl;
         private bool _moveOutStepDone;
         private IHtmlCommunication _window;
+        private bool _isButtonTextChangeAllowed = true;
+
 
         private bool MoveOutStepDone
         {
@@ -29,7 +33,7 @@ namespace ReSharperTutorials.TutorialUI
         }
 
         private void OnAnimationsDone()
-        {
+        {            
             AllAnimationsDone.Fire(true);
         }
 
@@ -37,8 +41,9 @@ namespace ReSharperTutorials.TutorialUI
         {
             _window = window;
             AllAnimationsDone = new Signal<bool>(lifetime, "HtmlMediator.AllAnimationsDone");
-            OnButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
+            OnNextStepButtonClick = new Signal<bool>(lifetime, "HtmlMediator.OnButtonClick");
             OnRunStepNavigationLinkClick = new Signal<bool>(lifetime, "HtmlMediator.OnRunStepNavigationLinkClick");
+            OnPageHasFullyLoaded = new Signal<bool>(lifetime, "HtmlMediator.OnPageHasFullyLoaded");
             _viewControl = window.HtmlViewControl;
             _viewControl.ObjectForScripting = this;
         }
@@ -73,8 +78,8 @@ namespace ReSharperTutorials.TutorialUI
         }
 
         public void ClickNextButton()
-        {
-            OnButtonClick.Fire(true);
+        {            
+            OnNextStepButtonClick.Fire(true);
         }
 
         public void RunTutorial(object id)
@@ -95,6 +100,26 @@ namespace ReSharperTutorials.TutorialUI
         public void CloseSolution()
         {
             VsIntegration.CloseVsSolution(true);
+        }
+
+        public void ChangeNextStepButtonText(bool isFocusOnEditor)
+        {
+            if (!_isButtonTextChangeAllowed)
+                return;
+                            
+            var nextStepShortcut = VsIntegration.GetActionShortcut(GlobalSettings.NextStepShortcutAction);
+            var args = new object[] {isFocusOnEditor, nextStepShortcut};
+            _viewControl.Document?.InvokeScript("setNextStepButtonText", args);
+        }
+
+        public void PageHasFullyLoaded()
+        {            
+            OnPageHasFullyLoaded.Fire(true);
+        }
+
+        public void MouseOverNextStepButton(object hover)
+        {
+            _isButtonTextChangeAllowed = !(bool) hover;
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Reflection;
-using JetBrains.ActionManagement;
 using JetBrains.Application;
-using JetBrains.Application.changes;
 using JetBrains.DataFlow;
 using JetBrains.DocumentManagers;
 using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.Files;
 using JetBrains.TextControl;
-using JetBrains.UI.Application;
 using ReSharperTutorials.CodeNavigator;
 
 namespace ReSharperTutorials.Checker
@@ -18,13 +15,9 @@ namespace ReSharperTutorials.Checker
     {
         private readonly Lifetime _lifetime;
         private readonly ISolution _solution;
-        private readonly IPsiFiles _psiFiles;
         private readonly TextControlManager _textControlManager;
-        private readonly IShellLocks _shellLocks;
         private readonly IEditorManager _editorManager;
         private readonly DocumentManager _documentManager;
-        private readonly IUIApplication _environment;
-        private readonly IActionManager _actionManager;
 
         /// <summary>
         /// Use to identify whether a user applied an action specified in the step
@@ -45,30 +38,24 @@ namespace ReSharperTutorials.Checker
 
 
         public MainChecker(Lifetime lifetime, TutStep.TutorialStep step, ISolution solution, IPsiFiles psiFiles,
-            ChangeManager changeManager, TextControlManager textControlManager, IShellLocks shellLocks,
-            IEditorManager editorManager, DocumentManager documentManager, IActionManager actionManager,
-            IUIApplication environment)
+            TextControlManager textControlManager, IShellLocks shellLocks,
+            IEditorManager editorManager, DocumentManager documentManager)
         {
             _lifetime = lifetime;
             _currentStep = step;
             _solution = solution;
-            _psiFiles = psiFiles;
             _textControlManager = textControlManager;
-            _shellLocks = shellLocks;
             _documentManager = documentManager;
-            _environment = environment;
             _editorManager = editorManager;
-            _actionManager = actionManager;
 
             if (step.Check.Actions != null)
-                _stepActionChecker = new StepActionChecker(lifetime, shellLocks, psiFiles, actionManager);
+                _stepActionChecker = new StepActionChecker(lifetime, shellLocks, psiFiles);
 
             if (step.Check.Method == null) return;
-            _stepPsiChecker = new StepPsiChecker(lifetime, solution, psiFiles, changeManager, textControlManager,
-                shellLocks, editorManager,
-                documentManager, environment);
+            _stepPsiChecker = new StepPsiChecker(lifetime, solution, psiFiles,
+                shellLocks);
             _stepNavigationChecker = new StepNavigationChecker(lifetime, solution, psiFiles, textControlManager,
-                shellLocks, editorManager, documentManager, environment);
+                shellLocks);
         }
 
 
@@ -87,7 +74,8 @@ namespace ReSharperTutorials.Checker
                 var mInfo = customType.GetMethod(methodName);
                 if (mInfo != null)
                 {
-                    var parameterArray = new object[] {_solution, _editorManager, _documentManager, _textControlManager};
+                    var parameterArray = new object[]
+                        {_solution, _editorManager, _documentManager, _textControlManager};
                     var customInst = Activator.CreateInstance(customType, parameterArray);
                     var checkMethod = (Func<bool>) Delegate.CreateDelegate(typeof(Func<bool>), customInst, mInfo);
                     attr = (RunCheckAttribute) mInfo.GetCustomAttribute(typeof(RunCheckAttribute));
@@ -96,23 +84,29 @@ namespace ReSharperTutorials.Checker
                     {
                         case OnEvent.PsiChange:
                             _stepPsiChecker.Check = checkMethod;
-                            _stepPsiChecker.AfterPsiChangesDone.Advise(_lifetime,
+                            _stepPsiChecker.OnCheckPass.Advise(_lifetime,
                                 () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.CaretMove:
                             _stepNavigationChecker.Check = checkMethod;
-                            _stepNavigationChecker.AfterNavigationDone.Advise(_lifetime,
+                            _stepNavigationChecker.OnCheckPass.Advise(_lifetime,
                                 () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.AfterAction:
                             _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
                             _stepActionChecker.Check = checkMethod;
-                            _stepActionChecker.AfterActionApplied.Advise(_lifetime,
+                            _stepActionChecker.OnCheckPass.Advise(_lifetime,
                                 () =>
                                 {
                                     _currentStep.IsActionDone = true;
                                     _currentStep.IsCheckDone = true;
                                 });
+                            break;
+                        case OnEvent.OnTimer:
+                            var timer = new CheckTimer(_lifetime);
+                            timer.Check = checkMethod;
+                            timer.OnCheckPass.Advise(_lifetime,
+                                () => { _currentStep.IsCheckDone = true; });
                             break;
                         case OnEvent.None:
                             throw new ApplicationException(
@@ -129,7 +123,7 @@ namespace ReSharperTutorials.Checker
 
             if (_currentStep.Check.Actions == null || attr.OnEvent == OnEvent.AfterAction) return;
             _stepActionChecker.StepActionNames = _currentStep.Check.Actions;
-            _stepActionChecker.AfterActionApplied.Advise(_lifetime,
+            _stepActionChecker.OnCheckPass.Advise(_lifetime,
                 () => { _currentStep.IsActionDone = true; });
         }
     }

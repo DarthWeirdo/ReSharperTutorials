@@ -7,7 +7,7 @@
   <steps>
     <step li="1">
       <text>
-        <h1>
+        <h1 class="stepTitle">
           Welcome!
         </h1>
         <p>
@@ -38,14 +38,14 @@
 
     <step li="2" strikeOnDone="true">
       <text>
-        <h1>
+        <h1 class="stepTitle">
           What's New in ReSharper 2016.3
         </h1>
         <p>
           ReSharper 2016.3 brings numerous fixes and multiple new features. This tutorial will acquaint you with the most important ones.
           Please note that this tutorial is dedicated only to <b>ReSharper's C# features</b>, while other languages have received their share of
           attention in 2016.3 as well. For more details on these features, read
-          <a class="externalLink" href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.          
+          <a class="externalLink" href="https://blog.jetbrains.com/dotnet/">ReSharper blog</a>.
         </p>
         <p>But, enough words! Let's start!</p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
@@ -57,7 +57,7 @@
                 type="ReSharper20163.CodeGenerationIDisposable+HandleWrapper" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep3" />
       <text>
-        <h1>Dispose pattern generator</h1>
+        <h1 class="stepTitle">Dispose pattern generator</h1>
         <p>Let's begin with code generation features.</p>
         <p>
           Now, you can quickly generate the <code>IDisposable</code> interface implementation for a class. Let's do this for
@@ -86,14 +86,14 @@
 
     <step li="4" strikeOnDone="true">
       <text>
-        <h1>Dispose pattern generator</h1>
+        <h1 class="stepTitle">Dispose pattern generator</h1>
         <p>
           Great! Note that as we specified <span class="menuItem">I have unmanaged resources</span>, R# has created a
           corresponding <code>TODO</code> item.
         </p>
         <p>
           Now, let's take a look at the other code generation features.
-        </p>        
+        </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
@@ -102,9 +102,9 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep5" />
       <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep5" />
       <text>
-        <h1>
+        <h1 class="stepTitle">
           Generate relational members
-        </h1>        
+        </h1>
         <p>
           This feature allows you to quickly implement <code>IComparable</code> or <code>IComparable&lt;T&gt;</code>
           for
@@ -133,7 +133,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep6_7" />
       <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep6" />
       <text>
-        <h1>Generate relational members</h1>
+        <h1 class="stepTitle">Generate relational members</h1>
         <p>That was great!</p>
         <p>
           Note that if a field is of <code>string</code> type, you can choose from several string comparison
@@ -164,7 +164,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep6_7" />
       <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep7" />
       <text>
-        <h1>Relational comparer</h1>
+        <h1 class="stepTitle">Relational comparer</h1>
         <p>Awesome!</p>
         <p>
           With ReSharper 2016.3, you can also quickly generate a relational comparer (a base class for
@@ -192,10 +192,10 @@
         </ol>
       </text>
     </step>
-    
+
     <step li="8" strikeOnDone="true">
       <text>
-        <h1>Relational comparer</h1>
+        <h1 class="stepTitle">Relational comparer</h1>
         <p>
           You're doing great!
         </p>
@@ -205,14 +205,14 @@
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
     </step>
-    
+
     <step li="9" strikeOnDone="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep9" />
       <check action="ReSharper.ReSharper_Generate" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep9" />
       <text>
-        <h1>Check for null in the constructor</h1>
+        <h1 class="stepTitle">Check for null in the constructor</h1>
         <p>
-          The <span class="menuItem">Generate constructor</span> action gets a small update with an option to check parameters for 
+          The <span class="menuItem">Generate constructor</span> action gets a small update with an option to check parameters for
           <code>null</code>. If checked, it will generate guard code that throws <code>ArgumentNullException</code> in the constructor.
           Let's try this:
         </p>
@@ -227,7 +227,8 @@
             In the list, select <span class="menuItem">Constructor</span>.
           </li>
           <li>
-            In the opened window, select all fields and turn on <span class="menuItem">Check parameters for null</span>.
+            In the opened window, select all fields and turn on <span class="menuItem">Check parameters for null</span>
+            .
           </li>
           <li>
             Click <span class="menuItem">Finish</span>.
@@ -238,7 +239,7 @@
 
     <step li="10" strikeOnDone="true">
       <text>
-        <h1>Check for null in the constructor</h1>
+        <h1 class="stepTitle">Check for null in the constructor</h1>
         <p>
           Done!
         </p>
@@ -254,7 +255,7 @@
                 type="ReSharper20163.IntroduceFromUnusedParameters" textToFind="unused1" textToFindOccurrence="1" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep11" />
       <text>
-        <h1>Fields or auto-properties from unused parameters</h1>
+        <h1 class="stepTitle">Fields or auto-properties from unused parameters</h1>
         <p>
           A new quick-fix allows introducing fields and auto properties from all unused parameters.
           For example, we need to quickly create auto-properties for all params in the constructor:
@@ -263,28 +264,28 @@
           <li>
             The caret should be on <a href="www.jetbrains.com" class="navigate">one of the unused parameters</a>.
           </li>
-          
-            <li>
-              Hit <shortcut>ReSharper_AltEnter</shortcut>.              
-            </li>
-          
+
           <li>
-            In the list, select 
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+
+          <li>
+            In the list, select
             <span class="menuItem">Introduce get-only auto-property 'Unused1'</span>.
           </li>
           <li>
             Then <span class="menuItem">For all unused parameters</span>.
-        </li>
+          </li>
           <li>
             Then <span class="menuItem">For all with private setter</span>.
-        </li>
+          </li>
         </ol>
       </text>
     </step>
 
     <step li="12" strikeOnDone="true">
       <text>
-        <h1>Fields or auto-properties from unused parameters</h1>
+        <h1 class="stepTitle">Fields or auto-properties from unused parameters</h1>
         <p>
           Cool!
         </p>
@@ -297,13 +298,14 @@
 
     <step li="13" strikeOnDone="true">
       <navigate project="Tutorial3_WhatsNewReSharper2016.3" file="IntroducePropertyForLazilyInitialisedField.cs"
-                type="ReSharper20163.IntroducePropertyForLazilyInitialisedField" textToFind="_foo" textToFindOccurrence="1" />
+                type="ReSharper20163.IntroducePropertyForLazilyInitialisedField" textToFind="_foo"
+                textToFindOccurrence="1" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep13" />
       <text>
-        <h1>Properties from lazily initialized fields</h1>
+        <h1 class="stepTitle">Properties from lazily initialized fields</h1>
         <p>
           A new context action allows creating properties from the fields of type <code>Lazy&lt;T&gt;</code>.
-          Why? Because using a property is easier than calling <code>_foo.Value</code>.          
+          Why? Because using a property is easier than calling <code>_foo.Value</code>.
         </p>
         <p>
           Let's try the action on the <code>_foo</code> field:
@@ -311,11 +313,11 @@
         <ol>
           <li>
             The caret should be on the <code>_foo</code> <a href="www.jetbrains.com" class="navigate">field</a>.
-          </li>          
-            <li>
-              Hit <shortcut>ReSharper_AltEnter</shortcut>.
-            </li>
-          
+          </li>
+          <li>
+            Hit <shortcut>ReSharper_AltEnter</shortcut>.
+          </li>
+
           <li>
             In the list, select
             <span class="menuItem">Introduce property for lazily initialized value</span>.
@@ -326,7 +328,7 @@
 
     <step li="14" strikeOnDone="true">
       <text>
-        <h1>Properties from lazily initialized fields</h1>
+        <h1 class="stepTitle">Properties from lazily initialized fields</h1>
         <p>
           That's it!
         </p>
@@ -342,14 +344,15 @@
                 type="ReSharper20163.TransformParameters" textToFind="DoSomething" textToFindOccurrence="1" />
       <check action="ReSharper.ReSharper_RefactorThis" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep15" />
       <text>
-        <h1>Transform parameters</h1>
+        <h1 class="stepTitle">Transform parameters</h1>
         <p>
-          This new refactoring allows you to quickly transform all incoming parameters to a new class or a tuple.          
+          This new refactoring allows you to quickly transform all incoming parameters to a new class or a tuple.
         </p>
         <p>For example, we want to create a new class from all four params of the <code>DoSomething</code> method:</p>
         <ol>
           <li>
-            The caret should be on the <code>DoSomething</code> <a href="www.jetbrains.com" class="navigate">method declaration</a>.
+            The caret should be on the <code>DoSomething</code>
+            <a href="www.jetbrains.com" class="navigate">method declaration</a>.
           </li>
           <li>
             Press <shortcut>ReSharper.ReSharper_RefactorThis</shortcut>.
@@ -358,7 +361,7 @@
             In the list, select <span class="menuItem">Transform Parameters</span>.
           </li>
           <li>
-            In the opened window, let's leave everything intact. Note that here you can specify which of the parameters will be transformed, 
+            In the opened window, let's leave everything intact. Note that here you can specify which of the parameters will be transformed,
             new class name, and so on.
           </li>
           <li>
@@ -370,7 +373,7 @@
 
     <step li="16" strikeOnDone="true">
       <text>
-        <h1>Transform parameters</h1>
+        <h1 class="stepTitle">Transform parameters</h1>
         <p>
           You're doing great!
         </p>
@@ -379,13 +382,13 @@
         </p>
         <button class="nextButton" onclick="buttonClick()">Next Step</button>
       </text>
-    </step>        
+    </step>
 
     <step li="17" strikeOnDone="true">
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep17" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep17" />
       <text>
-        <h1>Language injections</h1>
+        <h1 class="stepTitle">Language injections</h1>
         <p>
           The next one on the list is improvements in language injections.
         </p>
@@ -413,16 +416,20 @@
     </step>
 
     <step li="18" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep18" />      
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep18" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep18" />
       <text>
-        <h1>Language injections</h1>
+        <h1 class="stepTitle">Language injections</h1>
         <p>
           Now you can treat this string as a CSS code. For example, we can use another color format:
         </p>
         <ol>
           <li>
-            The caret should be on the <code><a href="www.jetbrains.com" class="navigate">red</a></code> color value.
+            The caret should be on the
+            <code>
+              <a href="www.jetbrains.com" class="navigate">red</a>
+            </code>
+            color value.
           </li>
           <li>
             Hit <shortcut>ReSharper_AltEnter</shortcut> and select
@@ -436,7 +443,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep19" />
       <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep19" />
       <text>
-        <h1>Language injections</h1>
+        <h1 class="stepTitle">Language injections</h1>
         <p>
           Great!
         </p>
@@ -447,7 +454,11 @@
         </p>
         <ol>
           <li>
-            The caret must be after the statement <code><a href="www.jetbrains.com" class="navigate">// language=</a></code>.
+            The caret must be after the statement
+            <code>
+              <a href="www.jetbrains.com" class="navigate">// language=</a>
+            </code>
+            .
           </li>
           <li>
             Type <code>javascript</code>.
@@ -460,7 +471,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep20" />
       <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep20" />
       <text>
-        <h1>Language injections</h1>
+        <h1 class="stepTitle">Language injections</h1>
         <p>
           That's it!
         </p>
@@ -476,7 +487,11 @@
         </p>
         <ol>
           <li>
-            The caret must be after the statement <code><a href="www.jetbrains.com" class="navigate">// language=css</a></code>.
+            The caret must be after the statement
+            <code>
+              <a href="www.jetbrains.com" class="navigate">// language=css</a>
+            </code>
+            .
           </li>
           <li>
             Type <code>prefix=.myClass{color: postfix=;}</code>.
@@ -487,7 +502,7 @@
 
     <step li="21" strikeOnDone="true">
       <text>
-        <h1>Language injections</h1>
+        <h1 class="stepTitle">Language injections</h1>
         <p>
           You're doing great!
         </p>
@@ -504,7 +519,7 @@
       <check action="ReSharper_AltEnter"
              method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep22" />
       <text>
-        <h1>Convert to binary (C# 7)</h1>
+        <h1 class="stepTitle">Convert to binary (C# 7)</h1>
         <p>
           Now, if you develop C# 7 project, you can use binary literals. Note that if you have Visual Studio 2015 or earlier,
           you will get a compiler error on this literal. Nevertheless, this won't
@@ -530,7 +545,7 @@
       <check action="ReSharper_AltEnter"
              method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep23" />
       <text>
-        <h1>Digit separators (C# 7)</h1>
+        <h1 class="stepTitle">Digit separators (C# 7)</h1>
         <p>Awesome!</p>
         <p>
           The next C# 7 feature ReSharper supports is digit separators.
@@ -551,7 +566,7 @@
 
     <step li="24" strikeOnDone="true">
       <text>
-        <h1>Digit separators (C# 7)</h1>
+        <h1 class="stepTitle">Digit separators (C# 7)</h1>
         <p>
           You're doing great!
         </p>
@@ -574,14 +589,18 @@
       <check action="ReSharper_AltEnter"
              method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep25" />
       <text>
-        <h1>'Search with Pattern' improvement</h1>
+        <h1 class="stepTitle">'Search with Pattern' improvement</h1>
         <p>
           A minor update gets the 'Search with Pattern' feature. Now, it matches integer constants, regardless
           of how they're encoded:
         </p>
         <ol>
           <li>
-            The <code><a href="www.jetbrains.com" class="navigate">42 * Second</a></code> expression must be selected.
+            The
+            <code>
+              <a href="www.jetbrains.com" class="navigate">42 * Second</a>
+            </code>
+            expression must be selected.
           </li>
           <li>
             Press <shortcut>ReSharper_AltEnter</shortcut>.
@@ -593,7 +612,8 @@
             In the list, select <span class="menuItem">Search with Pattern</span>.
           </li>
           <li>
-            In the window, click <span class="menuItem">Find</span>. Note that the <span class="menuItem">Match similar constructs</span>
+            In the window, click <span class="menuItem">Find</span>. Note that the
+            <span class="menuItem">Match similar constructs</span>
             option is selected.
           </li>
           <li>
@@ -605,7 +625,7 @@
 
     <step li="26" strikeOnDone="true">
       <text>
-        <h1>'Search with Pattern' improvement</h1>
+        <h1 class="stepTitle">'Search with Pattern' improvement</h1>
         <p>
           That's it!
         </p>
@@ -617,11 +637,11 @@
     </step>
 
     <step li="27" strikeOnDone="true">
-      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep27"/>
-                textToFindOccurrence="1" />
+      <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep27" />
+      textToFindOccurrence="1" />
       <check method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep27" />
       <text>
-        <h1>Interpolated strings improvement</h1>
+        <h1 class="stepTitle">Interpolated strings improvement</h1>
         <p>
           The next minor yet handy improvement concerns interpolated strings. Once you type the <code>$</code>
           character,
@@ -629,7 +649,11 @@
         </p>
         <ol>
           <li>
-            The caret must be after <code><a href="www.jetbrains.com" class="navigate">interpolatedString =</a></code>.
+            The caret must be after
+            <code>
+              <a href="www.jetbrains.com" class="navigate">interpolatedString =</a>
+            </code>
+            .
           </li>
           <li>
             Type <code>$</code>.
@@ -640,7 +664,7 @@
 
     <step li="28" strikeOnDone="true">
       <text>
-        <h1>Interpolated strings improvement</h1>
+        <h1 class="stepTitle">Interpolated strings improvement</h1>
         <p>
           Awesome!
         </p>
@@ -652,7 +676,7 @@
       <navigate runMethod="ReSharperTutorials.CodeNavigator.Tutorial3Navigation.NavigateStep29" />
       <check action="ReSharper_AltEnter" method="ReSharperTutorials.Checker.Tutorial3Checks.CheckStep29" />
       <text>
-        <h1>Join lines</h1>
+        <h1 class="stepTitle">Join lines</h1>
         <p>
           Sometimes, it may be needed to join multiple lines into one. For example, we want
           <code>MyProperty</code> to fit into one line:
@@ -676,10 +700,11 @@
 
     <step li="30">
       <text>
-        <h1>That's All!</h1>
+        <h1 class="stepTitle">That's All!</h1>
         <p>
           Thanks for passing the tutorial. Note that we've acquainted only with the ReSharper features related to C#.
-          To learn about other ReSharper 2016.3 improvements, please follow this link.
+          To learn about other ReSharper 2016.3 improvements, please follow this
+          <a class="exrenalLink" href="https://www.jetbrains.com/resharper/whatsnew/">link</a>.
         </p>
         <p>
           Now, you can:
@@ -687,6 +712,16 @@
         <ul>
           <li>
             <a href="#" onclick="closeSolution(); return false;">Close the tutorial and return to the Home page</a>
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(4); return false;">
+              Run <b>What's New in ReSharper 2017.1</b> tutorial
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="runTutorial(1); return false;">
+              Run <b>ReSharper Essentials</b> tutorial
+            </a>
           </li>
         </ul>
       </text>

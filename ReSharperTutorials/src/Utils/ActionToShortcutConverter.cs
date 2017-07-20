@@ -20,11 +20,45 @@ namespace ReSharperTutorials.Utils
 
         public string SubstituteShortcutsViaVs(string text)
         {
+            var keySequence = "";
+
             var result = Regex.Replace(text, @"<shortcut>(.*?)</shortcut>", txt =>
             {
                 var action = txt.Groups[1].Value;
-                return $"<span class=\"shortcut\">{VsIntegration.GetActionShortcut(action)}</span>";
+
+                // VS doesn't support shortcut sequences - GotoText must be treated individually
+                if (action == "ReSharper.ReSharper_GotoText")
+                {
+                    action = "ReSharper.ReSharper_GotoType";
+                    if (_currentScheme == ShortcutScheme.Idea)
+                        keySequence = ",N,N";
+                    if (_currentScheme == ShortcutScheme.VS)
+                        keySequence = ",T,T";
+                }
+
+                return $"<span class=\"shortcut\">{VsIntegration.GetActionShortcut(action)}{keySequence}</span>";
             });
+            return result;
+        }
+
+
+        public List<string> GetUndefinedShortcutsList(string text)
+        {
+            var result = new List<string>();
+            var regex = new Regex(@"<shortcut>(.*?)</shortcut>");
+            var match = regex.Match(text);
+
+            while (match.Success)
+            {
+                var action = match.Groups[1].Value;
+                var shortcut = VsIntegration.GetActionShortcut(action);
+
+                if (!result.Contains(action) && shortcut == "Undefined" && action != "ReSharper.ReSharper_GotoText")               
+                    result.Add(action);                                   
+
+                match = match.NextMatch();
+            }
+
             return result;
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.Interop.NativeHook;
@@ -10,7 +11,6 @@ using JetBrains.UI.Components.Theming;
 using JetBrains.UI.CrossFramework;
 using JetBrains.UI.Extensions;
 using JetBrains.UI.ToolWindowManagement;
-using ReSharperTutorials.Runner;
 
 namespace ReSharperTutorials.TutorialUI
 {
@@ -18,19 +18,14 @@ namespace ReSharperTutorials.TutorialUI
     {
         private readonly TutorialWindowManager _windowManager;
         private readonly TabbedToolWindowClass _toolWindowClass;
-        private readonly ToolWindowInstance _toolWindowInstance;
-        private readonly IActionManager _actionManager;
         private readonly IShellLocks _shellLocks;
         private TutorialPanel _containerControl;
         private HtmlViewControl _viewControl = new HtmlViewControl(null, null);
         private readonly Lifetime _lifetime;
         private readonly IColorThemeManager _colorThemeManager;
-        private TutorialId _runningTutorial;
         private string _pageText;
         private readonly HtmlGenerator _htmlGenerator;
         private HtmlMediator _htmlMediator;
-        private readonly GlobalSettings _globalSettings;
-        private readonly SolutionStateTracker _solutionStateTracker;
         public HtmlMediator HtmlMediator => _htmlMediator;
         public HtmlViewControl HtmlViewControl => _viewControl;
         public Lifetime WindowLifetime => _lifetime;
@@ -49,22 +44,18 @@ namespace ReSharperTutorials.TutorialUI
 
 
         public HomeWindow(Lifetime lifetime, TutorialWindowManager windowManager,
-            SolutionStateTracker solutionStateTracker, GlobalSettings globalSettings,
             IShellLocks shellLocks, IUIApplication environment, IActionManager actionManager,
             TabbedToolWindowClass toolWindowClass, IWindowsHookManager windowsHookManager,
             IColorThemeManager colorThemeManager)
         {
             _windowManager = windowManager;
             _lifetime = lifetime;
-            _solutionStateTracker = solutionStateTracker;
-            _globalSettings = globalSettings;
-            _actionManager = actionManager;
             _shellLocks = shellLocks;
             _colorThemeManager = colorThemeManager;
             _toolWindowClass = toolWindowClass;
             _htmlGenerator = new HtmlGenerator(lifetime, colorThemeManager);
 
-            _toolWindowInstance = _toolWindowClass.RegisterInstance(
+            var toolWindowInstance = _toolWindowClass.RegisterInstance(
                 lifetime, null, null,
                 (lt, twi) =>
                 {
@@ -72,11 +63,17 @@ namespace ReSharperTutorials.TutorialUI
 
                     var containerControl = new TutorialPanel(environment).BindToLifetime(lt);
 
-                    var viewControl = new HtmlViewControl(windowsHookManager, actionManager)
+                    var viewControl = new HtmlViewControl(windowsHookManager, actionManager)                    
                     {
                         Dock = DockStyle.Fill,
                         WebBrowserShortcutsEnabled = false,
                     }.BindToLifetime(lt);
+
+                    var webControlHandler = new WebBrowserHostUiHandler(viewControl)
+                    {
+                        Flags = HostUIFlags.DPI_AWARE,
+                        IsWebBrowserContextMenuEnabled = false
+                    };
 
                     lt.AddBracket(
                         () => _containerControl = containerControl,
@@ -94,12 +91,12 @@ namespace ReSharperTutorials.TutorialUI
 
                     _colorThemeManager.ColorThemeChanged.Advise(lifetime, RefreshKeepContent);
 
-                    SetColors();
+                    SetColors();                    
 
                     return new EitherControl(lt, containerControl);
                 });
 
-            _toolWindowInstance.Title.Value = "Home";
+            toolWindowInstance.Title.Value = "Home";
         }
 
         public void EnableButtons(bool state)
@@ -112,9 +109,9 @@ namespace ReSharperTutorials.TutorialUI
             _htmlMediator?.HideImages();
         }
 
-        public void AgreeToRunTutorial(string htmlTutorialId, string imgSrc)
+        public void AgreeToRunTutorial(int tutorialId, string imgSrc)
         {
-            _htmlMediator?.AgreeToRunTutorial(htmlTutorialId, imgSrc);
+            _htmlMediator?.AgreeToRunTutorial(tutorialId.ToString(), imgSrc);
         }
 
 
@@ -148,7 +145,7 @@ namespace ReSharperTutorials.TutorialUI
 
         public void RunTutorial(string htmlTutorialId)
         {
-            _windowManager.RunTutorial(htmlTutorialId);
+            _windowManager.RunTutorial(Convert.ToInt32(htmlTutorialId));
         }
     }
 }

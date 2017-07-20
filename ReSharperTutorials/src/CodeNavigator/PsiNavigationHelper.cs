@@ -297,5 +297,19 @@ namespace ReSharperTutorials.CodeNavigator
 
             textControl?.Caret.MoveTo(range.TextRange.EndOffset, CaretVisualPlacement.DontScrollIfVisible);
         }
+
+
+        public static T GetParentOfType<T>(ITreeNode node) where T : class, ITreeNode
+        {
+            while (node != null)
+            {
+                var typedNode = node as T;
+                if (typedNode != null)
+                    return typedNode;
+
+                node = node.Parent;
+            }
+            return null;
+        }
     }
 }

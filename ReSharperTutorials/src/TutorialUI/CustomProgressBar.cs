@@ -4,13 +4,17 @@ using System.Windows.Forms;
 using Brushes = System.Drawing.Brushes;
 using Color = System.Drawing.Color;
 using FontFamily = System.Drawing.FontFamily;
+using Point = System.Drawing.Point;
+using ProgressBar = System.Windows.Forms.ProgressBar;
+using Rectangle = System.Drawing.Rectangle;
+
 
 namespace ReSharperTutorials.TutorialUI
 {
     internal class CustomProgressBar : ProgressBar
     {
         public CustomProgressBar()
-        {            
+        {
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
         }
 
@@ -37,7 +41,7 @@ namespace ReSharperTutorials.TutorialUI
                 var len = g.MeasureString(CustomText, f);
                 var location = new Point(Convert.ToInt32(Width / 2 - len.Width / 2),
                     Convert.ToInt32(Height / 2 - len.Height / 2));
-                g.DrawString(CustomText, f, Brushes.Black, location);
+                g.DrawString(CustomText, f, Brushes.Black, location);                
             }
         }
     }
